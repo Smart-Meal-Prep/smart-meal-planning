@@ -1,8 +1,6 @@
 const { Sequelize } = require('sequelize');
 const ini = require('./config/config.js');
-console.log(ini)
 const config = JSON.parse(JSON.stringify(ini));
-
 /*This file is used to test if the connection to the data base is vaild*/
 // Set the environment (e.g., 'development')
 const environment = process.env.NODE_ENV || 'development';
