@@ -15,10 +15,10 @@ if (config.use_env_variable) {
 } else {
   //sequelize = new Sequelize(config.database, config.username, config.password, config);
   sequelize = new Sequelize(
-    config.development.database, 
-    config.development.username,
-    config.development.password,
-    config.development
+    config.database, 
+    config.username,
+    config.password,
+    config
   );
 }
 
