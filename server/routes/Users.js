@@ -1,20 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const { Users } = require('../models');
-//const { body, validationResult } = require('express-validator');
+const validator = require('validator');
 const bcrypt = require('bcrypt');//package used to hash password
-
 
 router.post('/registration', async (req, res) => {
     const { username, password, email } = req.body;//gets the username, password, email from the json
 
     if (!username || !password || !email) {
-        return res.status(400).json('field(s) left empty');//Checks if the fields are empty
+        return res.status(400).json('Field(s) left empty');//Checks if the fields are empty
     }
 
-//    if(!(validator.isEmail(email))){
-//        return res.status(400).json('invaild email format');//Checks the format of the email
-//    }
+    if (username === password) {
+        return res.status(400).json('Username and password cannot be the same');//Check if the username and password are the same
+    }
+
+    if (!(validator.isEmail(email))) {
+        return res.status(400).json('Invaild email');//Checks the format of the email
+    }
 
     bcrypt.hash(password, 10).then((hash) => {
         Users.create({
@@ -25,10 +28,10 @@ router.post('/registration', async (req, res) => {
             res.json('User created successfully');
         }).catch((error) => {
             if (error.name === 'SequelizeUniqueConstraintError') {
-                return res.status(400).json('email already in use')
+                return res.status(400).json('Email is already in use')
             }
             console.log(error)
-            return res.status(500).json('server failed')
+            return res.status(500).json('Server failed')
         })
 
     });
