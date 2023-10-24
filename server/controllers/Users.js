@@ -25,7 +25,7 @@ const userRegistration = async (req, res) => {
             password: hash,
             email: email
         }).then(() => {
-            res.json('User created successfully');
+            return res.status(200).json('User created successfully');
         }).catch((error) => {
             if (error.name === 'SequelizeUniqueConstraintError') {
                 return res.status(400).json('Email is already in use')
@@ -33,7 +33,6 @@ const userRegistration = async (req, res) => {
             console.log(error)
             return res.status(500).json('Server failed')
         })
-
     });
 };
 
