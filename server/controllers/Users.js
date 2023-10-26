@@ -39,4 +39,13 @@ const userRegistration = async (req, res) => {
     }
 };
 
-module.exports = { userRegistration }
+const userLogin = async (req, res) => {
+    const { email, password } = req.body;
+
+    if(!email || !password){
+        res.status(400);
+        return res.json("Field(s) left empty")
+    }
+};
+
+module.exports = { userRegistration, userLogin }
