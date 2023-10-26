@@ -23,23 +23,20 @@ const userRegistration = async (req, res) => {
         return res.json('Invaild email');//Checks the format of the email
     }
 
-    bcrypt.hash(password, 10).then((hash) => {
-        Users.create({
-            username: username,
-            password: hash,
-            email: email
-        }).then(() => {
-            return res.status(200).json('User created successfully');
-        }).catch((error) => {
-            if (error.name === 'SequelizeUniqueConstraintError') {
-                res.status(400)
-                return res.json('Email is already in use')
-            }
-            console.log(error)
-            res.status(500)
-            return res.json('Server failed')
-        })
-    });
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    try {
+        await Users.create({ username: username, password: hashedPassword, email: email });
+        res.status(200);
+        return res.json('User created successfully');
+    } catch (error) {
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            res.status(400);
+            return res.json('Email is already in use');
+        }
+        res.status(500);
+        return res.json('Server failed');
+    }
 };
 
 module.exports = { userRegistration }

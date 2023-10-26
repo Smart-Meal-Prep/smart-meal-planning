@@ -76,9 +76,7 @@ describe('On user registration with invaild operands', () => {
 
 });
 
-/*
 describe('On succesful user creation', () => {
-    //This one is just not working either not sure why :/
     it('should return status of 200 if user was created successfully', async () => {
         const req = {
             body: {
@@ -95,4 +93,3 @@ describe('On succesful user creation', () => {
         expect(res.status).toHaveBeenCalledWith(200);
     })
 })
-*/
