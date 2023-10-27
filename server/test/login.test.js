@@ -40,6 +40,25 @@ describe('On invalid user', () => {
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({ error: "User doesnt exist" });
     });
+
+    it('should return a status code of 400 if user enters incorrect password', async () => {
+        const req = {
+            body: {
+                email: "powers@gmail.com",
+                password: "well"
+            }
+        };
+
+        // Mock the Users.findOne function to return a user object
+        jest.spyOn(Users, 'findOne').mockResolvedValue({ email: "powers@gmail.com", password: "hashedPassword" });
+
+        // Mock the bcrypt.compare function to return false, indicating incorrect password
+        jest.spyOn(bcrypt, 'compare').mockResolvedValue(false);
+
+        await userLogin(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "User doesnt exist" });
+    });
 });
 
 describe('On successful user', () => {
@@ -62,5 +81,3 @@ describe('On successful user', () => {
         expect(res.json).toHaveBeenCalledWith("Login successful");
     });
 });
-
-//Have a password to see if the password matchs up for the user

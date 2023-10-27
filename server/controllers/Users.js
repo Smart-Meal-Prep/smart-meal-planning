@@ -44,25 +44,25 @@ const userLogin = async (req, res) => {
 
     if (!email || !password) {
         res.status(400);
-        return res.json("Field(s) left empty")
+        return res.json("Field(s) left empty");
     }
 
     const userExists = await Users.findOne({
         where: {
             email: email
         }
-    })
+    });
 
     if (!userExists) {
         res.status(400);
-        return res.json({ error: "User doesnt exist" })
+        return res.json({ error: "User doesnt exist" });
     }
 
     const correctPassword = await bcrypt.compare(password, userExists.password);
 
     if (!correctPassword) {
         res.status(400);
-        return res.json({ error: "Incorrect password" })
+        return res.json({ error: "Incorrect password" });
     }
 
     res.status(200);
@@ -71,6 +71,3 @@ const userLogin = async (req, res) => {
 };
 
 module.exports = { userRegistration, userLogin };
-
-//test email: deondraetest@
-//password: dog
