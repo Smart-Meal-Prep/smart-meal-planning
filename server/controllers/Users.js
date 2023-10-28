@@ -39,4 +39,35 @@ const userRegistration = async (req, res) => {
     }
 };
 
-module.exports = { userRegistration }
+const userLogin = async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        res.status(400);
+        return res.json("Field(s) left empty");
+    }
+
+    const userExists = await Users.findOne({
+        where: {
+            email: email
+        }
+    });
+
+    if (!userExists) {
+        res.status(400);
+        return res.json({ error: "User doesnt exist" });
+    }
+
+    const correctPassword = await bcrypt.compare(password, userExists.password);
+
+    if (!correctPassword) {
+        res.status(400);
+        return res.json({ error: "Incorrect password" });
+    }
+
+    res.status(200);
+    return res.json("Login successful");
+
+};
+
+module.exports = { userRegistration, userLogin };

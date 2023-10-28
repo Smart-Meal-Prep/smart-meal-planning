@@ -91,5 +91,5 @@ describe('On succesful user creation', () => {
 
         await userRegistration(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
-    })
-})
+    });
+});
