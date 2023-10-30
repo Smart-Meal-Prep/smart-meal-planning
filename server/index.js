@@ -1,8 +1,11 @@
 const express = require('express');
+const session = require('express-session');
 const app = express();
 app.use(express.json());
 
 const db = require('./models')
+
+//Auth session
 
 //Routes
 const userRouter = require('./routes/Users');
