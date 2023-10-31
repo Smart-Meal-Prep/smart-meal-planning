@@ -1,0 +1,1 @@
+The assets folder should only contain images, gifs, fonts, and any appropriate assets
