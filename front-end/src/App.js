@@ -1,10 +1,16 @@
+import { React } from 'react';
+import { Routes, Route } from "react-router-dom"
 import "./styles/App.css"
-import React from 'react';
+import Home from './component/Home';
+import Dashboard from './component/Dashboard';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <h1>Front-end</h1>
+      <Routes>
+        <Route path="/" element={<Home />} />{/*Makes the home container the default view*/}
+        <Route path="/dashboard" element={<Dashboard />} />{/*Creates a route to the dashboard component*/}
+      </Routes>
     </div>
   );
 }
