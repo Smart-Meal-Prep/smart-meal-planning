@@ -65,9 +65,12 @@ const userLogin = async (req, res) => {
         return res.json({ error: "Incorrect password" });
     }
 
+    //Add authentication
+    req.session.user = userExists;//adds the user information to the session cookie
+    req.session.authorized = true;//sets the user as authorized
+
     res.status(200);
     return res.json("Login successful");
-
 };
 
 module.exports = { userRegistration, userLogin };

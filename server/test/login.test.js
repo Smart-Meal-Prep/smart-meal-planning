@@ -1,10 +1,12 @@
 const { userLogin } = require("../controllers/Users");
 const { Users } = require('../models');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
 
 // Mocks
 jest.mock('../models');
 jest.mock('bcrypt');
+jest.mock('express-session')
 
 const res = {
     status: jest.fn((x) => x),
@@ -62,12 +64,13 @@ describe('On invalid user', () => {
 });
 
 describe('On successful user', () => {
-    it('should return a status code of 200 if user was found and signed in', async () => {
+    it('should return a status code of 200 if user was found, signin and set up a session', async () => {
         const req = {
             body: {
                 email: "powers@gmail.com",
                 password: "well"
-            }
+            },
+            session: {}
         };
 
         // Mock the Users.findOne function to return a user object
@@ -79,5 +82,8 @@ describe('On successful user', () => {
         await userLogin(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith("Login successful");
+        
+        expect(req.session.user).toEqual({ email: "powers@gmail.com", password: "hashedPassword" });
+        expect(req.session.authorized).toBe(true);
     });
 });
