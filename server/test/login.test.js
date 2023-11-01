@@ -1,7 +1,6 @@
 const { userLogin } = require("../controllers/Users");
 const { Users } = require('../models');
 const bcrypt = require('bcrypt');
-const session = require('express-session');
 
 // Mocks
 jest.mock('../models');
