@@ -7,11 +7,11 @@ import { EmailInput } from "./components/EmailInput";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{width: 1440, height: 1024, position: 'relative', backgroundImage: 'url(https://via.placeholder.com/1440x1024)'}}>
       <SmartMealsLogo />
       <NavBar />
 
-      <div className="dashboardBG" style={{width: 1279, height: 643, left: 81, top: 241, position: 'absolute', background: '#EAC08F', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', borderBottomLeftRadius: 104, borderBottomRightRadius: 104, border: '1px black solid'}} />
+      <div className="dashboardBG"/>
 
       <div className="LogIn" style={{left: 221, top: 241, position: 'absolute', color: 'black', fontSize: 40, fontFamily: 'Literata', fontWeight: '500', letterSpacing: 8, wordWrap: 'break-word'}}>Log In</div>
       <Passwordinput left={89} top={406}/>
