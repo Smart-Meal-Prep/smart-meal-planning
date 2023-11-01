@@ -73,4 +73,18 @@ const userLogin = async (req, res) => {
     return res.json("Login successful");
 };
 
-module.exports = { userRegistration, userLogin };
+const Logout = async (req, res) => {
+    /*When called, destroys the user session*/
+    try {
+        await req.session.destroy();
+        res.status(200);
+        return res.json({ message: "Logout successful" });
+    }
+    catch (error) {
+        console.log('Failed to destroy session with error:', error);
+        res.status(400);
+        return res.json({ error: "Failed to log out" });
+    }
+};
+
+module.exports = { userRegistration, userLogin, Logout };
