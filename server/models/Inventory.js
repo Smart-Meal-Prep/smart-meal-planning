@@ -11,5 +11,5 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    return Inventory
+    return Inventory;
 }
