@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const env = require('../server/config/settings.js')
+const env = require('./config/settings.js')
 const app = express();
 app.use(express.json());
 
