@@ -16,5 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
+    Users.associate = (models) => {
+        Users.hasOne(models.Inventory, {
+            onDelete: 'cascade'
+        });
+    };
+
     return Users
 }
