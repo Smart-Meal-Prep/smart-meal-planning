@@ -4,12 +4,12 @@ module.exports = (sequelize, DataTypes) => {
         allergies: {
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
-            defaultValue: []
+            defaultValue: [] // Set a default empty array
         },
         preferences: {
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
-            defaultValue: []
+            defaultValue: [] // Set a default empty array
         }
     });
 
