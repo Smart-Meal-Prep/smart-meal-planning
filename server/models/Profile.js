@@ -1,21 +1,25 @@
 module.exports = (sequelize, DataTypes) => {
-    /*Define user profile table*/
+    /* Define user profile table */
     const Profile = sequelize.define("Profile", {
-        username: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        alergies: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        email: {
-            type: DataTypes.STRING,
+        allergies: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
-            unique: true
+            defaultValue: []
+        },
+        preferences: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: false,
+            defaultValue: []
         }
-        //may add more once we figure out our APIs
     });
+
+    Profile.associate = (models) => {
+        // Define a one-to-one association between Users and Profile
+        Profile.belongsTo(models.Users, {
+            foreignKey: 'userId',
+            onDelete: 'cascade'
+        });
+    };
 
     return Profile;
 }
