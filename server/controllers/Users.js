@@ -67,6 +67,10 @@ const userLogin = async (req, res) => {
 
     //Add authentication
     req.session.user = userExists;//adds the user information to the session cookie
+    /*
+    if(req.session.user){
+        console.log(req.session.user.id);//this does work
+    }*/
     req.session.authorized = true;//sets the user as authorized
 
     res.status(200);
