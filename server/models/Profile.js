@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         allergies: {
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
-            defaultValue: []
+            defaultValue: [] //Set default value as empty array
         },
         preferences: {
             type: DataTypes.ARRAY(DataTypes.STRING),
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     Profile.associate = (models) => {
         // Define a one-to-one association between Users and Profile
         Profile.belongsTo(models.Users, {
-            foreignKey: 'userId',
+            foreignKey: 'UserId',
             onDelete: 'cascade'
         });
     };
