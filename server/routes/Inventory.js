@@ -2,7 +2,7 @@ const express = require('express');
 const { getInventory, addIngredient, removeIngredient } = require('../controllers/inventory');
 const router = express.Router();
 
-router.get('/:UserId', getInventory);
+router.get('/', getInventory);
 router.post('/', addIngredient);
 router.delete('/', removeIngredient);
 
