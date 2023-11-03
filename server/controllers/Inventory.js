@@ -1,19 +1,19 @@
-const { Inventory, User } = require('../models');
+const { Inventory } = require('../models');
 
 const getInventory = async (req, res) => {
-    /*Think it is working its just that I dont have anything in my inventory*/
     try {
-        const { userId } = req.session.user.id//gets the user email from the session cookie
+        const { UserId } = req.body;
 
-        if (!req.session.user.authorized) {
-            res.status(401)
-            return res.json({ message: 'User is unauthorized' });
+        if(!UserId){
+            res.status(400);
+            return res.json({ error: 'Error empty userid' })
         }
 
         const inventoryItems = await Inventory.findAll({
-            where: { userId },
+            where: { UserId },
         });
 
+        res.status(200);
         return res.json(inventoryItems);
     }
     catch (error) {
@@ -29,12 +29,12 @@ const addIngredient = async (req, res) => {
 
         if (!ingredient || !quantity) {
             res.status(400);
-            return res.json({ message: "Field(s) left empty" });
+            return res.json({ error: "Field(s) left empty" });
         }
 
-        if(!UserId){
+        if (!UserId) {
             res.status(400);
-            return res.json({ message: "No userid provided" });
+            return res.json({ error: "No userid provided" });
         }
 
         await Inventory.create({
@@ -54,7 +54,6 @@ const addIngredient = async (req, res) => {
 };
 
 const removeIngredient = async (req, res) => {
-
 };
 
 module.exports = {
