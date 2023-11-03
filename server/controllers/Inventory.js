@@ -25,25 +25,22 @@ const getInventory = async (req, res) => {
 
 const addIngredient = async (req, res) => {
     try {
-        const { ingredient, quantity } = req.body;
-        //console.log("Entered addIngreident with following user", req.session.user)
+        const { ingredient, quantity, UserId } = req.body;
+
         if (!ingredient || !quantity) {
             res.status(400);
             return res.json({ message: "Field(s) left empty" });
         }
-        console.log(req.session.user)
-        if (!req.session.user.authorized) {
-            /*Authorized will be set to true on succesful cookie creation on login*/
-            res.status(401);
-            return res.json({ message: "User is unauthorized" });
-        }
 
-        const userId = req.session.user.id;
+        if(!UserId){
+            res.status(400);
+            return res.json({ message: "No userid provided" });
+        }
 
         await Inventory.create({
             ingredient,
             quantity,
-            userId
+            UserId
         });
 
         res.status(200);
