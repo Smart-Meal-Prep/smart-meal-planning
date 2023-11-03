@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
         Users.hasOne(models.Inventory, {
             onDelete: 'cascade'
         });
+        Users.hasOne(models.Profile, {
+            onDelete: 'cascade'
+        })
     };
 
     return Users
