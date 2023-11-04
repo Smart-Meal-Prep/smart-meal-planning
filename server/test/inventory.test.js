@@ -129,3 +129,76 @@ describe('On vaild inventory post body', () => {
         expect(res.json).toHaveBeenCalledWith({ message: "Successfully added to inventory" });
     });
 });
+
+describe('On invaild inventory delete request', () => {
+    it('should return a status code fo 400 if fields are left empty', async () => {
+        const req = {
+            body: {
+                id: null,
+                UserId: null
+            }
+        };
+
+        await removeIngredient(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Field(s) left empty" });
+    });
+
+    it('should return a status code of 400 if ingredient was not found', async () => {
+        const req = {
+            body: {
+                id: Number.MAX_SAFE_INTEGER,
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        jest.spyOn(Inventory, 'findOne').mockResolvedValue(null);
+
+        await removeIngredient(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Error ingredient does not exist" });
+    });
+
+    it('should return a status code of 400 if associated user is not the same', async () => {
+        const req = {
+            body: {
+                id: Number.MAX_SAFE_INTEGER,
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        jest.spyOn(Inventory, 'findOne').mockResolvedValue({
+            id: Number.MAX_SAFE_INTEGER,
+            UserId: 1
+        });
+
+        await removeIngredient(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Error unauthorized user" });
+    });
+
+});
+
+describe('On vaild inventory delete request', () => {
+    it('should return a status code of 200 and delete item from user inventory', async () => {
+        const req = {
+            body: {
+                id: Number.MAX_SAFE_INTEGER,
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+        /*Include a ingredient to be mocked and destoryed*/
+        const ingredientMock = {
+            destroy: jest.fn().mockResolvedValue(null),
+            id: Number.MAX_SAFE_INTEGER,
+            UserId: Number.MAX_SAFE_INTEGER
+        };
+
+        jest.spyOn(Inventory, 'findOne').mockResolvedValue(ingredientMock);
+
+        await removeIngredient(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({ success: "Ingredient deleted" });
+    });
+});
+

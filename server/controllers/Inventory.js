@@ -59,7 +59,7 @@ const removeIngredient = async (req, res) => {
 
         if (!id || !UserId) {
             res.status(400);
-            return res.json({ message: "Field(s) left empty" })
+            return res.json({ error: "Field(s) left empty" })
         }
 
         const ingredient = await Inventory.findOne({
