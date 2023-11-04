@@ -11,5 +11,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
+    Inventory.associate = (models) => {
+        Inventory.belongsTo(models.Users, {
+            foreignKey: 'UserId',
+            onDelete: 'cascade'
+        });
+    };
+
     return Inventory;
 }
