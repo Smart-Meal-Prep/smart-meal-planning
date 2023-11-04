@@ -276,7 +276,7 @@ describe('On vaild inventory update request', () => {
         jest.spyOn(Inventory, 'findOne').mockResolvedValue(ingredientMock);
 
         await updateAmount(req, res);
-        expect(ingredientMock.quantity).toEqual(100);//Quantity updated based on nput
+        expect(ingredientMock.quantity).toEqual(100);//Quantity updated based on input
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({ success: "Ingredient deleted" });
     });
