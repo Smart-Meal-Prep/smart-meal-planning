@@ -59,7 +59,7 @@ const removeIngredient = async (req, res) => {
 
         if (!id || !UserId) {
             res.status(400);
-            return res.json({ error: "Field(s) left empty" })
+            return res.json({ error: "Field(s) left empty" });
         }
 
         const ingredient = await Inventory.findOne({
@@ -80,17 +80,55 @@ const removeIngredient = async (req, res) => {
 
         await ingredient.destroy();
         res.status(200);
-        return res.json({ success: "Ingredient deleted" })
+        return res.json({ success: "Ingredient deleted" });
     }
     catch (error) {
         console.log(error);
         res.status(500);
-        return res.json({ error: "Error while deleting ingredient" })
+        return res.json({ error: "Error while deleting ingredient" });
+    }
+};
+
+const updateAmount = async (req, res) => {
+    try {
+        const { id, UserId, quantity } = req.body;
+
+        if (!id || !UserId || !quantity) {
+            res.status(400);
+            return res.json({ error: "Field(s) left empty" });
+        }
+
+        const ingredient = await Inventory.findOne({
+            where: { id: id },
+            include: User
+        });
+
+        if (!ingredient) {
+            res.status(400);
+            return res.json({ error: "Error ingredient does not exist" });
+        }
+
+        if (ingredient.UserId != UserId) {
+            res.status(401);
+            return res.json({ error: "Error unauthorized user" });
+        }
+
+        ingredient.quantity = quantity;
+        await ingredient.save();//updates the value in the database
+
+        res.status(200);
+        return res.json({ success: "Ingredient amount updated" });
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500);
+        return res.json({ error: "Error while updating ingredient amount" })
     }
 };
 
 module.exports = {
     getInventory,
     addIngredient,
-    removeIngredient
+    removeIngredient,
+    updateAmount
 };

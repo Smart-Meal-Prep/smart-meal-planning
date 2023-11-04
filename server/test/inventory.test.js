@@ -1,4 +1,4 @@
-const { getInventory, removeIngredient, addIngredient } = require("../controllers/inventory");
+const { getInventory, removeIngredient, addIngredient, updateAmount } = require("../controllers/inventory");
 const { Inventory } = require('../models');
 
 // Mocks
@@ -9,6 +9,7 @@ const res = {
     json: jest.fn((x) => x)
 };
 
+/*getInventory*/
 describe('On user get there inventory with a empty userid', () => {
     it('should return a status code of 400', async () => {
         const req = {
@@ -73,7 +74,7 @@ describe('On user get there inventory sucessfuly', () => {
     });
 });
 
-
+/*addIngredient*/
 describe('On invaild inventory post body', () => {
     it('should return status code of 400 if input fields are left empty', async () => {
         const req = {
@@ -130,6 +131,7 @@ describe('On vaild inventory post body', () => {
     });
 });
 
+/*removeIngredient*/
 describe('On invaild inventory delete request', () => {
     it('should return a status code fo 400 if fields are left empty', async () => {
         const req = {
@@ -202,3 +204,80 @@ describe('On vaild inventory delete request', () => {
     });
 });
 
+/*updateAmount*/
+describe('On invaild inventory update amount request', () => {
+    it('should return a status code fo 400 if fields are left empty', async () => {
+        const req = {
+            body: {
+                id: null,
+                UserId: null,
+                quantity: 100
+            }
+        };
+
+        await updateAmount(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Field(s) left empty" });
+    });
+
+    it('should return a status code of 400 if ingredient was not found', async () => {
+        const req = {
+            body: {
+                id: Number.MAX_SAFE_INTEGER,
+                UserId: Number.MAX_SAFE_INTEGER,
+                quantity: 100
+            }
+        };
+
+        jest.spyOn(Inventory, 'findOne').mockResolvedValue(null);
+
+        await updateAmount(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Error ingredient does not exist" });
+    });
+
+    it('should return a status code of 400 if associated user is not the same', async () => {
+        const req = {
+            body: {
+                id: Number.MAX_SAFE_INTEGER,
+                UserId: Number.MAX_SAFE_INTEGER,
+                quantity: 100
+            }
+        };
+
+        jest.spyOn(Inventory, 'findOne').mockResolvedValue({
+            id: Number.MAX_SAFE_INTEGER,
+            UserId: 1
+        });
+
+        await updateAmount(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Error unauthorized user" });
+    });
+
+});
+
+describe('On vaild inventory update request', () => {
+    it('should return a status code of 200 and update ingredient amount', async () => {
+        const req = {
+            body: {
+                id: Number.MAX_SAFE_INTEGER,
+                UserId: Number.MAX_SAFE_INTEGER,
+                quantity: 100
+            }
+        };
+
+        const ingredientMock = {
+            id: Number.MAX_SAFE_INTEGER,
+            UserId: Number.MAX_SAFE_INTEGER,
+            quantity: 10
+        };
+
+        jest.spyOn(Inventory, 'findOne').mockResolvedValue(ingredientMock);
+
+        await updateAmount(req, res);
+        expect(ingredientMock.quantity).toEqual(100);//Quantity updated based on nput
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({ success: "Ingredient deleted" });
+    });
+});
