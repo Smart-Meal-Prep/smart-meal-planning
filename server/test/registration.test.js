@@ -14,6 +14,7 @@ const res = {
     json: jest.fn((x) => x)
 };
 
+/*userRegistration*/
 describe('On user registration with invaild operands', () => {
     it('should return status of 400 if fields are empty', async () => {
         const req = {
