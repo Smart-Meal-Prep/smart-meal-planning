@@ -1,5 +1,5 @@
 const { userRegistration } = require("../controllers/Users");
-const { Users } = require('../models');
+const { Users, Profile } = require('../models');
 const validator = require('validator');//Import to mock isEmail
 const bcrypt = require('bcrypt');//Import to mock hash
 
@@ -90,7 +90,10 @@ describe('On succesful user creation', () => {
         bcrypt.hash.mockResolvedValue('hashedPassword');//mocks the behavior of the hash function
         Users.create.mockResolvedValue();
 
+        const user = await userRegistration(req, res);
+        await Profile.create.mockResolvedValue({ UserId: user.id, allergies: [], preferences: [] });
         await userRegistration(req, res);
+
         expect(res.status).toHaveBeenCalledWith(200);
     });
 });

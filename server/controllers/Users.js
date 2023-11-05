@@ -1,4 +1,4 @@
-const { Users } = require('../models');
+const { Users, Profile } = require('../models');
 const validator = require('validator');
 const bcrypt = require('bcrypt');//package used to hash password
 
@@ -26,7 +26,8 @@ const userRegistration = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-        await Users.create({ username: username, password: hashedPassword, email: email });
+        const user = await Users.create({ username: username, password: hashedPassword, email: email });
+        await Profile.create({allergies:[], preferences:[], UserId: user.id});
         res.status(200);
         return res.json('User created successfully');
     } catch (error) {
