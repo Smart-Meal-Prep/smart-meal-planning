@@ -26,7 +26,7 @@ const Register = () => {
             email: email,
             password: password
         };
-        
+
         const requestBody = JSON.stringify(user);// Convert the data to a JSON string
 
         try {
@@ -41,12 +41,12 @@ const Register = () => {
             if (res.ok) {// Request was successful (status code 2xx)
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
+                return navigate("/login");
             }
             else {
                 const errorData = await res.json();
                 alert(`Registration failed: ${errorData.message}`);
             }
-            return navigate("/login");
         }
         catch (error) {
             console.log(error);
