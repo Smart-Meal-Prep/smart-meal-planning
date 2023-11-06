@@ -20,9 +20,12 @@ app.use(session({
 const userRouter = require('./routes/Users');
 const inventoryRouter = require('./routes/Inventory');
 const profileRouter = require('./routes/Profile');
+const favoriteRouter = require('./routes/Favorite');
+
 app.use('/user', userRouter);
 app.use('/inventory', inventoryRouter);
 app.use('/profile', profileRouter);
+app.use('/favorite', favoriteRouter);
 
 db.sequelize.sync().then(() => {
     app.listen(3001, () => {
