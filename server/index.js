@@ -1,8 +1,10 @@
 const express = require('express');
 const session = require('express-session');
-const env = require('./config/settings.js')
+const env = require('./config/settings.js');
+const cors = require('cors');
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const db = require('./models')
 
