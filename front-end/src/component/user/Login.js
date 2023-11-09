@@ -29,7 +29,8 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json', // Set the content type to JSON
                 },
-                body: requestBody// Include the request body
+                body: requestBody,// Include the request body
+                credentials: 'include' // Include credentials in the request to allow browser to send cookis
             });
 
             if (res.ok) {// Request was successful (status code 2xx)
