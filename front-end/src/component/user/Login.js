@@ -21,7 +21,7 @@ const Login = () => {
             password: password
         };
         
-        const requestBody = JSON.stringify(user);// Convert the data to a JSON string
+        const requestBody = JSON.stringify(user);// Convert the data to a JSON string for sending to fetch call
 
         try {
             const res = await fetch('http://localhost:3001/user/login', {
