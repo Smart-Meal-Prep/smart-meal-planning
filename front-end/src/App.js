@@ -1,15 +1,17 @@
 import { React } from 'react';
 import { Routes, Route } from "react-router-dom"
-import "./styles/App.css"
-import Home from './component/Home';
 import Dashboard from './component/Dashboard';
+import Register from './component/user/Register';
+import Login from './component/user/Login';
+import "./styles/App.css"
 
 const App = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />{/*Makes the home container the default view*/}
-        <Route path="/dashboard" element={<Dashboard />} />{/*Creates a route to the dashboard component*/}
+        <Route path="/" element={<Dashboard />} />{/*Makes the home dashboard the default view*/}
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );

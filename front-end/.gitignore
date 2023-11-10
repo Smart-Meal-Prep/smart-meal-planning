@@ -12,6 +12,7 @@
 /build
 
 # misc
+Fetch.js
 .DS_Store
 .env.local
 .env.development.local
