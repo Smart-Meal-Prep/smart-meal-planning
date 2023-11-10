@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import endPoints from "../../config/Fetch"
 
 const Register = () => {
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Register = () => {
         const requestBody = JSON.stringify(user);// Convert the data to a JSON string
 
         try {
-            const res = await fetch('http://localhost:3001/user/registration', {
+            const res = await fetch(endPoints.registerEndpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Set the content type to JSON

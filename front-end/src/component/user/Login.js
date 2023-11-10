@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import endPoints from "../../config/Fetch"
 
 const Login = () => {
     const navigate = useNavigate();
@@ -15,7 +15,6 @@ const Login = () => {
         if (!password) {
             return alert('Please provide vaild password');
         }//need to check if the password is a vaild length, has to be atleast length 8
-
         const user = {
             email: email,
             password: password
@@ -24,7 +23,7 @@ const Login = () => {
         const requestBody = JSON.stringify(user);// Convert the data to a JSON string for sending to fetch call
 
         try {
-            const res = await fetch('http://localhost:3001/user/login', {
+            const res = await fetch(endPoints.loginEndpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Set the content type to JSON
