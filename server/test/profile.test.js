@@ -135,10 +135,9 @@ describe('On vaild allergy post body', () => {
         jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
 
         await addAllergy(req, res);
+        
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({ message: "Successfully added allergy" });
-
-        //const savedProfile = profile.save.mock.calls; // Retrieve the updated profile from the save method arguments
 
         expect(profile.allergies).toContain(req.body.ingredient);
         expect(profile.save).toHaveBeenCalled();

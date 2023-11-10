@@ -45,8 +45,6 @@ const addAllergy = async (req, res) => {
             res.status(400);
             return res.json({ error: "User profile not found" });
         }
-
-        // console.log(profile.dataValues.allergies);
         
         profile.allergies = [...profile.allergies, ingredient];
         await profile.save();
