@@ -25,7 +25,7 @@ const getProfile = async (req, res) => {
 
 const addAllergy = async (req, res) => {
     try {
-        const {id, UserId, ingredient} = req.body;
+        const {UserId, ingredient} = req.body;
         if (!ingredient) {
             res.status(400);
             return res.json({ error: "Field(s) left empty" });
@@ -37,7 +37,7 @@ const addAllergy = async (req, res) => {
         }
 
         const profile = await Profile.findOne({
-            where: {id : id},
+            where: {UserId : UserId},
             include: User
         })
 
@@ -48,7 +48,6 @@ const addAllergy = async (req, res) => {
         
         profile.allergies = [...profile.allergies, ingredient];
         await profile.save();
-        console.log(profile.allergies);
 
         res.status(200);
         return res.json({ message: "Successfully added allergy" })

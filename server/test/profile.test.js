@@ -118,14 +118,12 @@ describe('On vaild allergy post body', () => {
     it('should return a status code of 200 and add allergy to the users allergy list', async () => {
         const req = {
             body: {
-                id: 1,
                 ingredient: "Eggs",
                 UserId: Number.MAX_SAFE_INTEGER
             }
         };
 
         const profile = {
-            id: 1,
             allergies: ['Peanuts'],
             preferences: ['Vegetarian'],
             UserId: Number.MAX_SAFE_INTEGER,
