@@ -99,6 +99,4 @@ module.exports = {
     getProfile,
     addAllergy,
     removeAllergy,
-    // addPreference,
-    // removePreference,
 };
