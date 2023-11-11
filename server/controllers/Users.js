@@ -27,7 +27,7 @@ const userRegistration = async (req, res) => {
 
     try {
         const user = await Users.create({ username: username, password: hashedPassword, email: email });
-        await Profile.create({allergies:[], preferences:[], UserId: user.id});
+        await Profile.create({ allergies: [], preferences: [], UserId: user.id });
         res.status(200);
         return res.json('User created successfully');
     } catch (error) {
@@ -88,4 +88,19 @@ const Logout = async (req, res) => {
     }
 };
 
-module.exports = { userRegistration, userLogin, Logout };
+const userHasLogin = async (req, res) => {
+    if (req.session.authorized) {
+        res.status(200);
+        return res.json({
+            username: req.session.user.username,
+            email: req.session.user.email,
+            id: req.session.user.id
+        });
+    }
+    else {
+        res.status(400);
+        return res.json({ unauthorized: "User has not logged in" })
+    }
+}
+
+module.exports = { userRegistration, userLogin, Logout, userHasLogin };
