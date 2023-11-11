@@ -124,6 +124,7 @@ describe('On vaild allergy post body', () => {
         };
 
         const profile = {
+            id: 1,
             allergies: ['Peanuts'],
             preferences: ['Vegetarian'],
             UserId: Number.MAX_SAFE_INTEGER,
