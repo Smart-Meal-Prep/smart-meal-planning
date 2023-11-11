@@ -1,4 +1,4 @@
-const { userLogin } = require("../controllers/Users");
+const { userLogin, userHasLogin } = require("../controllers/Users");
 const { Users } = require('../models');
 const bcrypt = require('bcrypt');
 
@@ -82,8 +82,45 @@ describe('On successful user', () => {
         await userLogin(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith("Login successful");
-        
+
         expect(req.session.user).toEqual({ email: "powers@gmail.com", password: "hashedPassword" });
         expect(req.session.authorized).toBe(true);
+    });
+});
+
+/*userHasLogin*/
+describe('On user has not logged in', () => {
+    it('should return a status code of 400 if user has not logged in', async () => {
+        const req = {
+            session: {}
+        };
+
+        await userHasLogin(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ unauthorized: "User has not logged in" });
+    });
+});
+
+describe('On user has login', () => {
+    it('should return a status code of 200 and get the user information', async () => {
+        const req = {
+            session: {
+                user: {
+                    id: 1,
+                    email: "powers@gmail.com",
+                    password: "hashedPassword",
+                    username: "power"
+                },
+                authorized: true
+            }
+        };
+
+        await userHasLogin(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            username: "power",
+            email: "powers@gmail.com",
+            id: 1
+        });
     });
 });
