@@ -82,6 +82,11 @@ const removeAllergy = async (req, res) => {
             return res.json({ error: "User profile not found" });
         }
         
+        if(!profile.allergies.includes(ingredient)){
+            res.status(400)
+            return res.json({ error: "Allergy not found" });
+        }
+
         profile.allergies = profile.allergies.filter(allergy => allergy !== ingredient);
         await profile.save();
 

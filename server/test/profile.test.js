@@ -186,6 +186,29 @@ describe('On invalid remove allergy post', () => {
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({ error: "User profile not found" });
     })
+
+    it('should return a status code of 400 if user tries to remove an allergy thats not in the allergies list', async () => {
+        const req = {
+            body: {
+                ingredient: 'Apples',
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        }
+
+        const profile = {
+            id: 1,
+            allergies: ['Peanuts', 'Eggs'],
+            preferences: ['Vegetarian'],
+            UserId: Number.MAX_SAFE_INTEGER,
+        }
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
+
+        await removeAllergy(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Allergy not found" });
+    })
 })
 
 describe('On vaild remove allergy post body', () => {
