@@ -100,8 +100,87 @@ const removeAllergy = async (req, res) => {
     }
 }
 
+const addPreference = async (req, res) => {
+    try {
+        const {UserId, preference} = req.body;
+        if (!preference) {
+            res.status(400);
+            return res.json({ error: "Field(s) left empty" });
+        }
+
+        if (!UserId) {
+            res.status(400);
+            return res.json({ error: "No userid provided" });
+        }
+
+        const profile = await Profile.findOne({
+            where: {UserId : UserId},
+            include: User
+        })
+
+        if(!profile){
+            res.status(400);
+            return res.json({ error: "User profile not found" });
+        }
+        
+        profile.preferences = [...profile.preferences, preference];
+        await profile.save();
+
+        res.status(200);
+        return res.json({ message: "Successfully added preference" })
+
+    }catch(error){
+        console.log('Failed to add preference, error:', error);
+        res.status(400);
+        return res.json({ error: 'Error adding preference' })
+    }
+}
+
+const removePreference = async (req, res) => {
+    try {
+        const {UserId, preference} = req.body;
+        if (!preference) {
+            res.status(400);
+            return res.json({ error: "Field(s) left empty" });
+        }
+
+        if (!UserId) {
+            res.status(400);
+            return res.json({ error: "No userid provided" });
+        }
+
+        const profile = await Profile.findOne({
+            where: {UserId : UserId},
+            include: User
+        })
+
+        if(!profile){
+            res.status(400);
+            return res.json({ error: "User profile not found" });
+        }
+        
+        if(!profile.preferences.includes(preference)){
+            res.status(400)
+            return res.json({ error: "Preference not found" });
+        }
+
+        profile.preferences = profile.preferences.filter(pref => pref !== preference);
+        await profile.save();
+
+        res.status(200);
+        return res.json({ message: "Successfully removed preference" })
+
+    }catch(error){
+        console.log('Failed to remove preference, error:', error);
+        res.status(400);
+        return res.json({ error: 'Error removing preference' })
+    }
+}
+
 module.exports = {
     getProfile,
     addAllergy,
     removeAllergy,
+    addPreference,
+    removePreference
 };
