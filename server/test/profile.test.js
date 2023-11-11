@@ -1,5 +1,5 @@
 const { json } = require('sequelize');
-const { getProfile, addAllergy, removeAllergy } = require('../controllers/Profile');
+const { getProfile, addAllergy, removeAllergy, addPreference, removePreference } = require('../controllers/Profile');
 const { Profile, User } = require('../models');
 
 jest.mock('../models')
@@ -212,7 +212,7 @@ describe('On invalid remove allergy post', () => {
 })
 
 describe('On vaild remove allergy post body', () => {
-    it('should return a status code of 200 and add allergy to the users allergy list', async () => {
+    it('should return a status code of 200 and remove allergy from the users allergy list', async () => {
         const req = {
             body: {
                 ingredient: "Eggs",
@@ -236,6 +236,177 @@ describe('On vaild remove allergy post body', () => {
         expect(res.json).toHaveBeenCalledWith({ message: "Successfully removed allergy" });
 
         expect(profile.allergies).not.toContain(req.body.ingredient);
+        expect(profile.save).toHaveBeenCalled();
+    });
+});
+
+/*addPreference*/
+describe('On invalid add preference post', () => {
+    it('should return status code of 400 if input field is left empty', async () => {
+        const req = {
+            body: {
+                preference: "",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        await addPreference(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Field(s) left empty" });
+    });
+
+    it('should return status code of 400 if there is no userid', async () => {
+        const req = {
+            body: {
+                preference: "Vegan",
+                UserId: null
+            }
+        };
+
+        await addPreference(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "No userid provided" });
+    });
+
+    it('should return status code of 400 is user profile is not found', async () => {
+        const req = {
+            body: {
+                preference: "Vegan",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(null);
+
+        await addPreference(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "User profile not found" });
+    })
+})
+
+describe('On vaild add preference post body', () => {
+    it('should return a status code of 200 and add preference to the users preference list', async () => {
+        const req = {
+            body: {
+                preference: "Vegan",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        const profile = {
+            id: 1,
+            allergies: ['Peanuts'],
+            preferences: ['Vegetarian'],
+            UserId: Number.MAX_SAFE_INTEGER,
+            save: jest.fn().mockResolvedValue(true) // Mock the save method
+        }
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
+
+        await addPreference(req, res);
+        
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({ message: "Successfully added allergy" });
+
+        expect(profile.preferences).toContain(req.body.preference);
+        expect(profile.save).toHaveBeenCalled();
+    });
+});
+
+/**removeAllergy */
+describe('On invalid remove preference post', () => {
+    it('should return status code of 400 if input field is left empty', async () => {
+        const req = {
+            body: {
+                preference: "",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        await removePreference(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Field(s) left empty" });
+    });
+
+    it('should return status code of 400 if there is no userid', async () => {
+        const req = {
+            body: {
+                preference: "Vegan",
+                UserId: null
+            }
+        };
+
+        await removeAllergy(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "No userid provided" });
+    });
+
+    it('should return status code of 400 is user profile is not found', async () => {
+        const req = {
+            body: {
+                ingredient: "peanut",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(null);
+
+        await removeAllergy(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "User profile not found" });
+    })
+
+    it('should return a status code of 400 if user tries to remove a preference thats not in the preferences list', async () => {
+        const req = {
+            body: {
+                preference: 'Vegan',
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        }
+
+        const profile = {
+            id: 1,
+            allergies: ['Peanuts'],
+            preferences: ['Vegetarian'],
+            UserId: Number.MAX_SAFE_INTEGER,
+        }
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
+
+        await removePreference(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Preference not found" });
+    })
+})
+
+describe('On vaild remove preference post body', () => {
+    it('should return a status code of 200 and remove preference from the users preferences list', async () => {
+        const req = {
+            body: {
+                preference: "Vegan",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        const profile = {
+            id: 1,
+            allergies: ['Peanuts'],
+            preferences: ['Vegetarian', 'Vegan'],
+            UserId: Number.MAX_SAFE_INTEGER,
+            save: jest.fn().mockResolvedValue(true) // Mock the save method
+        }
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
+
+        await removePreference(req, res);
+        
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({ message: "Successfully removed allergy" });
+
+        expect(profile.preferences).not.toContain(req.body.preference);
         expect(profile.save).toHaveBeenCalled();
     });
 });
