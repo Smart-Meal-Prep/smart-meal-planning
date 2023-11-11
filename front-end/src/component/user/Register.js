@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import endPoints from "../../config/Fetch"
+import endPoints from "../../config/fetch.js"
 
 const Register = () => {
     const navigate = useNavigate();
