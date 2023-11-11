@@ -1,4 +1,4 @@
-const { getInventory, removeIngredient, addIngredient, updateAmount } = require("../controllers/inventory");
+const { getInventory, removeIngredient, addIngredient, updateAmount } = require("../controllers/Inventory");
 const { Inventory } = require('../models');
 
 // Mocks

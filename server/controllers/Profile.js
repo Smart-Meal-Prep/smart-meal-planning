@@ -23,4 +23,43 @@ const getProfile = async (req, res) => {
     }
 }
 
-module.exports = {getProfile};
+const addAllergy = async (req, res) => {
+    try {
+        const {UserId, ingredient} = req.body;
+        if (!ingredient) {
+            res.status(400);
+            return res.json({ error: "Field(s) left empty" });
+        }
+
+        if (!UserId) {
+            res.status(400);
+            return res.json({ error: "No userid provided" });
+        }
+
+        const profile = await Profile.findOne({
+            where: {UserId : UserId},
+            include: User
+        })
+
+        if(!profile){
+            res.status(400);
+            return res.json({ error: "User profile not found" });
+        }
+        
+        profile.allergies = [...profile.allergies, ingredient];
+        await profile.save();
+
+        res.status(200);
+        return res.json({ message: "Successfully added allergy" })
+
+    }catch(error){
+        console.log('Failed to add allergy, error:', error);
+        res.status(400);
+        return res.json({ error: 'Error adding allergy' })
+    }
+}
+
+module.exports = {
+    getProfile,
+    addAllergy
+};
