@@ -1,5 +1,5 @@
 const { json } = require('sequelize');
-const { getProfile, addAllergy } = require('../controllers/Profile');
+const { getProfile, addAllergy, removeAllergy } = require('../controllers/Profile');
 const { Profile, User } = require('../models');
 
 jest.mock('../models')
@@ -70,7 +70,7 @@ describe('On valid get profile', () => {
 })
 
 /*addAllergy*/
-describe('On invalid allergy post', () => {
+describe('On invalid add allergy post', () => {
     it('should return status code of 400 if input field is left empty', async () => {
         const req = {
             body: {
@@ -114,7 +114,7 @@ describe('On invalid allergy post', () => {
     })
 })
 
-describe('On vaild allergy post body', () => {
+describe('On vaild add allergy post body', () => {
     it('should return a status code of 200 and add allergy to the users allergy list', async () => {
         const req = {
             body: {
@@ -139,6 +139,103 @@ describe('On vaild allergy post body', () => {
         expect(res.json).toHaveBeenCalledWith({ message: "Successfully added allergy" });
 
         expect(profile.allergies).toContain(req.body.ingredient);
+        expect(profile.save).toHaveBeenCalled();
+    });
+});
+
+/**removeAllergy */
+describe('On invalid remove allergy post', () => {
+    it('should return status code of 400 if input field is left empty', async () => {
+        const req = {
+            body: {
+                ingredient: "",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        await removeAllergy(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Field(s) left empty" });
+    });
+
+    it('should return status code of 400 if there is no userid', async () => {
+        const req = {
+            body: {
+                ingredient: "peanut",
+                UserId: null
+            }
+        };
+
+        await removeAllergy(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "No userid provided" });
+    });
+
+    it('should return status code of 400 is user profile is not found', async () => {
+        const req = {
+            body: {
+                ingredient: "peanut",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(null);
+
+        await removeAllergy(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "User profile not found" });
+    })
+
+    it('should return a status code of 400 if user tries to remove an allergy thats not in the allergies list', async () => {
+        const req = {
+            body: {
+                ingredient: 'Apples',
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        }
+
+        const profile = {
+            id: 1,
+            allergies: ['Peanuts', 'Eggs'],
+            preferences: ['Vegetarian'],
+            UserId: Number.MAX_SAFE_INTEGER,
+        }
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
+
+        await removeAllergy(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Allergy not found" });
+    })
+})
+
+describe('On vaild remove allergy post body', () => {
+    it('should return a status code of 200 and add allergy to the users allergy list', async () => {
+        const req = {
+            body: {
+                ingredient: "Eggs",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        const profile = {
+            id: 1,
+            allergies: ['Peanuts', 'Eggs'],
+            preferences: ['Vegetarian'],
+            UserId: Number.MAX_SAFE_INTEGER,
+            save: jest.fn().mockResolvedValue(true) // Mock the save method
+        }
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
+
+        await removeAllergy(req, res);
+        
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({ message: "Successfully removed allergy" });
+
+        expect(profile.allergies).not.toContain(req.body.ingredient);
         expect(profile.save).toHaveBeenCalled();
     });
 });
