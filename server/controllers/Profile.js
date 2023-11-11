@@ -59,7 +59,46 @@ const addAllergy = async (req, res) => {
     }
 }
 
+const removeAllergy = async (req, res) => {
+    try {
+        const {UserId, ingredient} = req.body;
+        if (!ingredient) {
+            res.status(400);
+            return res.json({ error: "Field(s) left empty" });
+        }
+
+        if (!UserId) {
+            res.status(400);
+            return res.json({ error: "No userid provided" });
+        }
+
+        const profile = await Profile.findOne({
+            where: {UserId : UserId},
+            include: User
+        })
+
+        if(!profile){
+            res.status(400);
+            return res.json({ error: "User profile not found" });
+        }
+        
+        profile.allergies = profile.allergies.filter(allergy => allergy !== ingredient);
+        await profile.save();
+
+        res.status(200);
+        return res.json({ message: "Successfully removed allergy" })
+
+    }catch(error){
+        console.log('Failed to remove allergy, error:', error);
+        res.status(400);
+        return res.json({ error: 'Error removing allergy' })
+    }
+}
+
 module.exports = {
     getProfile,
-    addAllergy
+    addAllergy,
+    removeAllergy,
+    // addPreference,
+    // removePreference,
 };
