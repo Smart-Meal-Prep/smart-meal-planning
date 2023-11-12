@@ -23,11 +23,11 @@ const Inventory = (props) => {
                         props.setUserInventory(simplifiedInventory);//updates the inventory with specificed items 
                         return;
                     }
-                    return;//else return if the array is empty, its already default
+                    return;
                 };
             }
             catch (error) {
-                return;//we dont want to console log a error here, because its just checking if the user logged in or not
+                return;
             }
         };
         updateInventory();

@@ -23,7 +23,6 @@ const getInventory = async (req, res) => {
         return res.json({ error: 'Error retrieving inventory' })
     }
 };
-//Need to also change this testcase
 
 const addIngredient = async (req, res) => {
     try {
