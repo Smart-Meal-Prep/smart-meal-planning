@@ -20,8 +20,10 @@ const Inventory = (props) => {
                             ingredient,
                             quantity
                         }));//filters and only recives the id, ingredient and quanity from each object in the array
-                        props.setUserInventory(simplifiedInventory);//updates the inventory with specificed items 
-                        console.log("Entered ", props.userInventory)
+                        if (JSON.stringify(simplifiedInventory) !== JSON.stringify(props.userInventory)) {
+                            /* Update state only if it has changed*/
+                            props.setUserInventory(simplifiedInventory);
+                        }
                         return;
                     }
                     return;
@@ -33,7 +35,7 @@ const Inventory = (props) => {
         };
         updateInventory();
     },
-        []);//will update if there is a change to the users inventory, need to implement later
+        [props.userInventory]);//will update if there is a change to the users inventory, need to implement later
 
     const [ingredient, setIngredient] = useState("");
     const [quantity, setQuantity] = useState(0);
@@ -45,25 +47,21 @@ const Inventory = (props) => {
             return alert('Please select vaild ingredient');
         }//need to check if it matchs a vaild ingreident
         //Do fetching please add more edge cases above
-        console.log(selectedItemId)
         try {
-            const UserId = props.userId
-            const res = await fetch(endPoints.inventoryEndpoint, {
+            const res = await fetch(`${endPoints.inventoryEndpoint}/${selectedItemId}/${props.userId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json', // Set the content type to JSON
-                },
-                body: JSON.stringify(
-                    {
-                        selectedItemId,
-                        UserId
-                    }
-                )
+                }
             });
 
-            if (res.ok) {// Request was successful (status code 2xx)
+            if (res.ok) {
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
+                //to update the inventory
+                const updatedInventory = props.userInventory.filter(item => item.id !== selectedItemId);
+                props.setUserInventory(updatedInventory);
+                setSelectedItemId(""); // Clear the selected item ID
             }
             else {
                 const errorData = await res.json();
@@ -103,6 +101,17 @@ const Inventory = (props) => {
             if (res.ok) {// Request was successful (status code 2xx)
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
+                
+                const newItem = {
+                    id: responseData.id,
+                    ingredient: responseData.ingredient,
+                    quantity: responseData.quantity
+                };
+                //to update the inventory
+                const updatedInventory = [...props.userInventory, newItem];
+                props.setUserInventory(updatedInventory);
+                setIngredient(""); // Clear the input fields
+                setQuantity(0);
             }
             else {
                 const errorData = await res.json();
