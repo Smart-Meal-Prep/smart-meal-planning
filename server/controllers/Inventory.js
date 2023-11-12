@@ -1,8 +1,9 @@
 const { Inventory, User } = require('../models');
 
 const getInventory = async (req, res) => {
+    /*get method parameters need to be sent as parameters instead of in the body*/
     try {
-        const { UserId } = req.body;
+        const { UserId } = req.params;
 
         if (!UserId) {
             res.status(400);
@@ -22,6 +23,7 @@ const getInventory = async (req, res) => {
         return res.json({ error: 'Error retrieving inventory' })
     }
 };
+//Need to also change this testcase
 
 const addIngredient = async (req, res) => {
     try {
