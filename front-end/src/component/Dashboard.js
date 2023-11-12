@@ -37,7 +37,6 @@ const Dashboard = (props) => {
     return (
         <div className='container'>
             <p>Dashboard container</p>
-            <p>{}</p>
             <Link to='/register'>
                 <button>Register</button>
             </Link>
