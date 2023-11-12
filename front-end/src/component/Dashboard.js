@@ -2,13 +2,7 @@ import { React, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import endPoints from '../config/fetch.js'
 
-const Dashboard = () => {
-    const userInformation = {
-        username: null,
-        email: null,
-        id: null
-    };
-
+const Dashboard = (props) => {
     useEffect(() => { /*Needs test case by front-end team*/
         const findUserInfo = async () => {
             try {
@@ -22,9 +16,11 @@ const Dashboard = () => {
 
                 if (response.ok) {
                     const userData = await response.json();//resolves promis and turns the fetch information into JS object 
-                    userInformation.username = userData.username;
-                    userInformation.email = userData.email;
-                    userInformation.id = userData.id;
+                    props.setUserInformation({
+                        username: userData.username,
+                        email: userData.email,
+                        id: userData.id,
+                    })
                 };
             }
             catch (error) {
@@ -46,6 +42,9 @@ const Dashboard = () => {
             <Link to='/login'>
                 <button>Login</button>
             </Link>
+            <Link to='/profile'>
+                <button>Profile</button>
+            </Link>        
         </div>
     );
 }
