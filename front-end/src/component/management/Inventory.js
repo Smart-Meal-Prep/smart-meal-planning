@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import endPoints from '../../config/fetch.js'
 
 const Inventory = (props) => {
@@ -18,9 +18,10 @@ const Inventory = (props) => {
                         const simplifiedInventory = userInventory.map(({ id, ingredient, quantity }) => ({
                             id,
                             ingredient,
-                            quantity,
+                            quantity
                         }));//filters and only recives the id, ingredient and quanity from each object in the array
                         props.setUserInventory(simplifiedInventory);//updates the inventory with specificed items 
+                        console.log("Entered ", props.userInventory)
                         return;
                     }
                     return;
@@ -34,9 +35,121 @@ const Inventory = (props) => {
     },
         []);//will update if there is a change to the users inventory, need to implement later
 
+    const [ingredient, setIngredient] = useState("");
+    const [quantity, setQuantity] = useState(0);
+    const [selectedItemId, setSelectedItemId] = useState(0); // New state to store the selected item's ID
+
+    const handleRemove = async (event) => {
+        event.preventDefault(); // Prevent the default form submission behavior of refreshing on submission
+        if (!selectedItemId) {
+            return alert('Please select vaild ingredient');
+        }//need to check if it matchs a vaild ingreident
+        //Do fetching please add more edge cases above
+        console.log(selectedItemId)
+        try {
+            const UserId = props.userId
+            const res = await fetch(endPoints.inventoryEndpoint, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json', // Set the content type to JSON
+                },
+                body: JSON.stringify(
+                    {
+                        selectedItemId,
+                        UserId
+                    }
+                )
+            });
+
+            if (res.ok) {// Request was successful (status code 2xx)
+                const responseData = await res.json();
+                console.log('Response data:', responseData);
+            }
+            else {
+                const errorData = await res.json();
+                alert(`Removing failed: ${errorData.message}`);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleAdding = async (event) => {
+        event.preventDefault(); // Prevent the default form submission behavior of refreshing on submission
+        if (!ingredient) {
+            return alert('Please provide vaild ingredient');
+        }//need to check if it matchs a vaild ingreident
+        if (!quantity) {
+            return alert('Please provide vaild quantity');
+        }//need to check if it matchs a vaild ingreident
+
+        try {
+            const UserId = props.userId
+            const res = await fetch(endPoints.inventoryEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Set the content type to JSON
+                },
+                body: JSON.stringify(
+                    {
+                        ingredient,
+                        quantity,
+                        UserId
+                    }
+                )
+            });
+
+            if (res.ok) {// Request was successful (status code 2xx)
+                const responseData = await res.json();
+                console.log('Response data:', responseData);
+            }
+            else {
+                const errorData = await res.json();
+                alert(`Adding failed: ${errorData.message}`);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+
+    }
+
     return (
         <div>
-            Hi
+            <h1>Inventory</h1>
+            <form onSubmit={handleRemove}>
+                <label>
+                    <p>Remove ingredient:</p>
+                    <select value={selectedItemId} onChange={(event) => setSelectedItemId(event.target.value)}>
+                        <option value="" disabled>Select an ingredient</option>
+                        {props.userInventory.map(item => (
+                            <option key={item.id} value={item.id}>
+                                {item.ingredient}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <button type="submit">Submit</button>
+            </form>
+
+            <form onSubmit={handleAdding}>
+                <label>
+                    <p>Add ingredient:</p>
+                    <input placeholder="Ingredient" type="text" onChange={(event) => setIngredient(event.target.value)} />
+                    <input placeholder="Quantity" type="text" onChange={(event) => setQuantity(event.target.value)} />
+                </label>
+                <button type="submit">Submit</button>
+            </form>
+
+            <form /*</div>onSubmit={handleSubmission}*/>
+                <label>
+                    <p>Update ingredient:</p>
+                    <input placeholder="Ingredient" type="text" onChange={(event) => setIngredient(event.target.value)} />
+                    <input placeholder="Quantity" type="text" onChange={(event) => setQuantity(event.target.value)} />
+                </label>
+                <button type="submit">Submit</button>
+            </form>
         </div>
     )
 }
