@@ -56,7 +56,7 @@ const addIngredient = async (req, res) => {
 
 const removeIngredient = async (req, res) => {
     try {
-        const { id, UserId } = req.body;
+        const { id, UserId } = req.params;
 
         if (!id || !UserId) {
             res.status(400);
