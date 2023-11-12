@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import endPoints from '../config/fetch.js'
 
 const Dashboard = (props) => {
+    
     useEffect(() => { /*Needs test case by front-end team*/
         const findUserInfo = async () => {
             try {
@@ -36,6 +37,7 @@ const Dashboard = (props) => {
     return (
         <div className='container'>
             <p>Dashboard container</p>
+            <p>{}</p>
             <Link to='/register'>
                 <button>Register</button>
             </Link>

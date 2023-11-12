@@ -1,5 +1,5 @@
-import { React } from 'react';
-import { Routes, Route, useState } from "react-router-dom"
+import { React, useState } from 'react';
+import { Routes, Route } from "react-router-dom"
 import Dashboard from './component/Dashboard';
 import Register from './component/user/Register';
 import Login from './component/user/Login';
@@ -7,7 +7,7 @@ import Profile from './component/user/Profile'
 import "./styles/App.css"
 
 const App = () => {
-  const [userInformation, setUserInformatio] = useState({
+  const [userInformation, setUserInformation] = useState({
     username: null,
     email: null,
     id: null
@@ -19,7 +19,7 @@ const App = () => {
         <Route path="/" element={
           <Dashboard 
             userInformation={userInformation} 
-            setUserInformatio={setUserInformatio}
+            setUserInformation={setUserInformation}
           />
         } />{/*Makes the home dashboard the default view*/}
         <Route path='/profile' element={<Profile userInformation={userInformation}/>}/>
