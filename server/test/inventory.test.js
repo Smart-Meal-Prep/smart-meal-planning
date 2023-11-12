@@ -13,7 +13,7 @@ const res = {
 describe('On user get there inventory with a empty userid', () => {
     it('should return a status code of 400', async () => {
         const req = {
-            body: {
+            params: {
                 UserId: null
             }
         };
@@ -27,7 +27,7 @@ describe('On user get there inventory with a empty userid', () => {
 describe('On user get there inventory sucessfuly', () => {
     it('should return a status code of 200 and display inventory contents', async () => {
         const req = {
-            body: {
+            params: {
                 UserId: Number.MAX_SAFE_INTEGER
             }
         };
