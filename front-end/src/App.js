@@ -22,7 +22,6 @@ const App = () => {
     sessionStorage.setItem('userInformation', JSON.stringify(userInformation));
   }, [userInformation]);
 
-
   const [inventory, setUserInventory] = useState([{
     id: null,
     ingredient: null,

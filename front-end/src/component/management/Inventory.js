@@ -39,10 +39,10 @@ const Inventory = (props) => {
 
     const [ingredient, setIngredient] = useState("");
     const [quantity, setQuantity] = useState(0);
-    const [selectedItemId, setSelectedItemId] = useState(0); // New state to store the selected item's ID
+    const [selectedItemId, setSelectedItemId] = useState(-1); // New state to store the selected item's ID
 
     const handleRemove = async (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior of refreshing on submission
+        event.preventDefault();
         if (!selectedItemId) {
             return alert('Please select vaild ingredient');
         }//need to check if it matchs a vaild ingreident
@@ -51,17 +51,17 @@ const Inventory = (props) => {
             const res = await fetch(`${endPoints.inventoryEndpoint}/${selectedItemId}/${props.userId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json', // Set the content type to JSON
+                    'Content-Type': 'application/json',
                 }
             });
 
             if (res.ok) {
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
-                //to update the inventory
+                /*to update the inventory*/
                 const updatedInventory = props.userInventory.filter(item => item.id !== selectedItemId);
                 props.setUserInventory(updatedInventory);
-                setSelectedItemId(""); // Clear the selected item ID
+                setSelectedItemId(-1); // Clear the selected item ID
             }
             else {
                 const errorData = await res.json();
@@ -71,10 +71,10 @@ const Inventory = (props) => {
         catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const handleAdding = async (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior of refreshing on submission
+        event.preventDefault();
         if (!ingredient) {
             return alert('Please provide vaild ingredient');
         }//need to check if it matchs a vaild ingreident
@@ -87,7 +87,7 @@ const Inventory = (props) => {
             const res = await fetch(endPoints.inventoryEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Set the content type to JSON
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(
                     {
@@ -98,16 +98,16 @@ const Inventory = (props) => {
                 )
             });
 
-            if (res.ok) {// Request was successful (status code 2xx)
+            if (res.ok) {
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
-                
+
                 const newItem = {
                     id: responseData.id,
                     ingredient: responseData.ingredient,
                     quantity: responseData.quantity
                 };
-                //to update the inventory
+                /*to update the inventory*/
                 const updatedInventory = [...props.userInventory, newItem];
                 props.setUserInventory(updatedInventory);
                 setIngredient(""); // Clear the input fields
@@ -121,8 +121,52 @@ const Inventory = (props) => {
         catch (error) {
             console.log(error);
         }
+    };
 
-    }
+    const handleUpdateAmount = async (event) => {
+        event.preventDefault();
+        if (!quantity) {
+            return alert('Please provide vaild quantity');
+        }//please do more testing here I.e it has to be a int, it cannot have spaces in between, it shouldnt be infinity or INT_MAX
+
+        try {
+            const UserId = props.userId
+            const id = selectedItemId;
+            const res = await fetch(endPoints.inventoryUpdateAmountEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    {
+                        id,
+                        quantity,
+                        UserId
+                    }
+                )
+            });
+
+            if (res.ok) {
+                const responseData = await res.json();
+                console.log('Response data:', responseData);
+                /*to update the inventory*/
+                const updatedInventory = props.userInventory.map(item =>
+                    item.id === selectedItemId ? { ...item, quantity: responseData.quantity } : item
+                );
+                // Set the updated inventory
+                props.setUserInventory(updatedInventory);
+                setSelectedItemId(-1);
+                setQuantity(0);
+            }
+            else {
+                const errorData = await res.json();
+                alert(`Adding failed: ${errorData.message}`);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div>
@@ -151,16 +195,23 @@ const Inventory = (props) => {
                 <button type="submit">Submit</button>
             </form>
 
-            <form /*</div>onSubmit={handleSubmission}*/>
+            <form onSubmit={handleUpdateAmount}>
                 <label>
-                    <p>Update ingredient:</p>
-                    <input placeholder="Ingredient" type="text" onChange={(event) => setIngredient(event.target.value)} />
+                    <p>Update Ingredient amount:</p>
+                    <select value={selectedItemId} onChange={(event) => setSelectedItemId(event.target.value)}>
+                        <option value="" disabled>Select an ingredient</option>
+                        {props.userInventory.map(item => (
+                            <option key={item.id} value={item.id}>
+                                {item.ingredient}
+                            </option>
+                        ))}
+                    </select>
                     <input placeholder="Quantity" type="text" onChange={(event) => setQuantity(event.target.value)} />
                 </label>
                 <button type="submit">Submit</button>
             </form>
         </div>
-    )
+    );
 }
 
 export default Inventory
