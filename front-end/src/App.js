@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom"
 import Dashboard from './component/Dashboard';
 import Register from './component/user/Register';
@@ -8,11 +8,20 @@ import Inventory from './component/management/Inventory';
 import "./styles/App.css"
 
 const App = () => {
-  const [userInformation, setUserInformation] = useState({
-    username: null,
-    email: null,
-    id: null
+  const [userInformation, setUserInformation] = useState(() => {
+    const storedUserInformation = sessionStorage.getItem('userInformation');
+    return storedUserInformation ? JSON.parse(storedUserInformation) : {
+      username: null,
+      email: null,
+      id: null
+    };//retrieves the user information if it exists. If it doesnt return a null/empty user information
   });
+
+  useEffect(() => {
+    /* Update sessionStorage whenever userInformation changes*/
+    sessionStorage.setItem('userInformation', JSON.stringify(userInformation));
+  }, [userInformation]);
+
 
   const [inventory, setUserInventory] = useState([{
     id: null,
