@@ -4,7 +4,7 @@ import endPoints from "../../config/fetch.js";
 const Profile = (props) => {
     return(
         <div>
-            Profile
+            <h1>Profile</h1>
         </div>
     );
 }
