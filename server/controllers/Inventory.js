@@ -1,8 +1,9 @@
 const { Inventory, User } = require('../models');
 
 const getInventory = async (req, res) => {
+    /*get method parameters need to be sent as parameters instead of in the body*/
     try {
-        const { UserId } = req.body;
+        const { UserId } = req.params;
 
         if (!UserId) {
             res.status(400);
@@ -55,7 +56,7 @@ const addIngredient = async (req, res) => {
 
 const removeIngredient = async (req, res) => {
     try {
-        const { id, UserId } = req.body;
+        const { id, UserId } = req.params;
 
         if (!id || !UserId) {
             res.status(400);

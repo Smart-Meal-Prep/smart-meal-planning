@@ -13,7 +13,7 @@ const res = {
 describe('On user get there inventory with a empty userid', () => {
     it('should return a status code of 400', async () => {
         const req = {
-            body: {
+            params: {
                 UserId: null
             }
         };
@@ -27,7 +27,7 @@ describe('On user get there inventory with a empty userid', () => {
 describe('On user get there inventory sucessfuly', () => {
     it('should return a status code of 200 and display inventory contents', async () => {
         const req = {
-            body: {
+            params: {
                 UserId: Number.MAX_SAFE_INTEGER
             }
         };
@@ -135,7 +135,7 @@ describe('On vaild inventory post body', () => {
 describe('On invaild inventory delete request', () => {
     it('should return a status code fo 400 if fields are left empty', async () => {
         const req = {
-            body: {
+            params: {
                 id: null,
                 UserId: null
             }
@@ -148,7 +148,7 @@ describe('On invaild inventory delete request', () => {
 
     it('should return a status code of 400 if ingredient was not found', async () => {
         const req = {
-            body: {
+            params: {
                 id: Number.MAX_SAFE_INTEGER,
                 UserId: Number.MAX_SAFE_INTEGER
             }
@@ -163,7 +163,7 @@ describe('On invaild inventory delete request', () => {
 
     it('should return a status code of 400 if associated user is not the same', async () => {
         const req = {
-            body: {
+            params: {
                 id: Number.MAX_SAFE_INTEGER,
                 UserId: Number.MAX_SAFE_INTEGER
             }
@@ -184,7 +184,7 @@ describe('On invaild inventory delete request', () => {
 describe('On vaild inventory delete request', () => {
     it('should return a status code of 200 and delete item from user inventory', async () => {
         const req = {
-            body: {
+            params: {
                 id: Number.MAX_SAFE_INTEGER,
                 UserId: Number.MAX_SAFE_INTEGER
             }

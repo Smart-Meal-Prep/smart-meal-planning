@@ -45,7 +45,10 @@ const Dashboard = (props) => {
             </Link>
             <Link to='/profile'>
                 <button>Profile</button>
-            </Link>        
+            </Link>
+            <Link to='/inventory'>
+                <button>Inventory</button>
+            </Link>                
         </div>
     );
 }

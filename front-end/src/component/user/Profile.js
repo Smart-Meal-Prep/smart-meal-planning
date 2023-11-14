@@ -1,5 +1,4 @@
 import { React } from 'react';
-import endPoints from "../../config/fetch.js";
 
 const Profile = (props) => {
     return(
