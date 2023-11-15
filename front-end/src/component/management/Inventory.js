@@ -168,6 +168,12 @@ const Inventory = (props) => {
         }
     };
 
+    const handlePossibleRecipe = async () => {
+        props.userInventory.forEach(element => {
+            console.log(element);//now do the fetch call for each ingredient and a seperate fetch call
+        });
+    }
+
     return (
         <div>
             <h1>Inventory</h1>
