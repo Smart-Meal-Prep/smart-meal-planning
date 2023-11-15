@@ -28,7 +28,6 @@ const Profile = (props) => {
                                 allergies: userProfile.allergies,
                                 preferences: userProfile.preferences,
                             });
-                            console.log(props.profile);
                         }
                     }
                 }
@@ -68,9 +67,6 @@ const Profile = (props) => {
             });
 
             if (res.ok) {
-                const responseData = await res.json();
-                console.log('Response data:', responseData);
-
                 /*update allergy list*/
                 const updatedAllergies = [...props.profile.allergies, newAllergy];
                 props.setProfile({
@@ -114,18 +110,14 @@ const Profile = (props) => {
             })
 
             if (res.ok) {
-                const responseData = await res.json();
-                console.log('Response data:', responseData);
+                /*update allergy list*/
+                const updatedAllergies = props.profile.allergies.filter(allergy => allergy !== removingAllergy);
+                props.setProfile({
+                    ...props.profile,
+                    allergies: updatedAllergies
+                });
+                setNewAllergy(""); // Clear the input field
             }
-
-            /*update allergy list*/
-            const updatedAllergies = props.profile.allergies.filter(allergy => allergy !== removingAllergy);
-            props.setProfile({
-                ...props.profile,
-                allergies: updatedAllergies
-            });
-            setNewAllergy(""); // Clear the input field
-
         } catch (error) {
             console.log(error);
         }
@@ -156,9 +148,6 @@ const Profile = (props) => {
             });
 
             if (res.ok) {
-                const responseData = await res.json();
-                console.log('Response data:', responseData);
-
                 /*update preference list*/
                 const updatedPreferences = [...props.profile.preferences, newPreference];
                 props.setProfile({
@@ -202,18 +191,14 @@ const Profile = (props) => {
             })
 
             if (res.ok) {
-                const responseData = await res.json();
-                console.log('Response data:', responseData);
+                /*update allergy list*/
+                const updatedPreferences = props.profile.preferences.filter(allergy => allergy !== removingPreference);
+                props.setProfile({
+                    ...props.profile,
+                    preferences: updatedPreferences
+                });
+                setNewPreference(""); // Clear the input field
             }
-
-            /*update allergy list*/
-            const updatedPreferences = props.profile.preferences.filter(allergy => allergy !== removingPreference);
-            props.setProfile({
-                ...props.profile,
-                preferences: updatedPreferences
-            });
-            setNewPreference(""); // Clear the input field
-
         } catch (error) {
             console.log(error);
         }
