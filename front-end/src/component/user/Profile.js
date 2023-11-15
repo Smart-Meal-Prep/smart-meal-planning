@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import endPoints from '../../config/fetch'
-import ingredients from '../../config/list';
+import lists from '../../config/list';
 
 const Profile = (props) => {
     const userId = props.userInformation.id;

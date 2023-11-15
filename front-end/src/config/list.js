@@ -35,7 +35,7 @@ const getCategories = async () => {
         const data = await res.json();
         const categoriesArray = data.meals;
         categoriesArray.forEach((category) => {
-            ingredients.set(category.strCategory, true);
+            categories.set(category.strCategory, true);
         });
 
         console.log(categories);
@@ -57,7 +57,7 @@ const getAreas = async () => {
         const data = await res.json();
         const areasArray = data.meals;
         areasArray.forEach((area) => {
-            ingredients.set(area.strArea, true);
+            area.set(area.strArea, true);
         });
 
         console.log(areas);
@@ -65,10 +65,12 @@ const getAreas = async () => {
         console.log(error);
     }
 }
-getCategories();
+getAreas();
 
-export default {
+const lists = {
     ingredients,
     categories,
     areas
-};
+}
+
+export default lists;
