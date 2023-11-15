@@ -13,7 +13,7 @@ const res = {
 describe('On invalid get profile', () => {
     it('should return status code of 400 when UserId if missing', async () => {
         const req = {
-            body: {}
+            params: {}
         };
 
         await getProfile(req, res);
@@ -26,7 +26,7 @@ describe('On invalid get profile', () => {
     
     it('should return error and status code 400 when User.findOne or Profile.findOne throws exception', async () => {
         const req = {
-            body: {
+            params: {
                 UserId: 1
             }
         }
@@ -42,7 +42,7 @@ describe('On invalid get profile', () => {
 describe('On valid get profile', () => {
     it('should return status code of 200 if user profile was succesfully retrieved', async () => {
         const req = {
-            body : {
+            params : {
                 UserId: 1
             }
         }

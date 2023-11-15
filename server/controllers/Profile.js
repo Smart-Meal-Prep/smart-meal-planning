@@ -2,7 +2,7 @@ const { Profile, User } = require('../models');
 
 const getProfile = async (req, res) => {
     try {
-        const {UserId} = req.body;
+        const {UserId} = req.params;
 
         if (!UserId) {
             res.status(400);
