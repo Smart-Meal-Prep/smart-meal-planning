@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import endPoints from '../../config/fetch'
+import ingredients from '../../config/list';
 
 const Profile = (props) => {
     const userId = props.userInformation.id;
@@ -272,6 +273,7 @@ const Profile = (props) => {
                     <li key={index}>{preference}</li>
                 ))}
             </ul>
+
         </div>
     );
 }
