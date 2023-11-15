@@ -28,6 +28,11 @@ const App = () => {
     quantity: null
   }]);//used to set and get the usersInventory
 
+  const [profile, setProfile] = useState({
+    allergies: [],
+    prefereces: []
+  });
+
   return (
     <div className="App">
       <Routes>
@@ -37,7 +42,7 @@ const App = () => {
             setUserInformation={setUserInformation}
           />
         } />{/*Makes the home dashboard the default view*/}
-        <Route path='/profile' element={<Profile userInformation={userInformation} />} />
+        <Route path='/profile' element={<Profile userInformation={userInformation} profile={profile} setProfile={setProfile} />} />
         <Route path="/register" element={<Register userInformation={userInformation} />} />
         <Route path="/login" element={<Login userInformation={userInformation} />} />
         <Route path="/inventory" element={<Inventory userId={userInformation.id} userInventory={inventory} setUserInventory={setUserInventory} />} />
