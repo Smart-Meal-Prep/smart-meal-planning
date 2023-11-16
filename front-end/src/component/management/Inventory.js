@@ -168,12 +168,54 @@ const Inventory = (props) => {
         }
     };
 
-    const handlePossibleRecipe = async () => {
-        props.userInventory.forEach(element => {
-            console.log(element);//now do the fetch call for each ingredient and a seperate fetch call
-        });
-    }
+    const handlePossibleRecipe = () => {
+        if (!props.userInventory.length) {
+            /*Edge case, if the array is empty we can automically return*/
+            console.log("Empty inventory");
+            return;
+        }
+        props.userInventory.forEach(async (ingredient) => {
+            try {
+                const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient.ingredient}`);
+                if (response.ok) {
+                    const meals = await response.json();//get the response which is object of meals
+                    const mealsArray = meals.meals;
+                    if (mealsArray != null) {//extra check to see if the meals list is not empty
 
+                        mealsArray.forEach(async (ingredientId) => {
+                            //console.log(ingredientId.idMeal)
+                            try{
+                                const mealres = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ingredientId
+                            .idMeal}`);
+                                if(mealres.ok){
+                                    const ingredientData = await mealres.json();
+                                    console.log(ingredientData)
+                                    //error is dealing with the way i'm passing in the parameter
+                                    //console.log(mealres)
+                                }
+                            }
+                            catch(error){
+                                console.log(error)
+                            }
+
+                        });
+                        //then we want to fetch the API to see its ingreidents based on the id
+                        //const mealIngreident = async () => {
+                        //    const mealres = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ingredient.ingredient}`);
+                        //}
+                        //next step is to do another call to the ids and see if its in the 
+                        //inventory then we would want to add it to the inventorys list
+                    }
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+            //now do the fetch call for each ingredient and a seperate fetch call
+        });
+
+    }
+    handlePossibleRecipe();
     return (
         <div>
             <h1>Inventory</h1>
