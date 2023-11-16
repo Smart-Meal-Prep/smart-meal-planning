@@ -16,7 +16,7 @@ const getIngredients = async () => {
             ingredients.set(ingredient.strIngredient, true);
         });
 
-        console.log(ingredients);
+        console.log(ingredients); //need to remove this
     } catch (error) {
         console.log(error);
     }
@@ -38,7 +38,7 @@ const getCategories = async () => {
             categories.set(category.strCategory, true);
         });
 
-        console.log(categories);
+        console.log(categories);//need to remove this
     } catch (error) {
         console.log(error);
     }
@@ -57,10 +57,10 @@ const getAreas = async () => {
         const data = await res.json();
         const areasArray = data.meals;
         areasArray.forEach((area) => {
-            area.set(area.strArea, true);
+            areas.set(area.strArea, true);
         });
 
-        console.log(areas);
+        console.log(areas);//need to remove this
     } catch (error) {
         console.log(error);
     }
