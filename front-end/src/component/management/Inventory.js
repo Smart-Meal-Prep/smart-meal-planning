@@ -40,6 +40,8 @@ const Inventory = (props) => {
     const [ingredient, setIngredient] = useState("");
     const [quantity, setQuantity] = useState(0);
     const [selectedItemId, setSelectedItemId] = useState(-1); // New state to store the selected item's ID
+    const [possibleMeals, setPossibleMeals] = useState([]);//set of possible meals
+    const delay = ms => new Promise(res => setTimeout(res, ms));//to not hit the request rate limit
 
     const handleRemove = async (event) => {
         event.preventDefault();
@@ -170,52 +172,59 @@ const Inventory = (props) => {
 
     const handlePossibleRecipe = () => {
         if (!props.userInventory.length) {
-            /*Edge case, if the array is empty we can automically return*/
             console.log("Empty inventory");
             return;
-        }
+        };
+        const checkIfMealInInventory = (mealingredients, userInventory) => {        // Function to check if all ingredients are in the user's inventory
+            const userInventoryIngredients = userInventory.map(item => item.ingredient);//make a new array by extracting the ingredient property from each object 
+            return [...mealingredients].every(ingredient => userInventoryIngredients.includes(ingredient));//checks if it is included in the userInventoryIngredients
+        };
         props.userInventory.forEach(async (ingredient) => {
             try {
+                /*Fetch a possible meal for each ingreident*/
                 const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient.ingredient}`);
                 if (response.ok) {
-                    const meals = await response.json();//get the response which is object of meals
+                    const meals = await response.json();
                     const mealsArray = meals.meals;
-                    if (mealsArray != null) {//extra check to see if the meals list is not empty
-
-                        mealsArray.forEach(async (ingredientId) => {
-                            //console.log(ingredientId.idMeal)
-                            try{
-                                const mealres = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ingredientId
-                            .idMeal}`);
-                                if(mealres.ok){
-                                    const ingredientData = await mealres.json();
-                                    console.log(ingredientData)
-                                    //error is dealing with the way i'm passing in the parameter
-                                    //console.log(mealres)
+                    /*If we can create a vaild meal*/
+                    if (mealsArray != null) {
+                        for (const ingredientId of mealsArray) {
+                            try {
+                                /*Call the API again to see what ingredients the meal is comprised of*/
+                                const mealres = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ingredientId.idMeal}`);
+                                await delay(800); // Introduce a delay before the next fetch
+                                if (mealres.ok) {
+                                    const mealData = await mealres.json();
+                                    const mealInfo = mealData.meals[0];
+                                    const mealingredients = new Set();
+                                    for (let i = 1; i < 21; i++) {
+                                        const ingredientKey = `strIngredient${i}`;
+                                        if (mealInfo.hasOwnProperty(ingredientKey) && mealInfo[ingredientKey] !== "") {
+                                            mealingredients.add(mealInfo[ingredientKey]);
+                                        };
+                                    };
+                                    if (checkIfMealInInventory(mealingredients, props.userInventory) && !possibleMeals.some(meal => meal.meal === ingredientId.strMeal)) {
+                                        const newMeal = {
+                                            meal: ingredientId.strMeal,
+                                            imageUrl: ingredientId.strMealThumb
+                                        };
+                                        setPossibleMeals(prevMeals => [...prevMeals, newMeal]);//add meal and assoicated img to the array
+                                    };
                                 }
-                            }
-                            catch(error){
-                                console.log(error)
-                            }
-
-                        });
-                        //then we want to fetch the API to see its ingreidents based on the id
-                        //const mealIngreident = async () => {
-                        //    const mealres = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ingredient.ingredient}`);
-                        //}
-                        //next step is to do another call to the ids and see if its in the 
-                        //inventory then we would want to add it to the inventorys list
-                    }
-                }
+                                await delay(800); // Introduce a delay before the next fetch
+                            } catch (error) {
+                                console.log(error);
+                            };
+                        };
+                    };
+                };
             }
             catch (error) {
                 console.log(error);
-            }
-            //now do the fetch call for each ingredient and a seperate fetch call
+            };
         });
+    };
 
-    }
-    handlePossibleRecipe();
     return (
         <div>
             <h1>Inventory</h1>
