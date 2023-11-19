@@ -35,13 +35,13 @@ const Inventory = (props) => {
         };
         updateInventory();
     },
-        [props.userInventory]);//will update if there is a change to the users inventory, need to implement later
+        [props.userInventory]);
 
     const [ingredient, setIngredient] = useState("");
     const [quantity, setQuantity] = useState(0);
-    const [selectedItemId, setSelectedItemId] = useState(-1); // New state to store the selected item's ID
-    const [possibleMeals, setPossibleMeals] = useState([]);//set of possible meals
-    const delay = ms => new Promise(res => setTimeout(res, ms));//to not hit the request rate limit
+    const [selectedItemId, setSelectedItemId] = useState(-1);
+    const [possibleMeals, setPossibleMeals] = useState(new Set());
+    const delay = ms => new Promise(res => setTimeout(res, ms));
 
     const handleRemove = async (event) => {
         event.preventDefault();
@@ -170,29 +170,25 @@ const Inventory = (props) => {
         }
     };
 
-    const handlePossibleRecipe = () => {
+    const handlePossibleRecipe = async () => {
         if (!props.userInventory.length) {
-            console.log("Empty inventory");
             return;
         };
-        const checkIfMealInInventory = (mealingredients, userInventory) => {        // Function to check if all ingredients are in the user's inventory
-            const userInventoryIngredients = userInventory.map(item => item.ingredient);//make a new array by extracting the ingredient property from each object 
-            return [...mealingredients].every(ingredient => userInventoryIngredients.includes(ingredient));//checks if it is included in the userInventoryIngredients
+        const uniqueMeals = Array.from(possibleMeals);
+        const checkIfIngredientInInventory = (mealingredients, userInventory) => {
+            const userInventoryIngredients = userInventory.map(item => item.ingredient);
+            return [...mealingredients].every(ingredient => userInventoryIngredients.includes(ingredient));
         };
-        props.userInventory.forEach(async (ingredient) => {
+        for (const ingredient of props.userInventory) {
             try {
-                /*Fetch a possible meal for each ingreident*/
                 const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient.ingredient}`);
                 if (response.ok) {
                     const meals = await response.json();
                     const mealsArray = meals.meals;
-                    /*If we can create a vaild meal*/
-                    if (mealsArray != null) {
-                        for (const ingredientId of mealsArray) {
+                    if (mealsArray) {
+                        for (const meal of mealsArray) {
                             try {
-                                /*Call the API again to see what ingredients the meal is comprised of*/
-                                const mealres = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ingredientId.idMeal}`);
-                                await delay(800); // Introduce a delay before the next fetch
+                                const mealres = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`);
                                 if (mealres.ok) {
                                     const mealData = await mealres.json();
                                     const mealInfo = mealData.meals[0];
@@ -203,26 +199,26 @@ const Inventory = (props) => {
                                             mealingredients.add(mealInfo[ingredientKey]);
                                         };
                                     };
-                                    if (checkIfMealInInventory(mealingredients, props.userInventory) && !possibleMeals.some(meal => meal.meal === ingredientId.strMeal)) {
-                                        const newMeal = {
-                                            meal: ingredientId.strMeal,
-                                            imageUrl: ingredientId.strMealThumb
+                                    if (checkIfIngredientInInventory(mealingredients, props.userInventory)) {
+                                        if (!uniqueMeals.some(item => item.meal === mealInfo.strMeal)) {
+                                            setPossibleMeals(new Set([...uniqueMeals, { meal: mealInfo.strMeal, imageUrl: mealInfo.strMealThumb }]));
                                         };
-                                        setPossibleMeals(prevMeals => [...prevMeals, newMeal]);//add meal and assoicated img to the array
                                     };
-                                }
-                                await delay(800); // Introduce a delay before the next fetch
+                                };
+                                await delay(700); // Introduce a delay before the next fetch
                             } catch (error) {
                                 console.log(error);
                             };
                         };
                     };
+                } else {
+                    console.log(`Failed to fetch meals for ${ingredient.ingredient}`);
                 };
-            }
-            catch (error) {
+                await delay(120);
+            } catch (error) {
                 console.log(error);
             };
-        });
+        };
     };
 
     return (
@@ -269,6 +265,6 @@ const Inventory = (props) => {
             </form>
         </div>
     );
-}
+};
 
 export default Inventory
