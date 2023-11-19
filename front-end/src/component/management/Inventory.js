@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import endPoints from '../../config/fetch.js'
+import lists from "../../config/list.js";
 
 const Inventory = (props) => {
     useEffect(() => {
@@ -75,7 +76,7 @@ const Inventory = (props) => {
 
     const handleAdding = async (event) => {
         event.preventDefault();
-        if (!ingredient) {
+        if (!ingredient || !lists.ingredients.get(ingredient)) {
             return alert('Please provide vaild ingredient');
         }//need to check if it matchs a vaild ingreident
         if (!quantity) {

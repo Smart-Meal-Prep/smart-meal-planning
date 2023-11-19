@@ -2,6 +2,7 @@
 import endPoints from "./fetch";
 
 const ingredients = new Map();
+const ingredientsOptions = [];
 const getIngredients = async () => {
     try {
         const res = await fetch(endPoints.listAllIngredients);
@@ -13,7 +14,11 @@ const getIngredients = async () => {
         const data = await res.json();
         const ingredientsArray = data.meals;
         ingredientsArray.forEach((ingredient) => {
-            ingredients.set(ingredient.strIngredient, true);
+            ingredients.set(ingredient.strIngredient, ingredient.idIngredient);
+            ingredientsOptions.push({
+                label: ingredient.strIngredient,
+                value: ingredient.idIngredient
+            })
         });
 
         console.log(ingredients); //need to remove this
@@ -23,6 +28,7 @@ const getIngredients = async () => {
 }
 getIngredients();
 
+const preferencesOptions = [];
 const categories = new Map();
 const getCategories = async () => {
     try {
@@ -36,6 +42,10 @@ const getCategories = async () => {
         const categoriesArray = data.meals;
         categoriesArray.forEach((category) => {
             categories.set(category.strCategory, true);
+            preferencesOptions.push({
+                label: category.strCategory,
+                value: category.strCategory
+            })
         });
 
         console.log(categories);//need to remove this
@@ -58,9 +68,13 @@ const getAreas = async () => {
         const areasArray = data.meals;
         areasArray.forEach((area) => {
             areas.set(area.strArea, true);
+            preferencesOptions.push({
+                label: area.strArea,
+                value: area.strArea
+            })
         });
 
-        console.log(areas);//need to remove this
+        console.log(areas);
     } catch (error) {
         console.log(error);
     }
@@ -69,8 +83,10 @@ getAreas();
 
 const lists = {
     ingredients,
+    ingredientsOptions,
     categories,
-    areas
+    areas,
+    preferencesOptions
 }
 
 export default lists;
