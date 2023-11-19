@@ -1,1 +1,0 @@
-The styles folder should only have css file for corresponding js file
