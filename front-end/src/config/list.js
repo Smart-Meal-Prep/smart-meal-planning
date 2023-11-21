@@ -20,8 +20,6 @@ const getIngredients = async () => {
                 value: ingredient.idIngredient
             })
         });
-
-        console.log(ingredients); //need to remove this
     } catch (error) {
         console.log(error);
     }
@@ -47,8 +45,6 @@ const getCategories = async () => {
                 value: category.strCategory
             })
         });
-
-        console.log(categories);//need to remove this
     } catch (error) {
         console.log(error);
     }
@@ -73,8 +69,6 @@ const getAreas = async () => {
                 value: area.strArea
             })
         });
-
-        console.log(areas);
     } catch (error) {
         console.log(error);
     }

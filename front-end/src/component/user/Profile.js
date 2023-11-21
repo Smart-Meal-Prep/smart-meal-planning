@@ -9,8 +9,6 @@ const Profile = (props) => {
     const [newPreference, setNewPreference] = useState('');
     const [removingAllergy, setRemovingAllergy] = useState('');
     const [removingPreference, setRemovingPreference] = useState('');
-    // const [allergiesOptions, setAllergiesOptions] = new useState([]);
-    // const [preferencesOptions, setPreferencesOptions] = new useState([])
 
     useEffect(() => {
         const updateProfile = async () => {
@@ -25,21 +23,21 @@ const Profile = (props) => {
                 if (response.ok) {
                     const userProfile = await response.json();
                     if (userProfile) {
-                        if (JSON.stringify(userProfile) !== JSON.stringify(props.profile)) {
-                            /* Update state only if it has changed*/
+                        if (JSON.stringify(userProfile) !== JSON.stringify(props.profile)) {                           
                             const allergiesOptions = userProfile.allergies.map((allergy) => {
                                 return { label: allergy, value: allergy };
                             });
+
                             const preferencesOptions = userProfile.preferences.map((preferece) => {
                                 return { label: preferece, value: preferece };
                             });
+                            
                             props.setProfile({
                                 allergies: userProfile.allergies,
                                 preferences: userProfile.preferences,
                                 allergiesOptions: allergiesOptions,
                                 preferencesOptions: preferencesOptions
                             });
-                            // updateAllergiesOptions();
                         }
                     }
                 }
@@ -89,11 +87,6 @@ const Profile = (props) => {
                     allergiesOptions: updatedAllergiesOptions
                 });
                 setNewAllergy(""); // Clear the input field
-                // setAllergiesOptions([
-                //     ...allergiesOptions,
-                //     { label: newAllergy, value: newAllergy }
-                // ]);
-                // updateAllergiesOptions();
             }
             else {
                 const errorData = await res.json();
