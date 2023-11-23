@@ -5,7 +5,7 @@ import '../../styles/NavigationBar.css'
 
 const NavigationBar = () => {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar className='nav-color' expand="lg">
             <Navbar.Brand href="/" className='nav-brand'>
                 <img src={cooking_icon} alt="cooking-icon" className='cooking-icon'/>
             </Navbar.Brand>

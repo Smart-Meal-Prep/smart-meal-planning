@@ -2,6 +2,10 @@
     padding: 0;
 }
 
+.nav-color{
+    background-color: white;
+}
+
 .nav-item {
     margin-left: 5rem;
     font-size: 18px;
