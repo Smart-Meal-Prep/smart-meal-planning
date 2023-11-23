@@ -1,0 +1,40 @@
+.nav-item {
+    margin-left: 5rem;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.nav-brand {
+    padding-left: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.cooking-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.navbar-toggle {
+    margin-left: auto;
+    margin-bottom: 1rem;
+}
+
+.collpased-bar {
+    text-align: center;
+    padding-right: 3rem;
+    font-size: 1.5rem;
+}
+
+@media (min-width: 1440px) {
+    .mr-auto {
+        padding-left: 56rem;
+    }
+    .nav-item {
+        font-size: 20px;
+        white-space: nowrap;
+    }
+    .profile-text{
+        font-size: 18px;
+    }
+}

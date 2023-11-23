@@ -1,8 +1,7 @@
 import { React, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import endPoints from '../../config/fetch.js'
 import '../../styles/Dashboard.css'
-import Navbar from './TopBar.js';
+import NavigationBar from './NavigationBar.js';
 
 const Dashboard = (props) => {
     useEffect(() => { /*Needs test case by front-end team*/
@@ -37,14 +36,8 @@ const Dashboard = (props) => {
     return (
         <div className='container-fluid'>
             <div className='row'>
-                <Navbar />
+                <NavigationBar />
             </div>
-            {/*
-            <p>Dashboard container</p>
-            <Link to='/register'>
-                <button>Register</button>
-            </Link>
-            */}
         </div>
     );
 };
