@@ -9,7 +9,6 @@ const NavigationBar = () => {
             <Navbar.Brand href="/" className='nav-brand'>
                 <img src={cooking_icon} alt="cooking-icon" className='cooking-icon'/>
             </Navbar.Brand>
-
             <Navbar.Toggle className='navbar-toggle' aria-controls="navbarNavDropdown" />
             <Navbar.Collapse id="navbarNavDropdown" className='collpased-bar'>
                 <Nav className="mr-auto" >
@@ -23,7 +22,6 @@ const NavigationBar = () => {
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
-            
         </Navbar>
     );
 };
