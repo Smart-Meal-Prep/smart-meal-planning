@@ -7,8 +7,8 @@ import '../../styles/Dashboardbody.css'
 
 const Dashboardbody = () => {
     return (
-        <div >
-            <Image src={food_background} fluid className="img-container" />
+        <div className="img-background">
+            <Image src={food_background} fluid className="img-area" />
         </div>
     )
 }
