@@ -36,10 +36,10 @@ const Dashboard = (props) => {
     );
 
     return (
-        <Container fluid>
+        <div >
             <NavigationBar />
             <Dashboardbody />
-        </Container>
+        </div>
     );
 };
 
