@@ -70,7 +70,6 @@
     .info-box {
         width: 70%;
         margin-left: 1vh;
-        /* Add more space between the boxes */
         margin-right: 1vh;
         padding: 35px;
     }
@@ -101,7 +100,6 @@
     .info-box p {
         font-size: 12px;
     }
-
 }
 
 @media (max-width: 1024px) and (min-width: 768px) {
@@ -112,9 +110,7 @@
     .info-box {
         width: 100%;
         margin-left: 1vh;
-        /* Add more space between the boxes */
         margin-right: 1vh;
-
     }
 
     .info-box h3 {
