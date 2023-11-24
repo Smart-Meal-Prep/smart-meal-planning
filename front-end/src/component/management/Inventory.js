@@ -76,12 +76,17 @@ const Inventory = (props) => {
 
     const handleAdding = async (event) => {
         event.preventDefault();
-        if (!ingredient || !lists.ingredients.get(ingredient)) {
-            return alert('Please provide vaild ingredient');
-        }//need to check if it matchs a vaild ingreident
+        if (!lists.ingredients.get(ingredient)) {
+            return alert('Please provide a vaild ingredient');
+        }//check if it matchs a vaild ingreident
+
+        if (!ingredient) {
+            return alert('Please provide an ingredient');
+        }
+
         if (!quantity) {
             return alert('Please provide vaild quantity');
-        }//need to check if it matchs a vaild ingreident
+        }
 
         try {
             const UserId = props.userId

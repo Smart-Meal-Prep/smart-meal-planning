@@ -1,8 +1,15 @@
 /*file for getting lists of ingredients, areas, and categories for meals*/
 import endPoints from "./fetch";
 
+/*Maps */
 const ingredients = new Map();
+const categories = new Map();
+const areas = new Map();
+
+/*Options for select components */
 const ingredientsOptions = [];
+const preferencesOptions = [];
+
 const getIngredients = async () => {
     try {
         const res = await fetch(endPoints.listAllIngredients);
@@ -24,10 +31,7 @@ const getIngredients = async () => {
         console.log(error);
     }
 }
-getIngredients();
 
-const preferencesOptions = [];
-const categories = new Map();
 const getCategories = async () => {
     try {
         const res = await fetch(endPoints.listAllCategories);
@@ -49,9 +53,7 @@ const getCategories = async () => {
         console.log(error);
     }
 }
-getCategories();
 
-const areas = new Map();
 const getAreas = async () => {
     try {
         const res = await fetch(endPoints.listAllAreas);
@@ -73,6 +75,9 @@ const getAreas = async () => {
         console.log(error);
     }
 }
+
+getIngredients();
+getCategories();
 getAreas();
 
 const lists = {

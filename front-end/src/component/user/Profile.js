@@ -54,9 +54,13 @@ const Profile = (props) => {
 
     const handleAddAllergy = async (event) => {
         event.preventDefault();
-        if (!newAllergy || !lists.ingredients.get(newAllergy)) {
+        if (!lists.ingredients.get(newAllergy)) {
             return alert('Please provide vaild ingredient');
-        }//need to check if it matchs a vaild ingreident
+        }//check if it matchs a vaild ingreident
+
+        if (!newAllergy) {
+            return alert('Please enter an ingredient you are allergic to');
+        }
 
         if (props.profile.allergies.includes(newAllergy)) {
             return alert('Allergy already exists');

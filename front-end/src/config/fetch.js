@@ -17,9 +17,10 @@ const inventoryEndpoint = `${backendEndpoint}inventory`;
 const inventoryUpdateAmountEndpoint = `${inventoryEndpoint}/update/amount`;
 
 /*MealDB endpoints*/
-const listAllIngredients = "https://www.themealdb.com/api/json/v2/9973533/list.php?i=list";
-const listAllAreas = "https://www.themealdb.com/api/json/v2/9973533/list.php?a=list"
-const listAllCategories = "https://www.themealdb.com/api/json/v2/9973533/list.php?c=list"
+const mealDb = "https://www.themealdb.com/api/json/v1/1/"
+const listAllIngredients = `${mealDb}list.php?i=list`;
+const listAllAreas = `${mealDb}list.php?a=list`
+const listAllCategories = `${mealDb}list.php?c=list`
 
 const endPoints = {
     registerEndpoint,
