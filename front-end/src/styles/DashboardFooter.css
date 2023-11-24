@@ -1,0 +1,14 @@
+.bg-color {
+    background-color: rgb(240, 226, 219);
+}
+
+.footer-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.footer-link:hover,
+.footer-link:focus {
+    text-decoration: none;
+    outline: none;
+}

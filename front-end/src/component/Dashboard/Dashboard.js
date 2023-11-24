@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import endPoints from '../../config/fetch.js'
 import NavigationBar from './NavigationBar.js';
 import Dashboardbody from './Dashboardbody.js';
+import DashboardFooter from './DashboardFooter.js';
 import '../../styles/Dashboard.css'
 
 const Dashboard = (props) => {
@@ -39,6 +40,7 @@ const Dashboard = (props) => {
         <div >
             <NavigationBar />
             <Dashboardbody />
+            <DashboardFooter />
         </div>
     );
 };
