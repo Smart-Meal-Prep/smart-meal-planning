@@ -12,8 +12,22 @@ const Dashboardbody = () => {
             <div className="logo-container">
                 <Image src={cooking_logo} fluid className="name-logo" />
             </div>
+            <div className="info-boxes">
+                <div className="info-box">
+                    <h3>Info 1</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+                <div className="info-box">
+                    <h3>Info 2</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+                <div className="info-box">
+                    <h3>Info 3</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </div>
         </div>
     );
 };
 
-export default Dashboardbody
+export default Dashboardbody;
