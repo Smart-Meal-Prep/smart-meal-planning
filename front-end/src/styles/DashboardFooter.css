@@ -1,5 +1,6 @@
 .bg-color {
     background-color: rgb(240, 226, 219);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
 }
 
 .footer-link {
