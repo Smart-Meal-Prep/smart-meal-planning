@@ -1,5 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import endPoints from '../../config/fetch'
+import lists from '../../config/list';
+import Select from 'react-select';
 
 const Profile = (props) => {
     const userId = props.userInformation.id;
@@ -7,7 +9,6 @@ const Profile = (props) => {
     const [newPreference, setNewPreference] = useState('');
     const [removingAllergy, setRemovingAllergy] = useState('');
     const [removingPreference, setRemovingPreference] = useState('');
-
 
     useEffect(() => {
         const updateProfile = async () => {
@@ -22,11 +23,20 @@ const Profile = (props) => {
                 if (response.ok) {
                     const userProfile = await response.json();
                     if (userProfile) {
-                        if (JSON.stringify(userProfile) !== JSON.stringify(props.profile)) {
-                            /* Update state only if it has changed*/
+                        if (JSON.stringify(userProfile) !== JSON.stringify(props.profile)) {                           
+                            const allergiesOptions = userProfile.allergies.map((allergy) => {
+                                return { label: allergy, value: allergy };
+                            });
+
+                            const preferencesOptions = userProfile.preferences.map((preferece) => {
+                                return { label: preferece, value: preferece };
+                            });
+                            
                             props.setProfile({
                                 allergies: userProfile.allergies,
                                 preferences: userProfile.preferences,
+                                allergiesOptions: allergiesOptions,
+                                preferencesOptions: preferencesOptions
                             });
                         }
                     }
@@ -44,9 +54,13 @@ const Profile = (props) => {
 
     const handleAddAllergy = async (event) => {
         event.preventDefault();
-        if (!newAllergy) {
+        if (!lists.ingredients.get(newAllergy)) {
             return alert('Please provide vaild ingredient');
-        }//need to check if it matchs a vaild ingreident
+        }//check if it matchs a vaild ingreident
+
+        if (!newAllergy) {
+            return alert('Please enter an ingredient you are allergic to');
+        }
 
         if (props.profile.allergies.includes(newAllergy)) {
             return alert('Allergy already exists');
@@ -69,9 +83,12 @@ const Profile = (props) => {
             if (res.ok) {
                 /*update allergy list*/
                 const updatedAllergies = [...props.profile.allergies, newAllergy];
+                const updatedAllergiesOptions = [...props.profile.allergiesOptions, { label: newAllergy, value: newAllergy }];
+
                 props.setProfile({
                     ...props.profile,
-                    allergies: updatedAllergies
+                    allergies: updatedAllergies,
+                    allergiesOptions: updatedAllergiesOptions
                 });
                 setNewAllergy(""); // Clear the input field
             }
@@ -112,11 +129,13 @@ const Profile = (props) => {
             if (res.ok) {
                 /*update allergy list*/
                 const updatedAllergies = props.profile.allergies.filter(allergy => allergy !== removingAllergy);
+                const updatedAllergiesOptions = props.profile.allergiesOptions.filter(opt => opt.label !== removingAllergy);
                 props.setProfile({
                     ...props.profile,
-                    allergies: updatedAllergies
+                    allergies: updatedAllergies,
+                    allergiesOptions: updatedAllergiesOptions
                 });
-                setNewAllergy(""); // Clear the input field
+                setRemovingAllergy(""); // Clear the input field
             }
         } catch (error) {
             console.log(error);
@@ -126,7 +145,7 @@ const Profile = (props) => {
     const handleAddPreference = async (event) => {
         event.preventDefault();
         if (!newPreference) {
-            return alert('Please provide vaild ingredient');
+            return alert('Please provide vaild preference');
         }//need to check if it matchs a vaild ingreident
 
         if (props.profile.preferences.includes(newPreference)) {
@@ -150,9 +169,12 @@ const Profile = (props) => {
             if (res.ok) {
                 /*update preference list*/
                 const updatedPreferences = [...props.profile.preferences, newPreference];
+                const updatedPreferencesOptions = [...props.profile.preferencesOptions, { label: newPreference, value: newPreference }];
+
                 props.setProfile({
                     ...props.profile,
-                    preferences: updatedPreferences
+                    preferences: updatedPreferences,
+                    preferencesOptions: updatedPreferencesOptions
                 });
                 setNewPreference(""); // Clear the input field
             }
@@ -169,7 +191,7 @@ const Profile = (props) => {
     const handleRemovePreference = async (event) => {
         event.preventDefault();
         if (!removingPreference) {
-            return alert('Please provide vaild ingredient');
+            return alert('Please provide vaild prefernece');
         }//need to check if it matchs a vaild ingreident
 
         if (!props.profile.preferences.includes(removingPreference)) {
@@ -192,12 +214,14 @@ const Profile = (props) => {
 
             if (res.ok) {
                 /*update allergy list*/
-                const updatedPreferences = props.profile.preferences.filter(allergy => allergy !== removingPreference);
+                const updatedPreferences = props.profile.preferences.filter(preference => preference !== removingPreference);
+                const updatedPreferencesOptions = props.profile.preferencesOptions.filter(opt => opt.label !== removingPreference);
                 props.setProfile({
                     ...props.profile,
-                    preferences: updatedPreferences
+                    preferences: updatedPreferences,
+                    preferencesOptions: updatedPreferencesOptions
                 });
-                setNewPreference(""); // Clear the input field
+                setRemovingPreference(""); // Clear the input field
             }
         } catch (error) {
             console.log(error);
@@ -209,55 +233,57 @@ const Profile = (props) => {
         <div>
             <h1>Profile</h1>
 
-            <form>
-                <label>
-                    Add Allergy:
-                    <input
-                        type="text"
-                        value={newAllergy}
-                        onChange={(e) => setNewAllergy(e.target.value)}
+            <div>
+                <form>
+                    Add Allergy:                 
+                    <Select
+                        options={lists.ingredientsOptions}
+                        onChange={(e) => setNewAllergy(e.label)}
+                        value={{ label: newAllergy }}
                     />
-                </label>
-                <button type="button" onClick={handleAddAllergy}>
-                    Add
-                </button>
-                <label>
-                    Remove Allergy:
-                    <input
-                        type="text"
-                        value={removingAllergy}
-                        onChange={(e) => setRemovingAllergy(e.target.value)}
-                    />
-                </label>
-                <button type="button" onClick={handleRemoveAllergy}>
-                    Remove
-                </button>
-            </form>
+                    <button type="button" onClick={handleAddAllergy}>
+                        Add
+                    </button>
+                </form>
 
-            <form>
-                <label>
-                    Add Preference:
-                    <input
-                        type="text"
-                        value={newPreference}
-                        onChange={(e) => setNewPreference(e.target.value)}
+                <form>
+                    Remove Allergy:          
+                    <Select
+                        options={props.profile.allergiesOptions}
+                        onChange={(e) => setRemovingAllergy(e.label)}
+                        value={{ label: removingAllergy }}
                     />
-                </label>
-                <button type="button" onClick={handleAddPreference}>
-                    Add
-                </button>
-                <label>
-                    Remove Preference:
-                    <input
-                        type="text"
-                        value={removingPreference}
-                        onChange={(e) => setRemovingPreference(e.target.value)}
+                    <button type="button" onClick={handleRemoveAllergy}>
+                        Remove
+                    </button>
+                </form>
+            </div>
+
+            <div>
+                <form>
+                    Add Preference:                   
+                    <Select
+                        options={lists.preferencesOptions}
+                        value={{ label: newPreference }}
+                        onChange={(e) => setNewPreference(e.label)}
                     />
-                </label>
-                <button type="button" onClick={handleRemovePreference}>
-                    Remove
-                </button>
-            </form>
+                    <button type="button" onClick={handleAddPreference}>
+                        Add
+                    </button>
+                </form>
+
+                <form>
+                    Remove Preference:                 
+                    <Select
+                        options={props.profile.preferencesOptions}
+                        value={{ label: removingPreference }}
+                        onChange={(e) => setRemovingPreference(e.label)}
+                    />
+                    <button type="button" onClick={handleRemovePreference}>
+                        Remove
+                    </button>
+                </form>
+            </div>
 
             <h2>Allergies:</h2>
             <ul>
@@ -272,6 +298,7 @@ const Profile = (props) => {
                     <li key={index}>{preference}</li>
                 ))}
             </ul>
+
         </div>
     );
 }

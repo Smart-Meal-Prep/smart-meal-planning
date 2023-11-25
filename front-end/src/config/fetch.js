@@ -16,7 +16,13 @@ const removePreferenceEndpoint = `${profileEndpoint}removePreference`
 const inventoryEndpoint = `${backendEndpoint}inventory`;
 const inventoryUpdateAmountEndpoint = `${inventoryEndpoint}/update/amount`;
 
-export default {
+/*MealDB endpoints*/
+const mealDb = "https://www.themealdb.com/api/json/v1/1/"
+const listAllIngredients = `${mealDb}list.php?i=list`;
+const listAllAreas = `${mealDb}list.php?a=list`
+const listAllCategories = `${mealDb}list.php?c=list`
+
+const endPoints = {
     registerEndpoint,
     loginEndpoint,
     profileEndpoint,
@@ -25,5 +31,10 @@ export default {
     addPreferenceEndpoint,
     removePreferenceEndpoint,
     inventoryEndpoint,
-    inventoryUpdateAmountEndpoint
-}
+    inventoryUpdateAmountEndpoint,
+    listAllAreas,
+    listAllCategories,
+    listAllIngredients
+};
+
+export default endPoints;
