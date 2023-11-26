@@ -44,9 +44,35 @@ describe('On successful fill recipes', () => {
             area: 'Area'
         }
 
-        jest.spyOn(Recipes, 'findOne').mockResolvedValue(fakeMeal); // Mock finding a meal that hasnt been created
+        jest.spyOn(Recipes, 'findOne').mockResolvedValue(null); // Mock not finding a duplicate meal
         jest.spyOn(Recipes, 'create').mockResolvedValue(fakeMeal); // Mock creating meal
-        jest.spyOn(Recipes, 'findOne').mockResolvedValue(fakeMeal); // Mock finding meal thats been created
+
+        await fillRecipes(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith('Successfully filled table');
+    });
+
+    it('should avoid creating duplicate recipes', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                ok: true,
+                json: () => Promise.resolve({ meals: [{ strMeal: 'Test Meal' }] }),
+            })
+        );
+
+        const req = {};
+        const fakeMeal = {
+            name: 'Test Meal',
+            ingredients: [],
+            measurements: [],
+            instructions: "Instructions",
+            thumbnail: 'Thumbnail',
+            category: 'Category',
+            area: 'Area'
+        }
+
+        jest.spyOn(Recipes, 'findOne').mockResolvedValue(fakeMeal); // Mock finding a duplicate meal
 
         await fillRecipes(req, res);
 
