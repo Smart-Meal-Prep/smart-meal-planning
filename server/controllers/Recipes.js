@@ -2,9 +2,9 @@ const { Recipes } = require('../models');
 
 const fillRecipes = async (req, res) => {
     let searchByFirstLetter = ['a', 'b', 'c', 'd',
-        'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-        'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    for (let j = 0; j < 26; j++) {
+        'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+        'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    for (let j = 0; j < searchByFirstLetter.length; j++) {
         try {
             const mealDbResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${searchByFirstLetter[j]}`);
 
