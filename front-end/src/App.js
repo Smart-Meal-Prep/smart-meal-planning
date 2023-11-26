@@ -30,7 +30,9 @@ const App = () => {
 
   const [profile, setProfile] = useState({
     allergies: [],
-    prefereces: []
+    prefereces: [],
+    allergiesOptions: [],
+    preferecesOptions: [],
   });
 
   return (
