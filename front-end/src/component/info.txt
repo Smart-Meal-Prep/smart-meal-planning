@@ -1,1 +1,0 @@
-The component folder should only have component js files 

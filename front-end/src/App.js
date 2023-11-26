@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom"
-import Dashboard from './component/Dashboard';
+import Dashboard from './component/Dashboard/Dashboard';
 import Register from './component/user/Register';
 import Login from './component/user/Login';
 import Profile from './component/user/Profile'
@@ -38,12 +38,7 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={
-          <Dashboard
-            userInformation={userInformation}
-            setUserInformation={setUserInformation}
-          />
-        } />{/*Makes the home dashboard the default view*/}
+        <Route path="/" element={<Dashboard userInformation={userInformation} setUserInformation={setUserInformation} />} />
         <Route path='/profile' element={<Profile userInformation={userInformation} profile={profile} setProfile={setProfile} />} />
         <Route path="/register" element={<Register userInformation={userInformation} />} />
         <Route path="/login" element={<Login userInformation={userInformation} />} />
