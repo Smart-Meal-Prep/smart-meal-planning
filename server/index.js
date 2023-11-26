@@ -27,9 +27,12 @@ app.use(cors({
 const userRouter = require('./routes/Users');
 const inventoryRouter = require('./routes/Inventory');
 const profileRouter = require('./routes/Profile');
+const recipeRouter = require('./routes/Recipes');
 app.use('/user', userRouter);
 app.use('/inventory', inventoryRouter);
 app.use('/profile', profileRouter);
+app.use('/recipes', recipeRouter);
+
 
 db.sequelize.sync().then(() => {
     app.listen(3001, () => {
