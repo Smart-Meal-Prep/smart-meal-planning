@@ -16,12 +16,23 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: []
         },
         instructions: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.TEXT,
+            allowNull: false,
+            validate: {
+                len: [0, 6000]
+            }
         },
         thumbnail: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        category: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        area: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
     });
 
