@@ -30,6 +30,9 @@
 }
 
 .collpased-bar {
+    display: flex;
+    justify-content: flex-end; /* Adjust as needed */
+    align-items: center;
     text-align: center;
     padding-right: 3rem;
     font-size: 1.5rem;
@@ -37,7 +40,7 @@
 
 @media (min-width: 1440px) {
     .mr-auto {
-        padding-left: 56rem;
+        padding-left: 10%;
     }
     .nav-item {
         font-size: 20px;
