@@ -63,6 +63,11 @@ const fillRecipes = async (req, res) => {
 const getRecipeSuggestions = async (req, res) => {
     const userId = req.params.UserId;
 
+    if(!userId){
+        res.status(400);
+        return res.json('No UserId Provided');
+    }
+
     try {
         const recipes = await Recipes.findAll({
             attributes: [
@@ -117,7 +122,7 @@ const getRecipeSuggestions = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500);
-        return res.json({ error: 'Error Getting Recipes' });
+        return res.json({ error: 'Server Error, Failed Getting Recipes' });
     }
 }
 
