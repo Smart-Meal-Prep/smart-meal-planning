@@ -1,4 +1,7 @@
 const { Recipes } = require('../models');
+const Inventory = require('../models/Inventory');
+const { Sequelize } = require('sequelize');
+
 
 const fillRecipes = async (req, res) => {
     let searchByFirstLetter = ['a', 'b', 'c', 'd',
@@ -58,6 +61,62 @@ const fillRecipes = async (req, res) => {
     return res.json('Successfully filled table');
 }
 
+const getRecipeSuggestions = async (req, res) => {
+    const userId = req.params.UserId;
+
+    try {
+        const recipes = await Recipes.findAll({
+            attributes: [
+                'id',
+                'name',
+                [Sequelize.literal(`(
+                    SELECT ARRAY_AGG(unnested_ingredients)
+                    FROM unnest(ingredients) AS unnested_ingredients
+                    WHERE LOWER(unnested_ingredients) = ANY(
+                        SELECT LOWER(ingredient)
+                        FROM "Inventories"
+                        WHERE "UserId" = ${userId}
+                    )
+                )`), 'matchingIngredients'],
+                [Sequelize.literal(`(
+                    SELECT ARRAY_AGG(unnested_ingredients)
+                    FROM unnest(ingredients) AS unnested_ingredients
+                    WHERE LOWER(unnested_ingredients) != ALL(
+                        SELECT LOWER(ingredient)
+                        FROM "Inventories"
+                        WHERE "UserId" = ${userId}
+                    )
+                )`), 'missingIngredients']
+            ],
+            group: ['Recipes.id', 'Recipes.name'],
+            order: [
+                [Sequelize.literal(`(
+                    SELECT COUNT(*) 
+                    FROM unnest(ingredients) i 
+                    WHERE LOWER(i) = ANY(
+                        SELECT LOWER(ingredient) 
+                        FROM "Inventories" 
+                        WHERE "UserId" = ${userId})
+                    )`), 'DESC'],
+            ],
+        });
+
+        if (!recipes) {
+            res.status(400);
+            return res.json('Failed to get recipes');
+        }
+
+        res.status(200);
+        return res.json(recipes);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500);
+        return res.json({ error: 'Error Getting Recipes' });
+    }
+}
+
 module.exports = {
-    fillRecipes
+    fillRecipes,
+    getRecipeSuggestions
 }
