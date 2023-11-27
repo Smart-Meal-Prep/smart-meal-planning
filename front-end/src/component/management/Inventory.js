@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Select from 'react-select';
 import endPoints from '../../config/fetch.js'
 import lists from "../../config/list.js";
 
@@ -195,7 +196,11 @@ const Inventory = (props) => {
             <form onSubmit={handleAdding}>
                 <label>
                     <p>Add ingredient:</p>
-                    <input placeholder="Ingredient" type="text" onChange={(event) => setIngredient(event.target.value)} />
+                    <Select
+                        options={lists.ingredientsOptions}
+                        onChange={(e) => setIngredient(e.label)}
+                        value={{ label: ingredient }}
+                    />
                     <input placeholder="Quantity" type="text" onChange={(event) => setQuantity(event.target.value)} />
                 </label>
                 <button type="submit">Submit</button>

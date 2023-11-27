@@ -1,5 +1,4 @@
 const { Recipes } = require('../models');
-const Inventory = require('../models/Inventory');
 const { Sequelize } = require('sequelize');
 
 
@@ -69,6 +68,12 @@ const getRecipeSuggestions = async (req, res) => {
             attributes: [
                 'id',
                 'name',
+                'ingredients',
+                'measurements',
+                'instructions',
+                'thumbnail',
+                'category',
+                'area',
                 [Sequelize.literal(`(
                     SELECT ARRAY_AGG(unnested_ingredients)
                     FROM unnest(ingredients) AS unnested_ingredients
