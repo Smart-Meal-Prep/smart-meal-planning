@@ -5,7 +5,9 @@ import Register from './component/user/Register';
 import Login from './component/user/Login';
 import Profile from './component/user/Profile'
 import Inventory from './component/management/Inventory';
+import Recipes from './component/management/Recipes';
 import "./styles/App.css"
+
 
 const App = () => {
   const [userInformation, setUserInformation] = useState(() => {
@@ -35,6 +37,8 @@ const App = () => {
     preferecesOptions: [],
   });
 
+  const [recipes, setRecipes] = useState([{}]);
+
   return (
     <div className="App">
       <Routes>
@@ -43,6 +47,7 @@ const App = () => {
         <Route path="/register" element={<Register userInformation={userInformation} />} />
         <Route path="/login" element={<Login userInformation={userInformation} />} />
         <Route path="/inventory" element={<Inventory userId={userInformation.id} userInventory={inventory} setUserInventory={setUserInventory} />} />
+        <Route path="/recipes" element={<Recipes userInformation={userInformation} recipes={recipes} setRecipes={setRecipes}/>} />
       </Routes>
     </div>
   );
