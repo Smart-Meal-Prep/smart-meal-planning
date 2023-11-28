@@ -63,7 +63,7 @@ const fillRecipes = async (req, res) => {
 const getRecipeSuggestions = async (req, res) => {
     const userId = req.params.UserId;
 
-    if(!userId){
+    if (!userId) {
         res.status(400);
         return res.json('No UserId Provided');
     }
@@ -96,18 +96,26 @@ const getRecipeSuggestions = async (req, res) => {
                         FROM "Inventories"
                         WHERE "UserId" = ${userId}
                     )
-                )`), 'missingIngredients']
+                )`), 'missingIngredients'],
+                [
+                    Sequelize.literal(`1.0 * (
+                        SELECT COUNT(unnested_ingredients)
+                        FROM unnest(ingredients) AS unnested_ingredients
+                        WHERE LOWER(unnested_ingredients) = ANY(
+                            SELECT LOWER(ingredient)
+                            FROM "Inventories"
+                            WHERE "UserId" = ${userId}
+                        )
+                    ) / (
+                        SELECT COUNT(*)
+                        FROM unnest(ingredients)  
+                    )
+                    `), 'strengthRatio'
+                ]
             ],
             group: ['Recipes.id', 'Recipes.name'],
             order: [
-                [Sequelize.literal(`(
-                    SELECT COUNT(*) 
-                    FROM unnest(ingredients) i 
-                    WHERE LOWER(i) = ANY(
-                        SELECT LOWER(ingredient) 
-                        FROM "Inventories" 
-                        WHERE "UserId" = ${userId})
-                    )`), 'DESC'],
+                [`strengthRatio`, 'DESC'],
             ],
         });
 
@@ -115,6 +123,34 @@ const getRecipeSuggestions = async (req, res) => {
             res.status(400);
             return res.json('Failed to get recipes');
         }
+
+        const calculateStrength = (meal) => {
+            try {
+                const strengthRatio = meal.strengthRatio;
+                if (strengthRatio >= 1.00)
+                    return 'Strongest';
+                else if (strengthRatio < 1.00 && strengthRatio >= 0.7)
+                    return 'Strong'
+                else if (strengthRatio < 0.7 && strengthRatio >= 0.3)
+                    return 'Meduium'
+                else if (strengthRatio < 0.3 && strengthRatio >= 0.01)
+                    return 'Weak'
+                else
+                    return 'Weakest';
+            } catch (error) {
+                return 'Weakest';
+            }
+        }
+
+        recipes.forEach(meal => {
+            const plainMeal = meal.get({ plain: true }); //meal exists as sequalize instances, this gets
+
+            const strength = calculateStrength(plainMeal);
+            meal.dataValues = {
+                ...meal.dataValues,
+                strength: strength
+            }
+        })
 
         res.status(200);
         return res.json(recipes);
