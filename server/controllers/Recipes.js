@@ -132,7 +132,7 @@ const getRecipeSuggestions = async (req, res) => {
                 else if (strengthRatio < 1.00 && strengthRatio >= 0.7)
                     return 'Strong'
                 else if (strengthRatio < 0.7 && strengthRatio >= 0.3)
-                    return 'Meduium'
+                    return 'Medium'
                 else if (strengthRatio < 0.3 && strengthRatio >= 0.01)
                     return 'Weak'
                 else
