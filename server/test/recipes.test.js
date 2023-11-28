@@ -1,4 +1,4 @@
-const { fillRecipes } = require('../controllers/Recipes');
+const { fillRecipes, getRecipeSuggestions } = require('../controllers/Recipes');
 const { Recipes } = require('../models');
 
 jest.mock('../models')
@@ -79,4 +79,62 @@ describe('On successful fill recipes', () => {
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith('Successfully filled table');
     });
+})
+
+/*test getRecipeSuggestions*/
+describe('On failure to get recipes', () => {
+    it('should give error if no userid was given', async () => {
+        const req = {
+            params: {}
+        }
+        await getRecipeSuggestions(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith('No UserId Provided');
+    })
+    it('should give error if no meals were retrieved', async () => {
+        const req = {
+            params: {
+                UserId: 1
+            }
+        }
+
+        jest.spyOn(Recipes, 'findAll').mockResolvedValue(null);
+
+        await getRecipeSuggestions(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith('Failed to get recipes');
+    })
+})
+
+describe('On success to get recipes', () => {
+    it('should return meals if meals were retrieved', async () => {
+        const req = {
+            params: {
+                UserId: 1
+            }
+        }
+
+        const fakeMeal = {
+            id: 1,
+            name: 'Test Meal',
+            ingredients: [],
+            measurements: [],
+            instructions: "Instructions",
+            thumbnail: 'Thumbnail',
+            category: 'Category',
+            area: 'Area',
+            matchingIngredients: [],
+            missingIngredients: []
+        }
+
+        const mockResponse = [fakeMeal, fakeMeal];
+        jest.spyOn(Recipes, 'findAll').mockResolvedValue(mockResponse);
+
+        await getRecipeSuggestions(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(mockResponse);
+    })
 })
