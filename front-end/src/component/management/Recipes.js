@@ -43,9 +43,9 @@ const Recipes = (props) => {
         <div>
             <h1>Recipes</h1>
             <h1>---------------------------------------------------------------</h1>
-            <div>
+            <ol>
                 {props.recipes && props.recipes.map((recipe) => (
-                    <div>
+                    <li>
                         <div>
                             <h2>{recipe.name}</h2>
                             <div style={{ display: 'flex', flexwrap: 'wrap' }}>
@@ -97,9 +97,9 @@ const Recipes = (props) => {
                             <div>{recipe.instructions}</div>
                         </div>
                         <h1>---------------------------------------------------------------</h1>
-                    </div>
+                    </li>
                 ))}
-            </div>
+            </ol>
 
         </div>
     )
