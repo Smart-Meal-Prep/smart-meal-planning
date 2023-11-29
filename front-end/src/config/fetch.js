@@ -16,6 +16,9 @@ const removePreferenceEndpoint = `${profileEndpoint}removePreference`
 const inventoryEndpoint = `${backendEndpoint}inventory`;
 const inventoryUpdateAmountEndpoint = `${inventoryEndpoint}/update/amount`;
 
+/*recipe endpoints*/
+const recipeEdnpoint = `${backendEndpoint}recipes/getRecipes/`
+
 /*MealDB endpoints*/
 const mealDb = "https://www.themealdb.com/api/json/v1/1/"
 const listAllIngredients = `${mealDb}list.php?i=list`;
@@ -32,6 +35,7 @@ const endPoints = {
     removePreferenceEndpoint,
     inventoryEndpoint,
     inventoryUpdateAmountEndpoint,
+    recipeEdnpoint,
     listAllAreas,
     listAllCategories,
     listAllIngredients
