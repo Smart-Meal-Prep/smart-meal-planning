@@ -11,75 +11,75 @@ const res = {
 global.fetch = jest.fn();
 
 /*test fillRecipes*/
-// describe('On failure to fill recipes', () => {
-//     it('should handle error when failing to fetch', async () => {
-//         global.fetch = jest.fn(() => Promise.reject('Fetch error'));
+describe('On failure to fill recipes', () => {
+    it('should handle error when failing to fetch', async () => {
+        global.fetch = jest.fn(() => Promise.reject('Fetch error'));
 
-//         const req = {};
+        const req = {};
 
-//         await fillRecipes(req, res);
+        await fillRecipes(req, res);
 
-//         expect(res.status).toHaveBeenCalledWith(400);
-//         expect(res.json).toHaveBeenCalledWith({ error: 'Error adding recipes' });
-//     });
-// })
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: 'Error adding recipes' });
+    });
+})
 
-// describe('On successful fill recipes', () => {
-//     it('should fill recipes', async () => {
-//         global.fetch = jest.fn(() =>
-//             Promise.resolve({
-//                 ok: true,
-//                 json: () => Promise.resolve({ meals: [{ strMeal: 'Test Meal' }] }),
-//             })
-//         );
+describe('On successful fill recipes', () => {
+    it('should fill recipes', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                ok: true,
+                json: () => Promise.resolve({ meals: [{ strMeal: 'Test Meal' }] }),
+            })
+        );
 
-//         const req = {};
-//         const fakeMeal = {
-//             name: 'Test Meal',
-//             ingredients: [],
-//             measurements: [],
-//             instructions: "Instructions",
-//             thumbnail: 'Thumbnail',
-//             category: 'Category',
-//             area: 'Area'
-//         }
+        const req = {};
+        const fakeMeal = {
+            name: 'Test Meal',
+            ingredients: [],
+            measurements: [],
+            instructions: "Instructions",
+            thumbnail: 'Thumbnail',
+            category: 'Category',
+            area: 'Area'
+        }
 
-//         jest.spyOn(Recipes, 'findOne').mockResolvedValue(null); // Mock not finding a duplicate meal
-//         jest.spyOn(Recipes, 'create').mockResolvedValue(fakeMeal); // Mock creating meal
+        jest.spyOn(Recipes, 'findOne').mockResolvedValue(null); // Mock not finding a duplicate meal
+        jest.spyOn(Recipes, 'create').mockResolvedValue(fakeMeal); // Mock creating meal
 
-//         await fillRecipes(req, res);
+        await fillRecipes(req, res);
 
-//         expect(res.status).toHaveBeenCalledWith(200);
-//         expect(res.json).toHaveBeenCalledWith('Successfully filled table');
-//     });
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith('Successfully filled table');
+    });
 
-//     it('should avoid creating duplicate recipes', async () => {
-//         global.fetch = jest.fn(() =>
-//             Promise.resolve({
-//                 ok: true,
-//                 json: () => Promise.resolve({ meals: [{ strMeal: 'Test Meal' }] }),
-//             })
-//         );
+    it('should avoid creating duplicate recipes', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                ok: true,
+                json: () => Promise.resolve({ meals: [{ strMeal: 'Test Meal' }] }),
+            })
+        );
 
-//         const req = {};
-//         const fakeMeal = {
-//             name: 'Test Meal',
-//             ingredients: [],
-//             measurements: [],
-//             instructions: "Instructions",
-//             thumbnail: 'Thumbnail',
-//             category: 'Category',
-//             area: 'Area'
-//         }
+        const req = {};
+        const fakeMeal = {
+            name: 'Test Meal',
+            ingredients: [],
+            measurements: [],
+            instructions: "Instructions",
+            thumbnail: 'Thumbnail',
+            category: 'Category',
+            area: 'Area'
+        }
 
-//         jest.spyOn(Recipes, 'findOne').mockResolvedValue(fakeMeal); // Mock finding a duplicate meal
+        jest.spyOn(Recipes, 'findOne').mockResolvedValue(fakeMeal); // Mock finding a duplicate meal
 
-//         await fillRecipes(req, res);
+        await fillRecipes(req, res);
 
-//         expect(res.status).toHaveBeenCalledWith(200);
-//         expect(res.json).toHaveBeenCalledWith('Successfully filled table');
-//     });
-// })
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith('Successfully filled table');
+    });
+})
 
 /*test getRecipeSuggestions*/
 describe('On failure to get recipes', () => {
