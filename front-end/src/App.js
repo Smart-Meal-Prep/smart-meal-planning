@@ -7,10 +7,24 @@ import Profile from './component/user/Profile'
 import Inventory from './component/management/Inventory';
 import Recipes from './component/management/Recipes';
 import "./styles/App.css"
-import { UserInfoProvider } from './config/UserInfo';
-
+import UserInfo from './config/UserInfo';
 
 const App = () => {
+  const [userInformation, setUserInformation] = useState({
+    username: null,
+    email: null,
+    id: null
+  });
+  /*
+      username: "no_pass",
+      email: "no_email",
+      id: Number.MAX_SAFE_INTEGER
+  */
+  let value = {
+    userInformation,
+    setUserInformation
+  };
+
   const [inventory, setUserInventory] = useState([{
     id: null,
     ingredient: null,
@@ -27,10 +41,10 @@ const App = () => {
   const [recipes, setRecipes] = useState([{}]);
 
   return (
-    <UserInfoProvider>
+    <UserInfo.Provider value={value}>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Dashboard/>} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/inventory" element={<Inventory userInventory={inventory} setUserInventory={setUserInventory} />} />
           {/*
@@ -40,9 +54,8 @@ const App = () => {
           <Route path="/recipes" element={<Recipes userInformation={userInformation} recipes={recipes} setRecipes={setRecipes}/>} />
           */}
         </Routes>
-        
       </div>
-    </UserInfoProvider>
+    </UserInfo.Provider>
   );
 }
 

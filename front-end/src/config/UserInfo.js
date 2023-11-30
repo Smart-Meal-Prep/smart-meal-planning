@@ -1,7 +1,17 @@
 import { React, createContext, useState } from "react";
 
-export const UserInfo = createContext(null);
+export const UserInfo = createContext({
+    userInformation: {
+        username: null,
+        email: null,
+        id: null
+    },
+    setUserInformation: () => { }
+});
 
+export default UserInfo;
+
+/*
 export const UserInfoProvider = ({ children }) => {
     const [userInformation, setUserInformation] = useState({
         username: null,
@@ -13,12 +23,5 @@ export const UserInfoProvider = ({ children }) => {
         userInformation,
         setUserInformation
     };//export values from context
-
-    return(
-        <UserInfo.Provider value={value}>
-            {children}
-        </UserInfo.Provider>
-    );
 };
-
-export default UserInfo;
+*/
