@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import { Routes, Route } from "react-router-dom"
 import Dashboard from './component/Dashboard/Dashboard';
 import Register from './component/user/Register';
@@ -7,28 +7,29 @@ import Profile from './component/user/Profile'
 import Inventory from './component/management/Inventory';
 import Recipes from './component/management/Recipes';
 import "./styles/App.css"
-
+import UserInfo from './config/UserInfo';
 
 const App = () => {
-  const [userInformation, setUserInformation] = useState(() => {
-    const storedUserInformation = sessionStorage.getItem('userInformation');
-    return storedUserInformation ? JSON.parse(storedUserInformation) : {
-      username: null,
-      email: null,
-      id: null
-    };//retrieves the user information if it exists. If it doesnt return a null/empty user information
+  const [userInformation, setUserInformation] = useState({
+    username: null,
+    email: null,
+    id: null
   });
-
-  useEffect(() => {
-    /* Update sessionStorage whenever userInformation changes*/
-    sessionStorage.setItem('userInformation', JSON.stringify(userInformation));
-  }, [userInformation]);
+  /*
+      username: "no_pass",
+      email: "no_email",
+      id: Number.MAX_SAFE_INTEGER
+  */
+  let value = {
+    userInformation,
+    setUserInformation
+  };
 
   const [inventory, setUserInventory] = useState([{
     id: null,
     ingredient: null,
     quantity: null
-  }]);//used to set and get the usersInventory
+  }]);
 
   const [profile, setProfile] = useState({
     allergies: [],
@@ -40,16 +41,21 @@ const App = () => {
   const [recipes, setRecipes] = useState([{}]);
 
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Dashboard userInformation={userInformation} setUserInformation={setUserInformation} />} />
-        <Route path='/profile' element={<Profile userInformation={userInformation} profile={profile} setProfile={setProfile} />} />
-        <Route path="/register" element={<Register userInformation={userInformation} />} />
-        <Route path="/login" element={<Login userInformation={userInformation} />} />
-        <Route path="/inventory" element={<Inventory userId={userInformation.id} userInventory={inventory} setUserInventory={setUserInventory} />} />
-        <Route path="/recipes" element={<Recipes userInformation={userInformation} recipes={recipes} setRecipes={setRecipes}/>} />
-      </Routes>
-    </div>
+    <UserInfo.Provider value={value}>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/inventory" element={<Inventory userInventory={inventory} setUserInventory={setUserInventory} />} />
+          {/*
+          <Route path='/profile' element={<Profile userInformation={userInformation} profile={profile} setProfile={setProfile} />} />
+          <Route path="/register" element={<Register userInformation={userInformation} />} />
+          
+          <Route path="/recipes" element={<Recipes userInformation={userInformation} recipes={recipes} setRecipes={setRecipes}/>} />
+          */}
+        </Routes>
+      </div>
+    </UserInfo.Provider>
   );
 }
 
