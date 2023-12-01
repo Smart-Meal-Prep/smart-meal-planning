@@ -1,12 +1,14 @@
-import { React, useEffect } from 'react'
-import { Container } from 'react-bootstrap';
+import { React, useEffect, useContext } from 'react'
 import endPoints from '../../config/fetch.js'
 import NavigationBar from './NavigationBar.js';
 import Dashboardbody from './Dashboardbody.js';
 import DashboardFooter from './DashboardFooter.js';
+import UserInfo from '../../config/UserInfo.js';
 import '../../styles/Dashboard.css'
 
-const Dashboard = (props) => {
+const Dashboard = () => {
+    const { setUserInformation } = useContext(UserInfo);
+
     useEffect(() => { /*Needs test case by front-end team*/
         const findUserInfo = async () => {
             try {
@@ -19,11 +21,11 @@ const Dashboard = (props) => {
                 });
 
                 if (response.ok) {
-                    const userData = await response.json();//resolves promis and turns the fetch information into JS object 
-                    props.setUserInformation({
+                    const userData = await response.json();
+                    setUserInformation({
                         username: userData.username,
                         email: userData.email,
-                        id: userData.id,
+                        id: userData.id
                     });
                 };
             }

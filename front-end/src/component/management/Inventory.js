@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Select from 'react-select';
 import endPoints from '../../config/fetch.js'
 import lists from "../../config/list.js";
+import UserInfo from "../../config/UserInfo.js";
 
 const Inventory = (props) => {
+    const { userInformation } = useContext(UserInfo);
+
     useEffect(() => {
         const updateInventory = async () => {
             try {
-                const response = await fetch(`${endPoints.inventoryEndpoint}/${props.userId}`, {
+                const response = await fetch(`${endPoints.inventoryEndpoint}/${userInformation.id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -50,7 +53,7 @@ const Inventory = (props) => {
         }//need to check if it matchs a vaild ingreident
         //Do fetching please add more edge cases above
         try {
-            const res = await fetch(`${endPoints.inventoryEndpoint}/${selectedItemId}/${props.userId}`, {
+            const res = await fetch(`${endPoints.inventoryEndpoint}/${selectedItemId}/${userInformation.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -90,7 +93,7 @@ const Inventory = (props) => {
         }
 
         try {
-            const UserId = props.userId
+            const UserId = userInformation.id;
             const res = await fetch(endPoints.inventoryEndpoint, {
                 method: 'POST',
                 headers: {
@@ -137,7 +140,7 @@ const Inventory = (props) => {
         }//please do more testing here I.e it has to be a int, it cannot have spaces in between, it shouldnt be infinity or INT_MAX
 
         try {
-            const UserId = props.userId
+            const UserId = userInformation.id;
             const id = selectedItemId;
             const res = await fetch(endPoints.inventoryUpdateAmountEndpoint, {
                 method: 'POST',

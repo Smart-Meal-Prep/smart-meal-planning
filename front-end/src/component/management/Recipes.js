@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import endPoints from '../../config/fetch.js'
+import UserInfo from "../../config/UserInfo.js";
 
 const Recipes = (props) => {
-    const userId = props.userInformation.id;
+
+    const { userInformation } = useContext(UserInfo);
+    const userId = userInformation.id;
 
     useEffect(() => {
         const updateRecipes = async () => {
@@ -43,9 +46,9 @@ const Recipes = (props) => {
         <div>
             <h1>Recipes</h1>
             <h1>---------------------------------------------------------------</h1>
-            <ol>
+            <div>
                 {props.recipes && props.recipes.map((recipe) => (
-                    <li>
+                    <div>
                         <div>
                             <h2>{recipe.name}</h2>
                             <div style={{ display: 'flex', flexwrap: 'wrap' }}>
@@ -97,9 +100,9 @@ const Recipes = (props) => {
                             <div>{recipe.instructions}</div>
                         </div>
                         <h1>---------------------------------------------------------------</h1>
-                    </li>
+                    </div>
                 ))}
-            </ol>
+            </div>
 
         </div>
     )
