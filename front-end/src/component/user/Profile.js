@@ -1,10 +1,13 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import endPoints from '../../config/fetch'
 import lists from '../../config/list';
 import Select from 'react-select';
+import UserInfo from '../../config/UserInfo';
 
 const Profile = (props) => {
-    const userId = props.userInformation.id;
+
+    const { userInformation, setUserInformation } = useContext(UserInfo);
+    const userId = userInformation.id;
     const [newAllergy, setNewAllergy] = useState('');
     const [newPreference, setNewPreference] = useState('');
     const [removingAllergy, setRemovingAllergy] = useState('');
@@ -23,7 +26,7 @@ const Profile = (props) => {
                 if (response.ok) {
                     const userProfile = await response.json();
                     if (userProfile) {
-                        if (JSON.stringify(userProfile) !== JSON.stringify(props.profile)) {                           
+                        if (JSON.stringify(userProfile) !== JSON.stringify(props.profile)) {
                             const allergiesOptions = userProfile.allergies.map((allergy) => {
                                 return { label: allergy, value: allergy };
                             });
@@ -31,7 +34,7 @@ const Profile = (props) => {
                             const preferencesOptions = userProfile.preferences.map((preferece) => {
                                 return { label: preferece, value: preferece };
                             });
-                            
+
                             props.setProfile({
                                 allergies: userProfile.allergies,
                                 preferences: userProfile.preferences,
@@ -49,7 +52,7 @@ const Profile = (props) => {
         };
         updateProfile();
     },
-        [props.userInformation.id]
+        [userInformation.id]
     );
 
     const handleAddAllergy = async (event) => {
@@ -235,7 +238,7 @@ const Profile = (props) => {
 
             <div>
                 <form>
-                    Add Allergy:                 
+                    Add Allergy:
                     <Select
                         options={lists.ingredientsOptions}
                         onChange={(e) => setNewAllergy(e.label)}
@@ -247,7 +250,7 @@ const Profile = (props) => {
                 </form>
 
                 <form>
-                    Remove Allergy:          
+                    Remove Allergy:
                     <Select
                         options={props.profile.allergiesOptions}
                         onChange={(e) => setRemovingAllergy(e.label)}
@@ -261,7 +264,7 @@ const Profile = (props) => {
 
             <div>
                 <form>
-                    Add Preference:                   
+                    Add Preference:
                     <Select
                         options={lists.preferencesOptions}
                         value={{ label: newPreference }}
@@ -273,7 +276,7 @@ const Profile = (props) => {
                 </form>
 
                 <form>
-                    Remove Preference:                 
+                    Remove Preference:
                     <Select
                         options={props.profile.preferencesOptions}
                         value={{ label: removingPreference }}

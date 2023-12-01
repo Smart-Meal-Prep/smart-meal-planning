@@ -20,26 +20,24 @@ const Register = () => {
             return alert('Please provide vaild email');
         }//need to check if it matchs a vaild email
 
-        //After checking now need to do the fetching
-
         const user = {
             username: username,
             email: email,
             password: password
         };
 
-        const requestBody = JSON.stringify(user);// Convert the data to a JSON string
+        const requestBody = JSON.stringify(user);
 
         try {
             const res = await fetch(endPoints.registerEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Set the content type to JSON
+                    'Content-Type': 'application/json',
                 },
-                body: requestBody// Include the request body
+                body: requestBody
             });
 
-            if (res.ok) {// Request was successful (status code 2xx)
+            if (res.ok) {
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
                 return navigate("/login");
