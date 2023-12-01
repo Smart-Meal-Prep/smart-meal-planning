@@ -6,7 +6,11 @@ export const UserInfo = createContext({
         email: null,
         id: null
     },
-    setUserInformation: () => { }
+    status: {
+        LoggedIn: false
+    },
+    setUserInformation: () => { },
+    setStatus: () => { }
 });
 
 export default UserInfo;

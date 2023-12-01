@@ -5,7 +5,7 @@ import lists from "../../config/list.js";
 import UserInfo from "../../config/UserInfo.js";
 
 const Inventory = (props) => {
-    const { userInformation, setUserInformation } = useContext(UserInfo);
+    const { userInformation } = useContext(UserInfo);
 
     useEffect(() => {
         const updateInventory = async () => {

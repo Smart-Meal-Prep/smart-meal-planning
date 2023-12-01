@@ -7,8 +7,8 @@ import UserInfo from '../../config/UserInfo.js';
 import '../../styles/Dashboard.css'
 
 const Dashboard = () => {
-    const { userInformation, setUserInformation } = useContext(UserInfo);
-    
+    const { setUserInformation } = useContext(UserInfo);
+
     useEffect(() => { /*Needs test case by front-end team*/
         const findUserInfo = async () => {
             try {
@@ -21,7 +21,7 @@ const Dashboard = () => {
                 });
 
                 if (response.ok) {
-                    const userData = await response.json(); 
+                    const userData = await response.json();
                     setUserInformation({
                         username: userData.username,
                         email: userData.email,

@@ -4,7 +4,7 @@ import UserInfo from "../../config/UserInfo.js";
 
 const Recipes = (props) => {
 
-    const { userInformation, setUserInformation } = useContext(UserInfo);
+    const { userInformation } = useContext(UserInfo);
     const userId = userInformation.id;
 
     useEffect(() => {

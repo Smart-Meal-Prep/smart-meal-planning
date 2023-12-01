@@ -1,14 +1,16 @@
-import { React, useState } from "react";
+import { React, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import endPoints from "../../config/fetch.js"
+import UserInfo from "../../config/UserInfo.js";
 
 const Login = () => {
+    const { setStatus } = useContext(UserInfo);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmission = async (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior of refreshing on submission
+        event.preventDefault();
         if (!email) {
             return alert('Please provide vaild email');
         }//need to check if it matchs a vaild email
@@ -19,22 +21,24 @@ const Login = () => {
             email: email,
             password: password
         };
-        
-        const requestBody = JSON.stringify(user);// Convert the data to a JSON string for sending to fetch call
 
+        const requestBody = JSON.stringify(user);
         try {
             const res = await fetch(endPoints.loginEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Set the content type to JSON
+                    'Content-Type': 'application/json',
                 },
-                body: requestBody,// Include the request body
+                body: requestBody,
                 credentials: 'include' // Include credentials in the request to allow browser to send cookis
             });
 
-            if (res.ok) {// Request was successful (status code 2xx)
+            if (res.ok) {
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
+                setStatus({
+                    LoggedIn: true
+                });
                 return navigate("/");
             }
             else {
@@ -62,7 +66,7 @@ const Login = () => {
                 <button type="submit">Submit</button>
             </form>
         </div>
-    )
-}
+    );
+};
 
 export default Login

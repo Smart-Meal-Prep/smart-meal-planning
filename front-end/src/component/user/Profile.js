@@ -6,7 +6,7 @@ import UserInfo from '../../config/UserInfo';
 
 const Profile = (props) => {
 
-    const { userInformation, setUserInformation } = useContext(UserInfo);
+    const { userInformation } = useContext(UserInfo);
     const userId = userInformation.id;
     const [newAllergy, setNewAllergy] = useState('');
     const [newPreference, setNewPreference] = useState('');

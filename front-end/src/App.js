@@ -1,5 +1,5 @@
 import { React, useState, useContext } from 'react';
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import Dashboard from './component/Dashboard/Dashboard';
 import Register from './component/user/Register';
 import Login from './component/user/Login';
@@ -16,9 +16,15 @@ const App = () => {
     id: null
   });
 
+  const [status, setStatus] = useState({
+    LoggedIn: false
+  });
+
   let value = {
     userInformation,
-    setUserInformation
+    setUserInformation,
+    status,
+    setStatus
   };
 
   const [inventory, setUserInventory] = useState([{
@@ -42,10 +48,16 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/inventory" element={<Inventory userInventory={inventory} setUserInventory={setUserInventory} />} />
           <Route path="/register" element={<Register />} />
-          <Route path='/profile' element={<Profile profile={profile} setProfile={setProfile} />} />
-          <Route path="/recipes" element={<Recipes recipes={recipes} setRecipes={setRecipes} />} />
+          <Route path="/inventory" element={
+            status.LoggedIn ?
+              (<Inventory userInventory={inventory} setUserInventory={setUserInventory} />) : (<Navigate to="/login" />)} />
+          <Route path='/profile' element={
+            status.LoggedIn ?
+              (<Profile profile={profile} setProfile={setProfile} />) : (<Navigate to="/login" />)} />
+          <Route path="/recipes" element={
+            status.LoggedIn ?
+              (<Recipes recipes={recipes} setRecipes={setRecipes} />) : (<Navigate to="/login" />)} />
         </Routes>
       </div>
     </UserInfo.Provider>
