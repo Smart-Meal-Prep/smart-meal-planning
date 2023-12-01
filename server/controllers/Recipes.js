@@ -79,24 +79,28 @@ const getRecipeSuggestions = async (req, res) => {
                 'thumbnail',
                 'category',
                 'area',
-                [Sequelize.literal(`(
-                    SELECT ARRAY_AGG(unnested_ingredients)
-                    FROM unnest(ingredients) AS unnested_ingredients
-                    WHERE LOWER(unnested_ingredients) = ANY(
-                        SELECT LOWER(ingredient)
-                        FROM "Inventories"
-                        WHERE "UserId" = ${userId}
-                    )
-                )`), 'matchingIngredients'],
-                [Sequelize.literal(`(
-                    SELECT ARRAY_AGG(unnested_ingredients)
-                    FROM unnest(ingredients) AS unnested_ingredients
-                    WHERE LOWER(unnested_ingredients) != ALL(
-                        SELECT LOWER(ingredient)
-                        FROM "Inventories"
-                        WHERE "UserId" = ${userId}
-                    )
-                )`), 'missingIngredients'],
+                [
+                    Sequelize.literal(`(
+                        SELECT ARRAY_AGG(unnested_ingredients)
+                        FROM unnest(ingredients) AS unnested_ingredients
+                        WHERE LOWER(unnested_ingredients) = ANY(
+                            SELECT LOWER(ingredient)
+                            FROM "Inventories"
+                            WHERE "UserId" = ${userId}
+                        )
+                    )`), 'matchingIngredients'
+                ],
+                [
+                    Sequelize.literal(`(
+                        SELECT ARRAY_AGG(unnested_ingredients)
+                        FROM unnest(ingredients) AS unnested_ingredients
+                        WHERE LOWER(unnested_ingredients) != ALL(
+                            SELECT LOWER(ingredient)
+                            FROM "Inventories"
+                            WHERE "UserId" = ${userId}
+                        )
+                    )`), 'missingIngredients'
+                ],
                 [
                     Sequelize.literal(`1.0 * (
                         SELECT COUNT(unnested_ingredients)
@@ -126,7 +130,7 @@ const getRecipeSuggestions = async (req, res) => {
 
         const calculateStrength = (meal) => {
             try {
-                const strengthRatio = meal.strengthRatio;
+                const strengthRatio = meal.dataValues.strengthRatio; //need to use dataValues here when accessing attributes since meal is a sequalize instance, not yet a json object
                 if (strengthRatio >= 1.00)
                     return 'Strongest';
                 else if (strengthRatio < 1.00 && strengthRatio >= 0.7)
@@ -143,10 +147,8 @@ const getRecipeSuggestions = async (req, res) => {
         }
 
         recipes.forEach(meal => {
-            const plainMeal = meal.get({ plain: true }); //meal exists as sequalize instances, this gets
-
-            const strength = calculateStrength(plainMeal);
-            meal.dataValues = {
+            const strength = calculateStrength(meal);
+            meal.dataValues = { 
                 ...meal.dataValues,
                 strength: strength
             }

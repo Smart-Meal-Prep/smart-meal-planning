@@ -126,11 +126,13 @@ describe('On success to get recipes', () => {
             category: 'Category',
             area: 'Area',
             matchingIngredients: [],
-            missingIngredients: []
+            missingIngredients: [],
+            strengthRatio: '0.5'
         }
 
         const mockResponse = [fakeMeal, fakeMeal];
         jest.spyOn(Recipes, 'findAll').mockResolvedValue(mockResponse);
+
 
         await getRecipeSuggestions(req, res);
 
