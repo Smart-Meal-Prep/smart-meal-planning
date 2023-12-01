@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import endPoints from '../../config/fetch.js'
+import UserInfo from "../../config/UserInfo.js";
 
 const Recipes = (props) => {
-    const userId = props.userInformation.id;
+
+    const { userInformation, setUserInformation } = useContext(UserInfo);
+    const userId = userInformation.id;
 
     useEffect(() => {
         const updateRecipes = async () => {

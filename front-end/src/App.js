@@ -45,10 +45,7 @@ const App = () => {
           <Route path="/inventory" element={<Inventory userInventory={inventory} setUserInventory={setUserInventory} />} />
           <Route path="/register" element={<Register />} />
           <Route path='/profile' element={<Profile profile={profile} setProfile={setProfile} />} />
-          {/*
-          
-          <Route path="/recipes" element={<Recipes userInformation={userInformation} recipes={recipes} setRecipes={setRecipes}/>} />
-          */}
+          <Route path="/recipes" element={<Recipes recipes={recipes} setRecipes={setRecipes} />} />
         </Routes>
       </div>
     </UserInfo.Provider>
