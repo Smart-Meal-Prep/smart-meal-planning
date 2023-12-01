@@ -8,6 +8,7 @@ import '../../styles/Dashboard.css'
 
 const Dashboard = () => {
     const { userInformation, setUserInformation } = useContext(UserInfo);
+    
     useEffect(() => { /*Needs test case by front-end team*/
         const findUserInfo = async () => {
             try {
@@ -20,7 +21,7 @@ const Dashboard = () => {
                 });
 
                 if (response.ok) {
-                    const userData = await response.json();//resolves promis and turns the fetch information into JS object 
+                    const userData = await response.json(); 
                     setUserInformation({
                         username: userData.username,
                         email: userData.email,
@@ -36,7 +37,7 @@ const Dashboard = () => {
     },
         []
     );
-    console.log(userInformation.id);
+
     return (
         <div >
             <NavigationBar />
