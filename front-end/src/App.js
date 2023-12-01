@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from 'react';
+import { React, useState, useContext } from 'react';
 import { Routes, Route } from "react-router-dom"
 import Dashboard from './component/Dashboard/Dashboard';
 import Register from './component/user/Register';
@@ -15,11 +15,7 @@ const App = () => {
     email: null,
     id: null
   });
-  /*
-      username: "no_pass",
-      email: "no_email",
-      id: Number.MAX_SAFE_INTEGER
-  */
+
   let value = {
     userInformation,
     setUserInformation

@@ -1,4 +1,4 @@
-import { React, createContext, useState } from "react";
+import { createContext } from "react";
 
 export const UserInfo = createContext({
     userInformation: {
@@ -10,18 +10,3 @@ export const UserInfo = createContext({
 });
 
 export default UserInfo;
-
-/*
-export const UserInfoProvider = ({ children }) => {
-    const [userInformation, setUserInformation] = useState({
-        username: null,
-        email: null,
-        id: null
-    });
-
-    const value = {
-        userInformation,
-        setUserInformation
-    };//export values from context
-};
-*/
