@@ -1,0 +1,50 @@
+.login-container {
+    background-color: #EAE1DC;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+}
+
+.login-form {
+    background-color: white;
+    width: 30%;
+    height: auto;
+    margin: 7% auto;
+    padding: 25px 10px;
+}
+
+.label-text {
+    font-size: 20px;
+}
+
+.button-class {
+    margin-right: 4%;
+    margin-left: 4.3%;
+}
+
+@media screen and (max-width: 600px) {
+    .login-form {
+        width: 90%;
+        margin: 7% auto;
+        margin-top: 25%;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+    .login-form {
+        width: 70%;
+        height: auto;
+        margin: 7% auto;
+        margin-top: 15%;
+    }
+}
+
+@media (max-width: 3000px) and (min-width: 1440px) {
+    .login-form {
+        width: 30%;
+        height: auto;
+        margin: 7% auto;
+    }
+}

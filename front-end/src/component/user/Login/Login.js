@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import endPoints from "../../../config/fetch.js"
 import UserInfo from "../../../config/UserInfo.js";
 import LoginNavbar from "./LoginNavbar.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../../styles/Login.css'
 
 const Login = () => {
     const { setStatus } = useContext(UserInfo);
@@ -53,22 +55,29 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div className="login-container">
             <LoginNavbar />
-            <h1>Login</h1>
-            <form onSubmit={handleSubmission}>
-                <label>
-                    <p>Email:</p>
-                    <input type="text" onChange={event => setEmail(event.target.value)} />
-                </label>
-                <label>
-                    <p>Password:</p>
-                    <input type="text" onChange={event => setPassword(event.target.value)} />
-                </label>
-                <button type="submit">Submit</button>
-            </form>
+            <div className="login-form">
+                <h3 className="text-center text-uppercase fs-2 text-dark mt-2 mb-4">Login</h3>
+                <form onSubmit={handleSubmission}>
+                    <div class="form-group">
+                        <label className="label-text" for="exampleInputEmail1">Email address</label>
+                        <input type="email" onChange={event => setEmail(event.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                        <small id="emailHelp" class="form-text text-muted">Your email is safe with us</small>
+                    </div>
+                    <div class="form-group">
+                        <label className="label-text" for="exampleInputPassword1">Password</label>
+                        <input type="password" onChange={event => setPassword(event.target.value)} class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                    </div>
+                    <div class="form-group form-check">
+                    </div>
+                    <button type="text" class="btn btn-primary col-lg-5 col-5 mt-2 mb-2 button-class" >Sign Up</button>
+                    <button type="submit" class="btn btn-primary col-lg-5 col-5 mt-2 mb-2 button-class">Login</button>
+                </form>
+            </div>
         </div>
     );
 };
+{/*onClick={navigate("/register")}*/ }
 
 export default Login
