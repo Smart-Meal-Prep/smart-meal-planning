@@ -5,7 +5,6 @@ import UserInfo from "../../../config/UserInfo.js";
 import NavigationBar from "../../NavigationBar.js";
 import DashboardFooter from "../../DashboardFooter.js";
 import InventoryBody from "./InventoryBody.js";
-import InventoryContext from './InventoryContext.js';
 
 const Inventory = (props) => {
     const { userInformation } = useContext(UserInfo);
@@ -196,9 +195,7 @@ const Inventory = (props) => {
     return (
         <div>
             <NavigationBar />
-            <InventoryContext.Provider value={value}>
-                <InventoryBody userInventory={props.userInventory} />
-            </InventoryContext.Provider>
+            <InventoryBody value={value} userInventory={props.userInventory} />
             <DashboardFooter />
         </div>
     );

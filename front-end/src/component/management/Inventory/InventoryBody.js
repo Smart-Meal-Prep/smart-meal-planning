@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import Select from 'react-select';
 import lists from "../../../config/list";
-import InventoryContext from './InventoryContext'
 
 const InventoryBody = (props) => {
     const {
@@ -14,7 +13,7 @@ const InventoryBody = (props) => {
         setIngredient,
         quantity,
         setQuantity
-    } = useContext(InventoryContext);
+    } = props.value;
     
     return (
         <div>
@@ -42,7 +41,7 @@ const InventoryBody = (props) => {
                         onChange={(e) => setIngredient(e.label)}
                         value={{ label: ingredient }}
                     />
-                    <input placeholder="Quantity" type="text" onChange={(event) => setQuantity(event.target.value)} />
+                    <input placeholder="Quantity" type="text" value={quantity} onChange={(event) => setQuantity(event.target.value)} />
                 </label>
                 <button type="submit">Submit</button>
             </form>
@@ -66,4 +65,4 @@ const InventoryBody = (props) => {
     )
 }
 
-export default InventoryBody
+export default InventoryBody;
