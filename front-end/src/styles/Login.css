@@ -3,16 +3,20 @@
     background-position: center;
     background-size: cover;
     overflow: hidden;
+    background-image: url("../assets/overlay_2.png");
+    background-repeat: no-repeat;
     height: 100vh;
     width: 100%;
 }
 
 .login-form {
     background-color: white;
+    border-radius: 10px;
     width: 30%;
     height: auto;
     margin: 7% auto;
     padding: 25px 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .label-text {
