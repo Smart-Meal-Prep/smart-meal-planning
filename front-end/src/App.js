@@ -4,8 +4,8 @@ import Dashboard from './component/Dashboard/Dashboard';
 import Register from './component/user/Register';
 import Login from './component/user/Login';
 import Profile from './component/user/Profile'
-import Inventory from './component/management/Inventory';
-import Recipes from './component/management/Recipes';
+import Inventory from './component/management/Inventory/Inventory';
+import Recipes from './component/management/Recipes/Recipes';
 import "./styles/App.css"
 import UserInfo from './config/UserInfo';
 

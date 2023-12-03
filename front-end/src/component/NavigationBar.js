@@ -1,8 +1,8 @@
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
-import cooking_icon from "../../assets/cooking_icon.png"
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import cooking_icon from "../assets/cooking_icon.png"
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../styles/NavigationBar.css'
+import '../styles/NavigationBar.css'
 
 const NavigationBar = () => {
     /*We need to redirect using the react-router-dom Link instead because using any other will refresh the page, thus context */

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
-import endPoints from '../../config/fetch.js'
-import UserInfo from "../../config/UserInfo.js";
+import endPoints from '../../../config/fetch.js'
+import UserInfo from "../../../config/UserInfo.js";
 
 const Recipes = (props) => {
 
