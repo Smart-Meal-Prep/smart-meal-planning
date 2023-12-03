@@ -1,7 +1,8 @@
 import { React, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import endPoints from "../../config/fetch.js"
-import UserInfo from "../../config/UserInfo.js";
+import endPoints from "../../../config/fetch.js"
+import UserInfo from "../../../config/UserInfo.js";
+import LoginNavbar from "./LoginNavbar.js";
 
 const Login = () => {
     const { setStatus } = useContext(UserInfo);
@@ -53,6 +54,7 @@ const Login = () => {
 
     return (
         <div>
+            <LoginNavbar />
             <h1>Login</h1>
             <form onSubmit={handleSubmission}>
                 <label>
