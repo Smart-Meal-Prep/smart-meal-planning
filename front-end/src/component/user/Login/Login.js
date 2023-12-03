@@ -54,6 +54,10 @@ const Login = () => {
         }
     };
 
+    const handleSignUpClick = () =>{
+        return navigate("/register");
+    }
+
     return (
         <div className="login-container">
             <LoginNavbar />
@@ -71,13 +75,12 @@ const Login = () => {
                     </div>
                     <div class="form-group form-check">
                     </div>
-                    <button type="text" class="btn btn-primary col-lg-5 col-5 mt-2 mb-2 button-class" >Sign Up</button>
+                    <button type="button" class="btn btn-primary col-lg-5 col-5 mt-2 mb-2 button-class" onClick={handleSignUpClick} >Sign Up</button>
                     <button type="submit" class="btn btn-primary col-lg-5 col-5 mt-2 mb-2 button-class">Login</button>
                 </form>
             </div>
         </div>
     );
 };
-{/*onClick={navigate("/register")}*/ }
 
 export default Login
