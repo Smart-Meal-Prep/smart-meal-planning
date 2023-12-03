@@ -194,13 +194,13 @@ const Inventory = (props) => {
     }
 
     return (
-        <InventoryContext.Provider value={value}>
-            <div>
-                <NavigationBar />
-                <InventoryBody userInventory={props.userInventory}/>
-                <DashboardFooter />
-            </div>
-        </InventoryContext.Provider>
+        <div>
+            <NavigationBar />
+            <InventoryContext.Provider value={value}>
+                <InventoryBody userInventory={props.userInventory} />
+            </InventoryContext.Provider>
+            <DashboardFooter />
+        </div>
     );
 }
 
