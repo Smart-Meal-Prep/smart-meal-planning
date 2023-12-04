@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import endPoints from "../../../config/fetch.js"
 import UserInfo from "../../../config/UserInfo.js";
 import LoginNavbar from "./LoginNavbar.js";
+import Swal from 'sweetalert2'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../styles/Login.css'
 
@@ -15,16 +16,23 @@ const Login = () => {
     const handleSubmission = async (event) => {
         event.preventDefault();
         if (!email) {
-            return alert('Please provide vaild email');
-        }//need to check if it matchs a vaild email
+            return Swal.fire({
+                icon: "error",
+                title: "Invaild email",
+                text: "Please enter a vaild email!",
+            });
+        }
         if (!password) {
-            return alert('Please provide vaild password');
-        }//need to check if the password is a vaild length, has to be atleast length 8
+            return Swal.fire({
+                icon: "error",
+                title: "Invaild password",
+                text: "Please enter a vaild password!",
+            });
+        }
         const user = {
             email: email,
             password: password
         };
-
         const requestBody = JSON.stringify(user);
         try {
             const res = await fetch(endPoints.loginEndpoint, {
@@ -39,19 +47,30 @@ const Login = () => {
             if (res.ok) {
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
-                setStatus({
-                    LoggedIn: true
+                Swal.fire({
+                    title: `${responseData}`,
+                    icon: "success"
                 });
-                return navigate("/");
+                setTimeout(() => {
+                    setStatus({
+                        LoggedIn: true
+                    });
+                    return navigate("/");
+                }, 500);
+                return;
             }
             else {
                 const errorData = await res.json();
-                alert(`Registration failed: ${errorData.message}`);
-            }
+                return Swal.fire({
+                    icon: "error",
+                    title: "Login Failed",
+                    text: `Error: ${errorData.message}`,
+                });
+            };
         }
         catch (error) {
             console.log(error);
-        }
+        };
     };
 
     const handleSignUpClick = () => {
