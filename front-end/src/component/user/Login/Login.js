@@ -80,9 +80,9 @@ const Login = () => {
     return (
         <div className="login-container">
             <LoginNavbar />
-            <div className="login-form">
+            <div className="login-form" data-testid={"login-form-div"}>
                 <h3 className="text-center text-uppercase fs-2 text-dark mt-2 mb-4">Login</h3>
-                <form onSubmit={handleSubmission}>
+                <form onSubmit={handleSubmission} data-testid={"login-submission-form"}>
                     <div class="form-group">
                         <label className="label-text" for="exampleInputEmail1">Email address</label>
                         <input type="email" onChange={event => setEmail(event.target.value)} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
@@ -94,8 +94,8 @@ const Login = () => {
                     </div>
                     <div class="form-group form-check">
                     </div>
-                    <button type="button" class="btn btn-primary col-lg-5 col-5 mt-2 mb-2 button-class" onClick={handleSignUpClick} >Sign Up</button>
-                    <button type="submit" class="btn btn-primary col-lg-5 col-5 mt-2 mb-2 button-class">Login</button>
+                    <button data-testid={"login-button"} type="button" class="btn btn-primary col-lg-5 col-5 mt-2 mb-2 button-class" onClick={handleSignUpClick} >Sign Up</button>
+                    <button data-testid={"sign-up-button"} type="submit" class="btn btn-primary col-lg-5 col-5 mt-2 mb-2 button-class">Login</button>
                 </form>
             </div>
         </div>
