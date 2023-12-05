@@ -1,5 +1,5 @@
 {
-  "homepage": "https://Smart-Meal-Prep.github.io/smart-meal-planning",
+  "homepage": "https://Smart-Meal-Prep.github.io/smart-meal-planning/front-end",
   "name": "front-end",
   "version": "0.1.0",
   "private": true,
@@ -19,7 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d front-end/build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
