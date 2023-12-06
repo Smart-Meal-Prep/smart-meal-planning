@@ -2,7 +2,7 @@ import { React, useState, useContext } from 'react';
 import { Routes, Route, Navigate } from "react-router-dom"
 import Dashboard from './component/Dashboard/Dashboard';
 import Register from './component/user/Register';
-import Login from './component/user/Login';
+import Login from './component/user/Login/Login';
 import Profile from './component/user/Profile'
 import Inventory from './component/management/Inventory/Inventory';
 import Recipes from './component/management/Recipes/Recipes';
