@@ -16,7 +16,6 @@ const InventoryBody = (props) => {
         setQuantity
     } = props.value;
 
-    const [selectedCategory, setSelectedCategory] = useState(null);
 
     const categories = [
         ['Meat', 'meat'],
@@ -36,6 +35,8 @@ const InventoryBody = (props) => {
         ['Miscellaneous', 'miscellaneous'],
     ];
 
+    const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+
     const ingredientsByCategory = lists.ingredientsByCategory;
 
     const handleCategoryClick = (category) => {
@@ -43,10 +44,11 @@ const InventoryBody = (props) => {
     };
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid" style={{backgroundColor: "#EAE1DC"}}>
             <div className="row">
                 {/* Sidebar */}
                 <div className="col-md-3">
+                    <h2>Categories</h2>
                     <div className="list-group">
                         {categories.map((category) => (
                             <button
