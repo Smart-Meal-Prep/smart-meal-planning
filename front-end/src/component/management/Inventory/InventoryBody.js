@@ -64,7 +64,7 @@ const InventoryBody = (props) => {
 
                 {/* Inventory Checklist */}
                 <div className="col-md-6">
-                    <h2>Inventory Checklist</h2>
+                    <h2>{selectedCategory ? selectedCategory[0] : 'Inventory Checklist'}</h2>
                     {selectedCategory ? (
                         <ul className="list-group">
                             {ingredientsByCategory[selectedCategory[1]].map((ingredient) => {
@@ -93,10 +93,25 @@ const InventoryBody = (props) => {
                 </div>
 
                 <div className="col-md-3">
-                    <ul>
-                        {props.userInventory.map(ingredient => (
-                            <li>{ingredient.ingredient}</li>
-                        ))}
+                    <h2>Inventory</h2>
+                    <ul className="list-group">
+                        {props.userInventory.map(ingredient => {
+                            return (
+                                <li key={ingredient.ingredient} className="list-group-item">
+                                    {ingredient.ingredient}
+                                    <button
+                                        type="button"
+                                        className={`btn btn-danger btn-sm float-end`}
+                                        onClick={(e) => {
+                                            setIngredient(ingredient.ingredient);
+                                            handleRemove(e, ingredient.ingredient);
+                                        }}
+                                    >
+                                        Remove from Inventory
+                                    </button>
+                                </li>
+                            )
+                        })}
                     </ul>
                 </div>
             </div>
