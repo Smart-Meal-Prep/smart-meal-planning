@@ -49,7 +49,7 @@ const Inventory = (props) => {
     const [quantity, setQuantity] = useState(0);
     const [selectedItemId, setSelectedItemId] = useState(-1); // New state to store the selected item's ID
 
-    const handleRemove = async (event) => {
+    const handleRemove = async (event, ingredient) => {
         event && event.preventDefault();
         if (!ingredient) {
             return alert('Please select vaild ingredient');
@@ -69,6 +69,7 @@ const Inventory = (props) => {
                 /*to update the inventory*/
                 const updatedInventory = props.userInventory.filter(item => item.ingredient !== ingredient);
                 props.setUserInventory(updatedInventory);
+                setIngredient("");
                 setSelectedItemId(-1); // Clear the selected item ID
             }
             else {
@@ -81,7 +82,7 @@ const Inventory = (props) => {
         }
     };
 
-    const handleAdding = async (event) => {
+    const handleAdding = async (event, ingredient) => {
         event && event.preventDefault();
         if (!lists.ingredients.get(ingredient)) {
             return alert('Please provide a vaild ingredient');

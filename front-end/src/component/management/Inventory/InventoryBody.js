@@ -76,9 +76,9 @@ const InventoryBody = (props) => {
                                         <button
                                             type="button"
                                             className={`btn ${isInInventory ? 'btn-danger' : 'btn-success'} btn-sm float-end`}
-                                            onClick={() => {
+                                            onClick={(e) => {
                                                 setIngredient(ingredient);
-                                                isInInventory ? handleRemove() : handleAdding();
+                                                isInInventory ? handleRemove(e, ingredient) : handleAdding(e, ingredient);
                                             }}
                                         >
                                             {isInInventory ? 'Remove from Inventory' : 'Add to Inventory'}

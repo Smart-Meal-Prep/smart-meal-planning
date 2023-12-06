@@ -1,9 +1,9 @@
 /*file for getting lists of ingredients, areas, and categories for meals*/
 import endPoints from "./fetch";
-
+ 
 /*Ingredients sorted into categories */
 const ingredientsByCategory = {
-    meat: ['Chicken', 'Salmon', 'Beef', 'Pork', 'Bacon', 'Beef Brisket', 'Beef Fillet', 'Chicken Breast', 'Chicken Breasts', 'Chicken Legs', 'Chicken Thighs', 'Chorizo', 'Doner Meat', 'Italian Fennel Sausages', 'Lamb', 'Lamb Loin Chops', 'Lamb Mince', 'Sausages', 'Duck', 'Duck Legs', 'Goose Fat', 'Duck Fat', 'Lamb Leg', 'Lamb Shoulder', 'Turkey Mince', 'Minced Beef', 'Lean Minced Beef', 'Beef Shin', 'Pork Chops', 'Beef Kidney', 'Lamb Kidney'],
+    meat: ['Chicken', 'Beef', 'Pork', 'Bacon', 'Beef Brisket', 'Beef Fillet', 'Chicken Breast', 'Chicken Breasts', 'Chicken Legs', 'Chicken Thighs', 'Chorizo', 'Doner Meat', 'Italian Fennel Sausages', 'Lamb', 'Lamb Loin Chops', 'Lamb Mince', 'Sausages', 'Duck', 'Duck Legs', 'Goose Fat', 'Duck Fat', 'Lamb Leg', 'Lamb Shoulder', 'Turkey Mince', 'Minced Beef', 'Lean Minced Beef', 'Beef Shin', 'Pork Chops', 'Beef Kidney', 'Lamb Kidney'],
     fishSeafood: ['Salmon', 'Mackerel', 'King Prawns', 'Fish Sauce', 'Cod', 'Salt Cod', 'Oysters', 'Haddock', 'Smoked Haddock', 'Prawns', 'Anchovy Fillet', 'Red Snapper', 'Squid', 'Baby Squid', 'Monkfish', 'Mussels', 'Clams', 'Crab'],
     vegetables: ['Asparagus', 'Aubergine', 'Broccoli', 'Carrots', 'Celeriac', 'Celery', 'Charlotte Potatoes', 'Cucumber', 'Egg Plants', 'Fennel Bulb', 'Garlic', 'Ginger', 'Jerusalem Artichokes', 'Kale', 'Leek', 'Little Gem Lettuce', 'Mushrooms', 'Onions', 'Peas', 'Potatoes', 'Rocket', 'Spinach', 'Squash', 'Sugar Snap Peas', 'Turnips', 'Zucchini', 'Bell Peppers', 'Red Onion', 'Cabbage'],
     fruits: ['Apple', 'Banana', 'Avocado', 'Bramley Apples', 'Cherry Tomatoes', 'Baby Plum Tomatoes', 'Lemons', 'Oranges', 'Raspberries', 'Blueberries', 'Strawberries', 'Peaches', 'Apricot', 'Pineapple', 'Mango', 'Grapes', 'Cherries', 'Lemon', 'Watermelon', 'Kiwi', 'Pears', 'Figs', 'Rhubarb', 'Tomatoes'],

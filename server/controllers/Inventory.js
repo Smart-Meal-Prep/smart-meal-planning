@@ -64,7 +64,10 @@ const removeIngredient = async (req, res) => {
         }
 
         const item = await Inventory.findOne({
-            where: { ingredient: ingredient },
+            where: { 
+                ingredient: ingredient,
+                UserId: UserId
+            },
             include: User//retrieves the User model to check if the user whose trying to delete the item is the same as the user who owns the item.
             //include is used to specify which associated models should be retrieved along with the main model you are querying
         });
@@ -76,7 +79,7 @@ const removeIngredient = async (req, res) => {
 
         if (item.UserId != UserId) {
             res.status(401);
-            return res.json({ error: "Error unauthorized user" });
+            return res.json({ error: `"Error unauthorized user" ${item.UserId} ${UserId}` });
         }
 
         await item.destroy();
