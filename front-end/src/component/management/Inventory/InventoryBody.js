@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import Select from 'react-select';
 import lists from "../../../config/list";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const InventoryBody = (props) => {
     const {
@@ -14,53 +15,91 @@ const InventoryBody = (props) => {
         quantity,
         setQuantity
     } = props.value;
-    
+
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+    const categories = [
+        ['Meat', 'meat'],
+        ['Fish/Seafood', 'fishSeafood'],
+        ['Vegetables', 'vegetables'],
+        ['Fruits', 'fruits'],
+        ['Dairy', 'dairy'],
+        ['Pantry', 'pantry'],
+        ['Herbs/Spices', 'herbsSpices'],
+        ['Grains/Pasta', 'grainsPasta'],
+        ['Bakery', 'bakery'],
+        ['Sweets/Snacks', 'sweetsSnacks'],
+        ['Condiments/Sauces', 'condimentsSauces'],
+        ['Oils/Vinegars', 'oilsVinegars'],
+        ['Beverages', 'beverages'],
+        ['Frozen', 'frozen'],
+        ['Miscellaneous', 'miscellaneous'],
+    ];
+
+    const ingredientsByCategory = lists.ingredientsByCategory;
+
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category);
+    };
+
     return (
-        <div>
-            <h1>Inventory</h1>
-            <form onSubmit={handleRemove}>
-                <label>
-                    <p>Remove ingredient:</p>
-                    <select value={selectedItemId} onChange={(event) => setSelectedItemId(event.target.value)}>
-                        <option value="" disabled>Select an ingredient</option>
-                        {props.userInventory.map(item => (
-                            <option key={item.id} value={item.id}>
-                                {item.ingredient}
-                            </option>
+        <div className="container-fluid">
+            <div className="row">
+                {/* Sidebar */}
+                <div className="col-md-3">
+                    <div className="list-group">
+                        {categories.map((category) => (
+                            <button
+                                key={category}
+                                type="button"
+                                className={`list-group-item list-group-item-action ${selectedCategory === category ? 'active' : ''
+                                    }`}
+                                onClick={() => handleCategoryClick(category)}
+                            >
+                                {category[0]}
+                            </button>
                         ))}
-                    </select>
-                </label>
-                <button type="submit">Submit</button>
-            </form>
+                    </div>
+                </div>
 
-            <form onSubmit={handleAdding}>
-                <label>
-                    <p>Add ingredient:</p>
-                    <Select
-                        options={lists.ingredientsOptions}
-                        onChange={(e) => setIngredient(e.label)}
-                        value={{ label: ingredient }}
-                    />
-                    <input placeholder="Quantity" type="text" value={quantity} onChange={(event) => setQuantity(event.target.value)} />
-                </label>
-                <button type="submit">Submit</button>
-            </form>
+                {/* Inventory Checklist */}
+                <div className="col-md-6">
+                    <h2>Inventory Checklist</h2>
+                    {selectedCategory ? (
+                        <ul className="list-group">
+                            {ingredientsByCategory[selectedCategory[1]].map((ingredient) => {
+                                const isInInventory = props.userInventory.find(i => i.ingredient === ingredient);
 
-            <form onSubmit={handleUpdateAmount}>
-                <label>
-                    <p>Update Ingredient amount:</p>
-                    <select value={selectedItemId} onChange={(event) => setSelectedItemId(event.target.value)}>
-                        <option value="" disabled>Select an ingredient</option>
-                        {props.userInventory.map(item => (
-                            <option key={item.id} value={item.id}>
-                                {item.ingredient}
-                            </option>
+                                return (
+                                    <li key={ingredient} className="list-group-item">
+                                        {ingredient}
+                                        <button
+                                            type="button"
+                                            className={`btn ${isInInventory ? 'btn-danger' : 'btn-success'} btn-sm float-end`}
+                                            onClick={() => {
+                                                setIngredient(ingredient);
+                                                isInInventory ? handleRemove() : handleAdding();
+                                            }}
+                                        >
+                                            {isInInventory ? 'Remove from Inventory' : 'Add to Inventory'}
+                                        </button>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    ) : (
+                        <p>Select a category to view ingredients.</p>
+                    )}
+                </div>
+
+                <div className="col-md-3">
+                    <ul>
+                        {props.userInventory.map(ingredient => (
+                            <li>{ingredient.ingredient}</li>
                         ))}
-                    </select>
-                    <input placeholder="Quantity" type="text" onChange={(event) => setQuantity(event.target.value)} />
-                </label>
-                <button type="submit">Submit</button>
-            </form>
+                    </ul>
+                </div>
+            </div>
         </div>
     )
 }

@@ -8,6 +8,7 @@ import InventoryBody from "./InventoryBody.js";
 
 const Inventory = (props) => {
     const { userInformation } = useContext(UserInfo);
+    const UserId = userInformation.id;
 
     useEffect(() => {
         const updateInventory = async () => {
@@ -49,13 +50,13 @@ const Inventory = (props) => {
     const [selectedItemId, setSelectedItemId] = useState(-1); // New state to store the selected item's ID
 
     const handleRemove = async (event) => {
-        event.preventDefault();
-        if (!selectedItemId) {
+        event && event.preventDefault();
+        if (!ingredient) {
             return alert('Please select vaild ingredient');
         }//need to check if it matchs a vaild ingreident
         //Do fetching please add more edge cases above
         try {
-            const res = await fetch(`${endPoints.inventoryEndpoint}/${selectedItemId}/${userInformation.id}`, {
+            const res = await fetch(`${endPoints.inventoryEndpoint}/${ingredient}/${userInformation.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ const Inventory = (props) => {
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
                 /*to update the inventory*/
-                const updatedInventory = props.userInventory.filter(item => item.id !== selectedItemId);
+                const updatedInventory = props.userInventory.filter(item => item.ingredient !== ingredient);
                 props.setUserInventory(updatedInventory);
                 setSelectedItemId(-1); // Clear the selected item ID
             }
@@ -81,7 +82,7 @@ const Inventory = (props) => {
     };
 
     const handleAdding = async (event) => {
-        event.preventDefault();
+        event && event.preventDefault();
         if (!lists.ingredients.get(ingredient)) {
             return alert('Please provide a vaild ingredient');
         }//check if it matchs a vaild ingreident
@@ -90,12 +91,11 @@ const Inventory = (props) => {
             return alert('Please provide an ingredient');
         }
 
-        if (!quantity) {
-            return alert('Please provide vaild quantity');
-        }
+        // if (!quantity) {
+        //     return alert('Please provide vaild quantity');
+        // }
 
         try {
-            const UserId = userInformation.id;
             const res = await fetch(endPoints.inventoryEndpoint, {
                 method: 'POST',
                 headers: {
@@ -104,7 +104,7 @@ const Inventory = (props) => {
                 body: JSON.stringify(
                     {
                         ingredient,
-                        quantity,
+                        quantity: quantity ? quantity : 1,
                         UserId
                     }
                 )
