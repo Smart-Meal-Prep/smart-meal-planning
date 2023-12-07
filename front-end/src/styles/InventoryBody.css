@@ -63,7 +63,6 @@
 
 .ingredients button {
     width: 100%;
-    /* Set a specific width for the buttons */
 }
 
 @media (max-width: 768px) {
