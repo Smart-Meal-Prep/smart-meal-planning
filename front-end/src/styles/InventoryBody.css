@@ -1,0 +1,77 @@
+.body {
+    background-color: #EAE1DC;
+    height: fit-content;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-image: url('../assets/foodpat.png');
+    background-repeat: repeat-y repeat-x;
+    background-size: contain;
+}
+
+.bg-img {
+    position: absolute;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.items {
+    width: auto;
+    top: auto;
+}
+
+.content-container {
+    position: relative;
+    z-index: 1;
+}
+
+.title {
+    background-color: rgb(243, 228, 218);
+    text-decoration: underline;
+    margin-top: 2vh;
+    border-width: 100px;
+    border-radius: 10px;
+    border-color: #000000;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.list-group {
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-content: center;
+}
+
+.list-group-item {
+    background-color: rgba(255, 255, 255, 0.912);
+    break-inside: avoid-column;
+}
+
+.option {
+    text-align: center;
+}
+
+.option-button {
+    height: fit-content;
+    width: auto;
+}
+
+.ingredients button {
+    width: 100%;
+    /* Set a specific width for the buttons */
+}
+
+@media (max-width: 768px) {
+    .list-group {
+        /* grid-template-columns: 1fr; */
+    }
+
+    .option-button {
+        position: absolute;
+    }
+}

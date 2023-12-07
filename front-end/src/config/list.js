@@ -115,6 +115,8 @@ getCategories();
 getAreas();
 createIngredientOptions();
 
+console.log(ingredientsOptionsByCategory);
+
 const lists = {
     ingredients,
     ingredientsOptions,
