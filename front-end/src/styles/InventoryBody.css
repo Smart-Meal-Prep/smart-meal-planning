@@ -67,11 +67,7 @@
 }
 
 @media (max-width: 768px) {
-    .list-group {
-        /* grid-template-columns: 1fr; */
-    }
-
-    .option-button {
-        position: absolute;
+    .option {
+        text-align: start;
     }
 }
