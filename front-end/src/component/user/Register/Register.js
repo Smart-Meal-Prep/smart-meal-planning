@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import endPoints from "../../config/fetch.js"
+import endPoints from "../../../config/fetch.js"
+import RegisterNavbar from "../Login/LoginNavbar.js"
 
 const Register = () => {
     const navigate = useNavigate();
@@ -54,6 +55,7 @@ const Register = () => {
 
     return (
         <div>
+            <RegisterNavbar/>
             <h1>Register</h1>
             <form onSubmit={handleSubmission}>
                 <label>
