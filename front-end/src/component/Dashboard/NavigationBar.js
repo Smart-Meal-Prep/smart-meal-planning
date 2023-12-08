@@ -54,7 +54,7 @@ const NavigationBar = () => {
                     <Nav.Link as={Link} to="/inventory" className='nav-item'>Inventory</Nav.Link>
                     <Nav.Link as={Link} to="#" className='nav-item'>Calendar</Nav.Link>
                     <Nav.Link as={Link} to="/recipes" className='nav-item'>Recipes</Nav.Link>
-                    {userInformation.username ? <div></div> :
+                    {status.LoggedIn ? <div></div> :
                         <Nav.Link as={Link} to="/login" className='nav-item'>Sign In</Nav.Link>}
                     <NavDropdown className='nav-item' title="Profile" id="navbarDropdownMenuLink">
                         <NavDropdown.Item as={Link} to="/profile" className='profile-text'>View settings</NavDropdown.Item>
