@@ -4,6 +4,7 @@ const backendEndpoint = "http://localhost:3001/"
 /*user endpoints*/
 const registerEndpoint = `${backendEndpoint}user/registration`;
 const loginEndpoint = `${backendEndpoint}user/login`;
+const loggoutEndpoint = `${backendEndpoint}user/logout`;
 
 /*profile endpoints*/
 const profileEndpoint = `${backendEndpoint}profile/`;
@@ -38,7 +39,8 @@ const endPoints = {
     recipeEdnpoint,
     listAllAreas,
     listAllCategories,
-    listAllIngredients
+    listAllIngredients,
+    loggoutEndpoint
 };
 
 export default endPoints;

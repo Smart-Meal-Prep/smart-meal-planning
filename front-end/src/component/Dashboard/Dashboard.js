@@ -7,7 +7,7 @@ import UserInfo from '../../config/UserInfo.js';
 import '../../styles/Dashboard.css'
 
 const Dashboard = () => {
-    const { userInformation, setUserInformation } = useContext(UserInfo);
+    const { userInformation, setUserInformation, status, setStatus } = useContext(UserInfo);
 
     useEffect(() => { /*Needs test case by front-end team*/
         const findUserInfo = async () => {
@@ -40,7 +40,7 @@ const Dashboard = () => {
 
     return (
         <div >
-            <NavigationBar username={userInformation.username} />
+            <NavigationBar username={userInformation.username} loggedin={status.LoggedIn} setStatus={setStatus} />
             <Dashboardbody />
             <DashboardFooter />
         </div>
