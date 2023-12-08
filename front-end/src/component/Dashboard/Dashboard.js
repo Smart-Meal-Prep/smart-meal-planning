@@ -40,7 +40,7 @@ const Dashboard = () => {
 
     return (
         <div >
-            <NavigationBar username={userInformation.username} loggedin={status.LoggedIn} setStatus={setStatus} />
+            <NavigationBar />
             <Dashboardbody />
             <DashboardFooter />
         </div>

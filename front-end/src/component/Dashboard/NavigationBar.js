@@ -1,17 +1,20 @@
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import cooking_icon from "../../assets/cooking_icon.png"
 import { useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import cooking_icon from "../../assets/cooking_icon.png"
+import UserInfo from '../../config/UserInfo';
 import endPoints from '../../config/fetch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/NavigationBar.css'
 
-const NavigationBar = (props) => {
+const NavigationBar = () => {
     /*We need to redirect using the react-router-dom Link instead because using any other will refresh the page, thus context */
     const navigate = useNavigate();
+    const { userInformation, setUserInformation, status, setStatus } = useContext(UserInfo);
 
     const Loggout = async () => {
-        if (!props.loggedin) {
+        if (!status.LoggedIn) {
             return;
         };
         try {
@@ -19,7 +22,12 @@ const NavigationBar = (props) => {
             if (response.ok) {
                 const res = await response.json();
                 console.log(res);
-                props.setStatus(false);//sets loggin in false
+                setStatus(false);
+                setUserInformation({
+                    username: null,
+                    email: null,
+                    id: null
+                });
                 document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";//deletes cookie
                 window.location.reload();
                 navigate("/");
@@ -46,7 +54,7 @@ const NavigationBar = (props) => {
                     <Nav.Link as={Link} to="/inventory" className='nav-item'>Inventory</Nav.Link>
                     <Nav.Link as={Link} to="#" className='nav-item'>Calendar</Nav.Link>
                     <Nav.Link as={Link} to="/recipes" className='nav-item'>Recipes</Nav.Link>
-                    {props.username ? <div></div> :
+                    {userInformation.username ? <div></div> :
                         <Nav.Link as={Link} to="/login" className='nav-item'>Sign In</Nav.Link>}
                     <NavDropdown className='nav-item' title="Profile" id="navbarDropdownMenuLink">
                         <NavDropdown.Item as={Link} to="/profile" className='profile-text'>View settings</NavDropdown.Item>
