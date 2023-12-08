@@ -12,7 +12,6 @@ const NavigationBar = (props) => {
 
     const Loggout = async () => {
         if (!props.loggedin) {
-            alert("Not logged in");
             return;
         };
         try {
