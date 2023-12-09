@@ -7,7 +7,7 @@ import UserInfo from '../../config/UserInfo.js';
 import '../../styles/Dashboard.css'
 
 const Dashboard = () => {
-    const { userInformation, setUserInformation, status, setStatus } = useContext(UserInfo);
+    const { setUserInformation } = useContext(UserInfo);
 
     useEffect(() => {
         const findUserInfo = async () => {
