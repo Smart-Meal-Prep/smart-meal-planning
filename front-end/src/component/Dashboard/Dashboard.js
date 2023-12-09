@@ -9,7 +9,7 @@ import '../../styles/Dashboard.css'
 const Dashboard = () => {
     const { setUserInformation } = useContext(UserInfo);
 
-    useEffect(() => { /*Needs test case by front-end team*/
+    useEffect(() => {
         const findUserInfo = async () => {
             try {
                 const response = await fetch(endPoints.loginEndpoint, {
