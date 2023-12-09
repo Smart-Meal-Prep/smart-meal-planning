@@ -1,5 +1,8 @@
+/*Hard code local varibles*/
+const inProd = true;
+
 /*Folder containing endpoint urls*/
-const backendEndpoint = "http://localhost:3001/"
+const backendEndpoint = inProd ? "https://smart-meals-back-end.onrender.com/" : "http://localhost:3001/";
 
 /*user endpoints*/
 const registerEndpoint = `${backendEndpoint}user/registration`;
