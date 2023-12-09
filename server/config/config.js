@@ -1,28 +1,28 @@
-const env = require('./settings.js')
+require('dotenv').config();
 
 module.exports = {
     development: {
-        username: env.USERNAME,
-        password: env.PASSWORD,
-        database: env.DATABASE,
-        host: env.HOST,
+        username: process.env.USER_NAME,
+        password: process.env.PASSWORD,
+        database: process.env.DATABASE,
+        host: process.env.HOST,
         dialect: "postgresql",
-        port: env.PORT
+        port: process.env.PORT
     },
     test: {
-        username: env.USERNAME,
-        password: env.PASSWORD,
-        database: env.DATABASE,
-        host: env.HOST,
+        username: process.env.USER_NAME,
+        password: process.env.PASSWORD,
+        database: process.env.DATABASE,
+        host: process.env.HOST,
         dialect: "postgresql",
-        port: env.PORT
+        port: process.env.PORT
     },
     production: {
-        username: env.USERNAME,
-        password: env.PASSWORD,
-        database: env.DATABASE,
-        host: env.HOST,
+        username: process.env.USER_NAME,
+        password: process.env.PASSWORD,
+        database: process.env.DATABASE,
+        host: process.env.HOST,
         dialect: "postgresql",
-        port: env.PORT
+        port: process.env.PORT
     }
 };
