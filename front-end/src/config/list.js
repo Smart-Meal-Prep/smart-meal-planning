@@ -1,24 +1,158 @@
 /*file for getting lists of ingredients, areas, and categories for meals*/
 import endPoints from "./fetch";
- 
+
 /*Ingredients sorted into categories */
 const ingredientsByCategory = {
-    meat: ['Chicken', 'Beef', 'Pork', 'Bacon', 'Beef Brisket', 'Beef Fillet', 'Chicken Breast', 'Chicken Breasts', 'Chicken Legs', 'Chicken Thighs', 'Chorizo', 'Doner Meat', 'Italian Fennel Sausages', 'Lamb', 'Lamb Loin Chops', 'Lamb Mince', 'Sausages', 'Duck', 'Duck Legs', 'Goose Fat', 'Duck Fat', 'Lamb Leg', 'Lamb Shoulder', 'Turkey Mince', 'Minced Beef', 'Lean Minced Beef', 'Beef Shin', 'Pork Chops', 'Beef Kidney', 'Lamb Kidney'],
-    fishSeafood: ['Salmon', 'Mackerel', 'King Prawns', 'Fish Sauce', 'Cod', 'Salt Cod', 'Oysters', 'Haddock', 'Smoked Haddock', 'Prawns', 'Anchovy Fillet', 'Red Snapper', 'Squid', 'Baby Squid', 'Monkfish', 'Mussels', 'Clams', 'Crab'],
-    vegetables: ['Asparagus', 'Aubergine', 'Broccoli', 'Carrots', 'Celeriac', 'Celery', 'Charlotte Potatoes', 'Cucumber', 'Egg Plants', 'Fennel Bulb', 'Garlic', 'Ginger', 'Jerusalem Artichokes', 'Kale', 'Leek', 'Little Gem Lettuce', 'Mushrooms', 'Onions', 'Peas', 'Potatoes', 'Rocket', 'Spinach', 'Squash', 'Sugar Snap Peas', 'Turnips', 'Zucchini', 'Bell Peppers', 'Red Onion', 'Cabbage'],
-    fruits: ['Apple', 'Banana', 'Avocado', 'Bramley Apples', 'Cherry Tomatoes', 'Baby Plum Tomatoes', 'Lemons', 'Oranges', 'Raspberries', 'Blueberries', 'Strawberries', 'Peaches', 'Apricot', 'Pineapple', 'Mango', 'Grapes', 'Cherries', 'Lemon', 'Watermelon', 'Kiwi', 'Pears', 'Figs', 'Rhubarb', 'Tomatoes'],
-    dairy: ['Butter', 'Cheese', 'Cheddar Cheese', 'Cheese Curds', 'Cubed Feta Cheese', 'Cream', 'Creme Fraiche', 'Feta', 'Gouda Cheese', 'Mozzarella Balls', 'Parmesan', 'Parmesan Cheese', 'Parmigiano-reggiano', 'Colby Jack Cheese', 'Cream Cheese', 'Goats Cheese', 'Mascarpone', 'Ricotta', 'Gruyère', 'Monterey Jack Cheese', 'Sour Cream', 'Milk', 'Double Cream', 'Full Fat Yogurt', 'Greek Yogurt', 'Semi-skimmed Milk', 'Whole Milk'],
-    pantry: ['Baking Powder', 'Bicarbonate Of Soda', 'Black Treacle', 'Biryani Masala', 'Black Pepper', 'Borlotti Beans', 'Bowtie Pasta', 'Breadcrumbs', 'Brown Lentils', 'Brown Rice', 'Brown Sugar', 'Cacao', 'Cajun', 'Canned Tomatoes', 'Cannellini Beans', 'Cardamom', 'Cashew Nuts', 'Cashews', 'Caster Sugar', 'Cayenne Pepper', 'Chickpeas', 'Chili Powder', 'Chopped Tomatoes', 'Cinnamon', 'Cinnamon Stick', 'Clove', 'Coco Sugar', 'Cocoa', 'Coconut Cream', 'Coconut Milk', 'Condensed Milk', 'Coriander Seeds', 'Cornstarch', 'Cumin Seeds', 'Curry Powder', 'Dark Brown Sugar', 'Dark Soft Brown Sugar', 'Demerara Sugar', 'Digestive Biscuits', 'Dill', 'Enchilada Sauce', 'Farfalle', 'Flaked Almonds', 'Flour', 'Flour Tortilla', 'Garam Masala', 'Garlic Powder', 'Ginger Garlic Paste', 'Harissa Spice', 'Italian Seasoning', 'Lasagne Sheets', 'Lentils', 'Mint', 'Mustard', 'Mustard Powder', 'Nutmeg', 'Oatmeal', 'Oats', 'Paprika', 'Parsley', 'Peanut Butter', 'Pecorino', 'Penne Rigate', 'Pepper', 'Pine Nuts', 'Plain Chocolate', 'Plain Flour', 'Plum Tomatoes', 'Potatoes', 'Puff Pastry', 'Rice', 'Rosemary', 'Sage', 'Salsa', 'Salt', 'Sea Salt', 'Self-raising Flour', 'Sesame Seed', 'Shallots', 'Shortcrust Pastry', 'Smoked Paprika', 'Smoky Paprika', 'Spaghetti', 'Sultanas', 'Sunflower Oil', 'Tamarind Paste', 'Thyme', 'Turmeric', 'Vanilla Extract', 'White Vinegar', 'White Chocolate Chips', 'Whole Wheat', 'Yeast', 'Allspice', 'Bouquet Garni', 'Vanilla'],
-    herbsSpices: ['Basil', 'Basil Leaves', 'Bay Leaf', 'Bay Leaves', 'Black Pepper', 'Cajun', 'Cardamom', 'Cayenne Pepper', 'Chili Powder', 'Cilantro', 'Cinnamon', 'Cinnamon Stick', 'Cloves', 'Coriander', 'Coriander Leaves', 'Cumin', 'Curry Powder', 'Dill', 'Fennel Seeds', 'Garam Masala', 'Garlic', 'Garlic Clove', 'Garlic Powder', 'Ginger', 'Italian Seasoning', 'Mint', 'Mustard', 'Mustard Powder', 'Nutmeg', 'Oregano', 'Paprika', 'Parsley', 'Rosemary', 'Sage', 'Thyme', 'Turmeric', 'Cumin Seeds', 'Fenugreek', 'Harissa Spice', 'Ground Almonds', 'Ground Cumin', 'Ground Ginger', 'Ground Pork', 'Ground Beef', 'Cocoa', 'Pumpkin Pie Spice', 'Saffron', 'Sesame Seed', 'Sichuan Pepper'],
-    grainsPasta: ['Basmati Rice', 'Bowtie Pasta', 'Brown Rice', 'Couscous', 'Farfalle', 'Jasmine Rice', 'Macaroni', 'Penne Rigate', 'Rice', 'Spaghetti', 'Tagliatelle', 'Fettuccine', 'Cannellini Beans', 'Borlotti Beans', 'Black Beans', 'Lentils', 'Quinoa', 'Rigatoni', 'Risotto Rice', 'Rolled Oats', 'Udon Noodles', 'Rice Noodles', 'Rice Stick Noodles', 'Rice Vermicelli'],
-    bakery: ['Bread', 'Breadcrumbs', 'Challah', 'Ciabatta', 'Croissants', 'Corn Tortillas', 'English Muffins', 'Flatbread', 'Naan Bread', 'Pita Bread', 'Baguette', 'Tortillas'],
-    sweetsSnacks: ['Chocolate Chips', 'Marshmallows', 'Candy Canes', 'Pretzels', 'Caramel', 'Toffee Popcorn', 'Maple Syrup', 'Icing Sugar', 'Brownie Mix', 'Peanut Brittle', 'Jam', 'Honey', 'Gelatine Leafs', 'Powdered Sugar', 'Chocolate Bar', 'Caramel Sauce', 'Marshmallow Fluff', 'M&Ms', 'Nutella'],
-    condimentsSauces: ['Apple Cider Vinegar', 'Balsamic Vinegar', 'BBQ Sauce', 'Burger Sauce', 'Caesar Dressing', 'Chimichurri Sauce', 'Chipotle Sauce', 'Coconut Aminos', 'Fish Sauce', 'Hot Sauce', 'Ketchup', 'Mayonnaise', 'Mustard', 'Pesto', 'Soy Sauce', 'Sweet Chilli Sauce', 'Tabasco Sauce', 'Tahini', 'Teriyaki Sauce', 'Worcestershire Sauce', 'Tomato Ketchup', 'Tomato Puree', 'Tomato Sauce'],
-    oilsVinegars: ['Extra Virgin Olive Oil', 'Olive Oil', 'Vegetable Oil', 'Sesame Seed Oil', 'White Vinegar', 'Red Wine Vinegar', 'Balsamic Vinegar', 'Apple Cider Vinegar'],
-    beverages: ['Red Wine', 'White Wine', 'Beer', 'Whiskey', 'Rum', 'Vodka', 'Gin', 'Tequila', 'Brandy', 'Baileys', 'Cointreau', 'Triple Sec', 'Prosecco', 'Champagne', 'Cider', 'Lemonade', 'Orange Juice', 'Cranberry Juice', 'Coconut Water', 'Tonic Water', 'Sparkling Water', 'Ginger Beer', 'Cola', 'Iced Tea', 'Coffee', 'Tea', 'Milk', 'Soda'],
-    frozen: ['Ice Cream', 'Frozen Vegetables', 'Frozen Fruits', 'Frozen Pizza', 'Frozen Chicken', 'Frozen Shrimp'],
-    miscellaneous: ['Eggs', 'Floury Potatoes', 'Chicken Stock', 'Free-range Eggs', 'Fresh Basil', 'Fresh Thyme', 'Lemon Zest', 'Orange Zest', 'Vanilla', 'Mushrooms', 'Raisins', 'Dried Fruit', 'Olives', 'Pickles', 'Capres', 'Capers', 'Anchovies', 'Canned Beans', 'Canned Corn', 'Canned Peas', 'Canned Chickpeas', 'Canned Tuna', 'Canned Salmon', 'Canned Sardines', 'Canned Pineapple', 'Canned Coconut Milk', 'Canned Tomatoes', 'Canned Soup', 'Canned Broth', 'Canned Condensed Milk', 'Canned Coconut Cream', 'Canned Pasta Sauce', 'Canned Fruit Cocktail', 'Canned Peach', 'Canned Mandarin Oranges', 'Canned Green Beans', 'Canned Black Beans', 'Canned Kidney Beans', 'Canned Cannellini Beans'],
-};
+    "Meat and Poultry": [
+        "Chicken", "Salmon", "Beef", "Pork", "Lamb", "Veal", "Duck",
+        "Chicken Legs", "Chicken Breasts", "Chicken Thighs", "Chicken Stock", "Chicken Stock Cube",
+        "Duck Legs", "Chicken Stock Concentrate", "Beef Brisket", "Beef Fillet", "Beef Gravy",
+        "Beef Stock", "Lamb Loin Chops", "Lamb Mince", "Lamb Leg", "Lamb Shoulder",
+        "Bacon", "Doner Meat", "Italian Fennel Sausages", "Sausages", "Beef Shin", "Haddock",
+        "Smoked Haddock", "Lamb Kidney", "Beef Kidney", "Oxtail", "Cod", "Salt Cod", "Goat Meat",
+        "Ground Pork", "Pork Chops", "Anchovy Fillet", "Herring", "Kielbasa",
+        "Polish Sausage", "Mulukhiyah", "Sardines", "Lean Minced Beef", "Mackerel", "Raw King Prawns", "Prawns"
+    ],
+    "Vegetables and Fruits": [
+        "Avocado", "Asparagus", "Aubergine", "Baby Plum Tomatoes", "Broccoli",
+        "Carrots", "Celery", "Cherry Tomatoes", "Celeriac", "Chinese Broccoli", "Cucumber",
+        "Egg Plants", "Garlic", "Ginger", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Potatoes",
+        "Red Onions", "Spinach", "Squash", "Stir-fry Vegetables", "Strawberries", "Sugar Snap Peas",
+        "Tomato", "Yellow Pepper", "Green Pepper", "Courgettes", "Red Pepper", "Brussels Sprouts",
+        "Raisins", "Currants", "Apples", "Apricot", "Butternut Squash", "Goose Fat", "Tinned Tomatos",
+        "Chestnuts", "Wild Mushrooms", "Truffle Oil", "Lentils", "Roasted Vegetables", "Kidney Beans",
+        "Mixed Grain", "Cabbage", "Shiitake Mushrooms", "Fennel", "Swede", "Redcurrants",
+        "Blackberries", "Braeburn Apples", "Pears", "Cherry",
+        "Black Pudding", "White Flour", "Figs", "Beetroot", "Fennel Bulb", "King Prawns",
+        "Star Anise", "Tiger Prawns", "Persian Cucumber", "Rhubarb", "Charlotte Potatoes", "Chestnut Mushroom",
+        "Green Beans", "Grape Tomatoes", "Green Chilli", "Turnips", "Tomatoes", "Zucchini", "Baby Squid", "Squid"
+    ],
+    "Sweeteners and Vinegars": [
+        "Apple Cider Vinegar", "Balsamic Vinegar", "Demerara Sugar", "Golden Syrup", "Granulated Sugar",
+        "Muscovado Sugar", "Brown Sugar", "White Chocolate Chips", "Dark Chocolate Chips",
+        "Light Brown Soft Sugar", "Dark Brown Soft Sugar", "Vanilla Extract", "Dark Rum",
+        "Light Rum", "Rum", "Red Wine Jelly", "Sherry", "White Wine Vinegar", "Malt Vinegar", "Rice Vinegar",
+        "Cider", "Vinegar", "Caster Sugar", "Coco Sugar", "Honey", "Dark Brown Sugar", "Dark Soft Brown Sugar"
+    ],
+    "Flour and Grains": [
+        "Baking Powder", "Bicarbonate Of Soda", "Cacao", "Cocoa", "Flour", "Self-raising Flour",
+        "Plain Chocolate", "Plain Flour", "Rice", "Rice Noodles", "Rice Stick Noodles", "Rice Vermicelli",
+        "Rigatoni", "Farfalle", "Macaroni", "Pappardelle Pasta", "Paccheri Pasta", "Linguine Pasta",
+        "Tagliatelle", "Fettuccine", "Vermicelli Pasta", "Udon Noodles", "Couscous", "Shortcrust Pastry",
+        "Puff Pastry", "Naan Bread", "Baguette", "Crusty Bread", "Ciabatta", "English Muffins", "Muffins",
+        "Filo Pastry", "Corn Flour", "Oatmeal", "Oats", "Bread", "Breadcrumbs", "Pretzels", "Mussels",
+        "Fideo", "Monkfish", "Clams", "Passata", "Gelatine Leafs", "Tortillas", "Wonton Skin",
+        "Sushi Rice", "Bulgur Wheat", "Quinoa", "Basmati Rice", "Bowtie Pasta", "Corn Tortillas",
+        "Flour Tortilla", "Lasagne Sheets", "Rolled Oats", "Whole Wheat", "Wholegrain Bread", "Bread Rolls",
+        "Bun", "Potatoe Buns", "Pita Bread"
+    ],
+    "Dairy and Dairy Substitutes": [
+        "Black Treacle", "Butter", "Challots", "Cheddar Cheese", "Cheese", "Cheese Curds",
+        "Cubed Feta Cheese", "Cream", "Creme Fraiche", "Custard", "Double Cream", "Feta",
+        "Fromage Frais", "Ghee", "Gouda Cheese", "Heavy Cream", "Mascarpone",
+        "Mozzarella Balls", "Parmesan", "Parmesan Cheese", "Parmigiano-reggiano", "Shredded Mexican Cheese",
+        "Shredded Monterey Jack Cheese", "Single Cream", "Sour Cream", "Clotted Cream", "Cream Cheese",
+        "Unsalted Butter", "Butter Beans", "Peanut Butter", "Peanut Oil", "Peanut Brittle",
+        "Vegan Butter", "Icing Sugar", "Creamed Corn", "Mayonnaise", "Shortening", "Condensed Milk",
+        "Whole Milk", "Semi-skimmed Milk", "Soya Milk", "Almond Milk", "Milk", "Chilled Butter", "Mozzarella",
+        "Salted Butter", "Cheese Slices"
+    ],
+    "Herbs and Spices": [
+        "Basil", "Basil Leaves", "Bay Leaf", "Bay Leaves", "Cardamom", "Cayenne Pepper", "Chilli",
+        "Chilli Powder", "Cinnamon", "Cinnamon Stick", "Cloves", "Coriander", "Coriander Leaves",
+        "Coriander Seeds", "Cumin", "Cumin Seeds", "Curry Powder", "Dill", "Fennel Seeds", "Fenugreek",
+        "Garam Masala", "Garlic Powder", "Harissa Spice", "Italian Seasoning", "Madras Paste", "Marjoram",
+        "Massaman Curry Paste", "Oregano", "Paprika", "Parsley", "Red Chile Flakes", "Sage", "Saffron",
+        "Tamarind Ball", "Tamarind Paste", "Thai Fish Sauce", "Thai Green Curry Paste",
+        "Thai Red Curry Paste", "Thyme", "Turmeric", "Turmeric Powder", "Ras el hanout", "Mixed Spice",
+        "Biryani Masala", "Cajun", "Celery Salt", "Chopped Parsley", "Dried Oregano", "Ginger Garlic Paste",
+        "Ginger Paste", "Little Gem Lettuce", "Nutmeg"
+    ],
+    "Sauces and Condiments": [
+        "Black Pepper", "Salt", "Sea Salt", "Onion Salt", "Kosher Salt", "Hot Beef Stock",
+        "White Vinegar", "Dark Soy Sauce", "Soy Sauce", "Worcestershire Sauce", "Fish Sauce",
+        "Oyster Sauce", "Tomato Ketchup", "Tomato Puree", "Dijon Mustard",
+        "English Mustard", "Mustard", "Mustard Powder", "Mustard Seeds", "Tabasco Sauce", "Sriracha",
+        "Pickle Juice", "Rice wine", "Cooking wine", "Duck Sauce", "Gochujang", "Enchilada Sauce",
+        "Fajita Seasoning", "Garlic Sauce", "Sake", "Salsa", "Vinaigrette Dressing", "Barbeque Sauce",
+        "Tomato Sauce", "Jerk"
+    ],
+    "Nuts and Seeds": [
+        "Cashew Nuts", "Cashews", "Flaked Almonds", "Ground Almonds", "Peanuts", "Pecorino",
+        "Pine Nuts", "Sesame Seed", "Almonds", "Walnuts", "Pecan Nuts", "Hazlenuts"
+    ],
+    "Legumes": [
+        "Cannellini Beans", "Borlotti Beans", "Chickpeas", "Pinto Beans", "Haricot Beans",
+        "Black Beans", "Butter Beans", "Kidney Beans", "Lentils", "French Lentils", "Green Red Lentils",
+        "Brown Lentils", "Refried Beans", "Toor Dal"
+    ],
+    "Cheese and Yogurt": [
+        "Colby Jack Cheese", "Greek Yogurt", "Full Fat Yogurt", "Yogurt", "Stilton Cheese", "Brie"
+    ],
+    "Coconut Products": [
+        "Coconut Cream", "Coconut Milk", "Desiccated Coconut"
+    ],
+    "Flavorings": [
+        "Ground Cumin", "Ground Ginger", "Smoked Paprika", "Smoky Paprika", "Vanilla", "Lemon Juice",
+        "Lemon Zest", "Lime", "Soy Sauce", "Worcestershire Sauce"
+    ],
+    "Eggs and Egg Substitutes": [
+        "Egg", "Meringue Nests", "Minced Garlic", "Miniature Marshmallows", "Eggs", "Free-range Egg, Beaten",
+        "Free-range Eggs, Beaten", "Egg White", "Egg Yolks", "Flax Eggs"
+    ],
+    "Proteins": [
+        "Chorizo", "Doner Meat", "Italian Fennel Sausages", "Parma Ham", "Prosciutto", "Bacon",
+        "Sausages", "Kielbasa", "Polish Sausage", "Anchovy Fillet", "Herring", "Smoked Haddock", "Clams",
+        "Mussels", "Monkfish", "Haddock", "Chicken Stock Cube", "Beef Stock Concentrate",
+        "Goat Meat", "Oxtail", "Ground Pork", "Pork Chops", "Cod", "Salt Cod", "Turkey Mince",
+        "Ground Beef", "Minced Pork", "Lamb Kidney", "Beef Kidney", "Beef Shin", "Cannellini Beans",
+        "Borlotti Beans", "Chickpeas", "Pinto Beans", "Haricot Beans", "Black Beans", "Butter Beans",
+        "Kidney Beans", "Lentils", "French Lentils", "Green Red Lentils", "Colby Jack Cheese",
+        "Greek Yogurt", "Full Fat Yogurt", "Yogurt", "Lean Minced Beef", "Mackerel", "Raw King Prawns",
+        "Prawns", "Chicken Breast", "Tofu", "Doubanjiang", "Fermented Black Beans", "Smoked Salmon"
+    ],
+    "Sweeteners and Dessert Ingredients": [
+        "Raspberry Jam", "Peanut Butter", "Jam", "Orange Blossom Water", "Candied Peel", "Grand Marnier",
+        "Sherry", "Rose water", "Maple Syrup", "Light Brown Soft Sugar", "Dark Brown Soft Sugar",
+        "Dark Chocolate Chips", "Milk Chocolate", "Dark Chocolate", "Caramel", "Caramel Sauce", "Cream Cheese",
+        "Icing Sugar", "Toffee Popcorn", "Gelatine Leafs", "Peanut Brittle", "Apricot Jam", "Marzipan",
+        "Almonds", "Mixed Peel", "Redcurrants", "Blackberries", "Braeburn Apples", "Pears",
+        "Cherry", "Apricot", "Black Pudding", "White Flour", "Figs", "Beetroot", "Fennel Bulb", "King Prawns",
+        "Star Anise", "Tiger Prawns", "Persian Cucumber", "Rhubarb", "Goose Fat", "Chocolate Chips", "Meringue Nests",
+        "Sugar", "Powdered Sugar", "Mincemeat"
+    ],
+    "Liquids and Beverages": [
+        "Water", "Cold Water", "Warm Water", "Boiling Water", "Rice wine", "Water Chestnut", "Cider",
+        "Stout", "Vine Leaves", "Tamarind Ball", "Tamarind Paste",
+        "Sherry", "Red Wine", "White Wine", "White Chocolate", "English Mustard", "Mustard", "Mustard Powder",
+        "Mustard Seeds", "White Chocolate Chips", "Dry White Wine", "Ginger Cordial", "Lemon Juice", "Sake"
+    ],
+    "Cooking Oils": [
+        "Oil", "Truffle Oil", "Olive Oil", "Extra Virgin Olive Oil", "Canola Oil", "Sesame Seed Oil", "Peanut Oil",
+        "Vegetable Oil", "Rapeseed Oil", "Sunflower Oil"
+    ],
+    "Chilies and Peppers": [
+        "Allspice", "Ancho Chillies", "Cayenne Pepper", "Chili Powder", "Paprika",
+        "Red Chile Flakes", "Sichuan Pepper", "Green Chilli", "Jalapeno", "Red Chilli", "Red Pepper Flakes", "Scotch Bonnet"
+    ],
+    "Alcohol": [
+        "Rum", "Dark Rum", "Light Rum", "Star Anise", "Vanilla", "Dry White Wine", "Sake"
+    ],
+    "Desserts": [
+        "Ice Cream", "Custard", "Mars Bar", "Raspberry Jam", "Peanut Brittle", "Toffee Popcorn", "Jam",
+        "Maple Syrup", "Light Brown Soft Sugar", "Dark Brown Soft Sugar", "Dark Chocolate Chips",
+        "Milk Chocolate", "Dark Chocolate", "Pumpkin", "Shortcrust Pastry", "Christmas Pudding", "Meringue Nests"
+    ],
+    "Miscellanous": [
+        "Coco Sugar", "Jalapeno", "Jerusalem Artichokes", "Khus Khus", "Medjool Dates", "Shallots", "Sultanas",
+        "Toor Dal", "Tuna", "Vegetable Stock Cube", "White Fish", "White Fish Fillets", "Wood Ear Mushrooms", "Suet",
+        "Ham", "Oysters", "Lard", "Red Food Colouring", "Pink Food Colouring", "Blue Food Colouring", "Yellow Food Colouring",
+        "Yeast", "Fruit Mix", "Dried Fruit", "Glace Cherry", "Treacle", "Bouquet Garni", "Tarragon Leaves", "Chives",
+        "Custard Powder", "Frozen Peas", "Sun-Dried Tomatoes", "Bean Sprouts", "Noodles", "Tripe", "Sweetcorn", "Dried Apricots",
+        "Capers", "Banana", "Raspberries", "Peanut Cookies", "Peaches", "Paneer", "Tahini", "Mirin", "Suet", "Prunes"
+    ]
+}
+
 
 /*Maps */
 const ingredients = new Map();
@@ -114,8 +248,6 @@ getIngredients();
 getCategories();
 getAreas();
 createIngredientOptions();
-
-console.log(ingredientsOptionsByCategory);
 
 const lists = {
     ingredients,

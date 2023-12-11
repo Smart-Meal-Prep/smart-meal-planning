@@ -5,42 +5,22 @@ import 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../styles/InventoryBody.css';
 
-
 const InventoryBody = (props) => {
     const {
         handleAdding,
         handleRemove,
-        handleUpdateAmount,
-        selectedItemId,
-        setSelectedItemId,
         ingredient,
         setIngredient,
-        quantity,
-        setQuantity
     } = props.value;
 
+    const ingredientsByCategory = lists.ingredientsByCategory;
 
-    const categories = [
-        ['Meat', 'meat'],
-        ['Fish/Seafood', 'fishSeafood'],
-        ['Vegetables', 'vegetables'],
-        ['Fruits', 'fruits'],
-        ['Dairy', 'dairy'],
-        ['Pantry', 'pantry'],
-        ['Herbs/Spices', 'herbsSpices'],
-        ['Grains/Pasta', 'grainsPasta'],
-        ['Bakery', 'bakery'],
-        ['Sweets/Snacks', 'sweetsSnacks'],
-        ['Condiments/Sauces', 'condimentsSauces'],
-        ['Oils/Vinegars', 'oilsVinegars'],
-        ['Beverages', 'beverages'],
-        ['Frozen', 'frozen'],
-        ['Miscellaneous', 'miscellaneous'],
-    ];
+    let categories = [];
+    for (let key in ingredientsByCategory) {
+        categories.push(key);
+    }
 
     const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-
-    const ingredientsByCategory = lists.ingredientsByCategory;
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -82,7 +62,7 @@ const InventoryBody = (props) => {
                                         }`}
                                     onClick={() => handleCategoryClick(category)}
                                 >
-                                    {category[0]}
+                                    {category}
                                 </button>
                             ))}
                         </div>
@@ -90,11 +70,11 @@ const InventoryBody = (props) => {
 
                     {/* Inventory Checklist */}
                     <div className="col-md-6">
-                        <h2 className="title">{selectedCategory ? selectedCategory[0] : 'Inventory Checklist'}</h2>
+                        <h2 className="title">{selectedCategory ? selectedCategory : 'Inventory Checklist'}</h2>
                         <Select
-                            options={lists.ingredientsOptionsByCategory[selectedCategory[1]]}
+                            options={lists.ingredientsOptionsByCategory[selectedCategory]}
                             value={ingredient}
-                            placeholder={`Search Ingredients in ${selectedCategory[0]}...`}
+                            placeholder={`Search Ingredients in ${selectedCategory}...`}
                             components={{
                                 Option: CustomOption
                             }}
@@ -102,7 +82,7 @@ const InventoryBody = (props) => {
 
                         {selectedCategory ? (
                             <ul className="list-group ingredients">
-                                {ingredientsByCategory[selectedCategory[1]].map((ingredient) => {
+                                {ingredientsByCategory[selectedCategory].map((ingredient) => {
                                     const isInInventory = props.userInventory.find(i => i.ingredient === ingredient);
                                     return (
                                         <li key={ingredient} className="list-group-item">
@@ -130,7 +110,7 @@ const InventoryBody = (props) => {
 
                     <div className="col-md-3">
                         <h2 className="title">Inventory</h2>
-                        <Select 
+                        <Select
                             options={lists.ingredientsOptions}
                             value={ingredient}
                             placeholder='Search All Ingredients...'
