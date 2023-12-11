@@ -1,12 +1,12 @@
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import cooking_icon from "../assets/cooking_icon.png"
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
-import cooking_icon from "../../assets/cooking_icon.png"
-import UserInfo from '../../config/UserInfo';
-import endPoints from '../../config/fetch';
+import UserInfo from '../config/UserInfo';
+import endPoints from '../config/fetch';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../styles/NavigationBar.css'
+import '../styles/NavigationBar.css'
 
 const NavigationBar = () => {
     /*We need to redirect using the react-router-dom Link instead because using any other will refresh the page, thus context */
@@ -65,5 +65,4 @@ const NavigationBar = () => {
         </Navbar>
     );
 };
-
 export default NavigationBar;

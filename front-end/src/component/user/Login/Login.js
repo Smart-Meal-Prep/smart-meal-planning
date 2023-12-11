@@ -38,7 +38,7 @@ const Login = () => {
             const res = await fetch(endPoints.loginEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: requestBody,
                 credentials: 'include' // Include credentials in the request to allow browser to send cookis

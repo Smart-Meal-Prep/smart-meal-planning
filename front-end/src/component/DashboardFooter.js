@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import '../../styles/DashboardFooter.css'
+import '../styles/DashboardFooter.css'
 
 const DashboardFooter = () => {
     return (

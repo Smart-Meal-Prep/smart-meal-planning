@@ -1,6 +1,5 @@
 const express = require('express');
 const session = require('express-session');
-require('dotenv').config();
 const cors = require('cors');
 const app = express();
 app.use(express.json());
@@ -18,8 +17,9 @@ app.use(session({
 }));
 
 //Allow cookies in front-end
+const prodOrigin = true;
 app.use(cors({
-    origin: 'http://localhost:3000', // Specify the allowed origin
+    origin: prodOrigin ? 'https://smart-meal-prep.github.io' : 'http://localhost:3000',// Specify the allowed origin
     credentials: true, // Allow credentials (cookies)
 }));
 
@@ -33,10 +33,12 @@ app.use('/inventory', inventoryRouter);
 app.use('/profile', profileRouter);
 app.use('/recipes', recipeRouter);
 
+//Port
+const port = process.env.PORT || 3001;
 
 db.sequelize.sync().then(() => {
-    app.listen(3001, () => {
-        console.log("Server running on port 3001");//host http://localhost:3001/user
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);//host http://localhost:3001/user
     });
 });
 
