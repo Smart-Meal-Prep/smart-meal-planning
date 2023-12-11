@@ -149,7 +149,7 @@ const ingredientsByCategory = {
         "Ham", "Oysters", "Lard", "Red Food Colouring", "Pink Food Colouring", "Blue Food Colouring", "Yellow Food Colouring",
         "Yeast", "Fruit Mix", "Dried Fruit", "Glace Cherry", "Treacle", "Bouquet Garni", "Tarragon Leaves", "Chives",
         "Custard Powder", "Frozen Peas", "Sun-Dried Tomatoes", "Bean Sprouts", "Noodles", "Tripe", "Sweetcorn", "Dried Apricots",
-        "Capers", "Banana", "Raspberries", "Peanut Cookies", "Peaches", "Paneer", "Tahini", "Mirin", "Suet", "Prunes"
+        "Capers", "Banana", "Raspberries", "Peanut Cookies", "Peaches", "Paneer", "Tahini", "Mirin", "Prunes"
     ]
 }
 
