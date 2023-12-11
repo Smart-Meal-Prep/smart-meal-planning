@@ -1,8 +1,8 @@
 import { React, useState, useEffect, useContext } from 'react';
-import endPoints from '../../config/fetch'
-import lists from '../../config/list';
+import endPoints from '../../../config/fetch'
+import lists from '../../../config/list';
 import Select from 'react-select';
-import UserInfo from '../../config/UserInfo';
+import UserInfo from '../../../config/UserInfo';
 
 const Profile = (props) => {
 
