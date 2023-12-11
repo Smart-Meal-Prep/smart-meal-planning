@@ -15,8 +15,7 @@ const Dashboard = () => {
                 const response = await fetch(endPoints.loginEndpoint, {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
+                        'Content-Type': 'application/json'
                     },
                     credentials: 'include' // Include credentials in the request to allow browser to send cookies
                 });
