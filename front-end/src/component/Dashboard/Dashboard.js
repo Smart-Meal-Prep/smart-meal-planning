@@ -16,6 +16,7 @@ const Dashboard = () => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
                     },
                     credentials: 'include' // Include credentials in the request to allow browser to send cookies
                 });

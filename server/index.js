@@ -22,9 +22,6 @@ app.use(cors({
     credentials: true, // Allow credentials (cookies)
 }));
 
-// Handle preflight requests for all routes
-app.options('*', cors());
-
 //Routes
 const userRouter = require('./routes/Users');
 const inventoryRouter = require('./routes/Inventory');
