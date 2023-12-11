@@ -1,8 +1,8 @@
 import { React, useEffect, useContext } from 'react'
 import endPoints from '../../config/fetch.js'
-import NavigationBar from './NavigationBar.js';
+import NavigationBar from '../NavigationBar.js';
 import Dashboardbody from './Dashboardbody.js';
-import DashboardFooter from './DashboardFooter.js';
+import DashboardFooter from '../DashboardFooter.js';
 import UserInfo from '../../config/UserInfo.js';
 import '../../styles/Dashboard.css'
 

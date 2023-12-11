@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
-import Select from 'react-select';
-import endPoints from '../../config/fetch.js'
-import lists from "../../config/list.js";
-import UserInfo from "../../config/UserInfo.js";
+import endPoints from '../../../config/fetch.js'
+import lists from "../../../config/list.js";
+import UserInfo from "../../../config/UserInfo.js";
+import NavigationBar from "../../NavigationBar.js";
+import DashboardFooter from "../../DashboardFooter.js";
+import InventoryBody from "./InventoryBody.js";
 
 const Inventory = (props) => {
     const { userInformation } = useContext(UserInfo);
+    const UserId = userInformation.id;
 
     useEffect(() => {
         const updateInventory = async () => {
@@ -46,14 +49,14 @@ const Inventory = (props) => {
     const [quantity, setQuantity] = useState(0);
     const [selectedItemId, setSelectedItemId] = useState(-1); // New state to store the selected item's ID
 
-    const handleRemove = async (event) => {
-        event.preventDefault();
-        if (!selectedItemId) {
+    const handleRemove = async (event, ingredient) => {
+        event && event.preventDefault();
+        if (!ingredient) {
             return alert('Please select vaild ingredient');
         }//need to check if it matchs a vaild ingreident
         //Do fetching please add more edge cases above
         try {
-            const res = await fetch(`${endPoints.inventoryEndpoint}/${selectedItemId}/${userInformation.id}`, {
+            const res = await fetch(`${endPoints.inventoryEndpoint}/${ingredient}/${userInformation.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,8 +67,9 @@ const Inventory = (props) => {
                 const responseData = await res.json();
                 console.log('Response data:', responseData);
                 /*to update the inventory*/
-                const updatedInventory = props.userInventory.filter(item => item.id !== selectedItemId);
+                const updatedInventory = props.userInventory.filter(item => item.ingredient !== ingredient);
                 props.setUserInventory(updatedInventory);
+                setIngredient("");
                 setSelectedItemId(-1); // Clear the selected item ID
             }
             else {
@@ -78,8 +82,8 @@ const Inventory = (props) => {
         }
     };
 
-    const handleAdding = async (event) => {
-        event.preventDefault();
+    const handleAdding = async (event, ingredient) => {
+        event && event.preventDefault();
         if (!lists.ingredients.get(ingredient)) {
             return alert('Please provide a vaild ingredient');
         }//check if it matchs a vaild ingreident
@@ -88,12 +92,11 @@ const Inventory = (props) => {
             return alert('Please provide an ingredient');
         }
 
-        if (!quantity) {
-            return alert('Please provide vaild quantity');
-        }
+        // if (!quantity) {
+        //     return alert('Please provide vaild quantity');
+        // }
 
         try {
-            const UserId = userInformation.id;
             const res = await fetch(endPoints.inventoryEndpoint, {
                 method: 'POST',
                 headers: {
@@ -102,7 +105,7 @@ const Inventory = (props) => {
                 body: JSON.stringify(
                     {
                         ingredient,
-                        quantity,
+                        quantity: quantity ? quantity : 1,
                         UserId
                     }
                 )
@@ -178,52 +181,18 @@ const Inventory = (props) => {
         }
     };
 
+    let value = {
+        handleAdding,
+        handleRemove,
+        ingredient,
+        setIngredient,
+    }
+
     return (
         <div>
-            <h1>Inventory</h1>
-            <form onSubmit={handleRemove}>
-                <label>
-                    <p>Remove ingredient:</p>
-                    <select value={selectedItemId} onChange={(event) => setSelectedItemId(event.target.value)}>
-                        <option value="" disabled>Select an ingredient</option>
-                        {props.userInventory.map(item => (
-                            <option key={item.id} value={item.id}>
-                                {item.ingredient}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-                <button type="submit">Submit</button>
-            </form>
-
-            <form onSubmit={handleAdding}>
-                <label>
-                    <p>Add ingredient:</p>
-                    <Select
-                        options={lists.ingredientsOptions}
-                        onChange={(e) => setIngredient(e.label)}
-                        value={{ label: ingredient }}
-                    />
-                    <input placeholder="Quantity" type="text" onChange={(event) => setQuantity(event.target.value)} />
-                </label>
-                <button type="submit">Submit</button>
-            </form>
-
-            <form onSubmit={handleUpdateAmount}>
-                <label>
-                    <p>Update Ingredient amount:</p>
-                    <select value={selectedItemId} onChange={(event) => setSelectedItemId(event.target.value)}>
-                        <option value="" disabled>Select an ingredient</option>
-                        {props.userInventory.map(item => (
-                            <option key={item.id} value={item.id}>
-                                {item.ingredient}
-                            </option>
-                        ))}
-                    </select>
-                    <input placeholder="Quantity" type="text" onChange={(event) => setQuantity(event.target.value)} />
-                </label>
-                <button type="submit">Submit</button>
-            </form>
+            <NavigationBar />
+            <InventoryBody value={value} userInventory={props.userInventory} />
+            <DashboardFooter />
         </div>
     );
 }
