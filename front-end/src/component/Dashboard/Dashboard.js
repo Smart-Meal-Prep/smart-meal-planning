@@ -9,13 +9,13 @@ import '../../styles/Dashboard.css'
 const Dashboard = () => {
     const { setUserInformation } = useContext(UserInfo);
 
-    useEffect(() => { /*Needs test case by front-end team*/
+    useEffect(() => {
         const findUserInfo = async () => {
             try {
                 const response = await fetch(endPoints.loginEndpoint, {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     credentials: 'include' // Include credentials in the request to allow browser to send cookies
                 });

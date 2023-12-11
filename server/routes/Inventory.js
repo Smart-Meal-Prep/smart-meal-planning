@@ -1,5 +1,5 @@
 const express = require('express');
-const { getInventory, addIngredient, removeIngredient, updateAmount } = require('../controllers/Inventory');
+const { getInventory, addIngredient, removeIngredient, updateAmount } = require('../controllers/Inventory.js');
 const router = express.Router();
 
 router.get('/:UserId', getInventory);
