@@ -17,8 +17,9 @@ app.use(session({
 }));
 
 //Allow cookies in front-end
+const prodOrigin = true;
 app.use(cors({
-    origin: 'https://smart-meal-prep.github.io/smart-meal-planning',// Specify the allowed origin
+    origin: prodOrigin ? 'https://smart-meal-prep.github.io/smart-meal-planning' : 'http://localhost:3000',// Specify the allowed origin
     credentials: true, // Allow credentials (cookies)
 }));
 
