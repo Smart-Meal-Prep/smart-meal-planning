@@ -39,6 +39,7 @@ const Login = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
                 },
                 body: requestBody,
                 credentials: 'include' // Include credentials in the request to allow browser to send cookis
