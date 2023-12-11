@@ -1,6 +1,5 @@
 const express = require('express');
 const session = require('express-session');
-const hidden_secret = require('dotenv').config();
 const cors = require('cors');
 const app = express();
 app.use(express.json());
@@ -9,7 +8,7 @@ const db = require('./models')
 
 //Auth session
 app.use(session({
-    secret: hidden_secret.SECRET,//should be automatically updated over time
+    secret: process.env.SECRET,//should be automatically updated over time
     resave: false,//prevent unnecessary writes to the session store
     saveUninitialized: false,//if the session was created but no data was added to it, the session will still be saved in the store.
     cookie: {
