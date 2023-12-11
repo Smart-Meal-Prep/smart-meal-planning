@@ -58,8 +58,7 @@ const InventoryBody = (props) => {
                                 <button
                                     key={category}
                                     type="button"
-                                    className={`list-group-item list-group-item-action ${selectedCategory === category ? 'active' : ''
-                                        }`}
+                                    className={`list-group-item list-group-item-action ${selectedCategory === category ? 'active' : ''}`}
                                     onClick={() => handleCategoryClick(category)}
                                 >
                                     {category}

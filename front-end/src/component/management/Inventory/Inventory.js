@@ -184,13 +184,8 @@ const Inventory = (props) => {
     let value = {
         handleAdding,
         handleRemove,
-        handleUpdateAmount,
-        selectedItemId,
-        setSelectedItemId,
         ingredient,
         setIngredient,
-        quantity,
-        setQuantity
     }
 
     return (
