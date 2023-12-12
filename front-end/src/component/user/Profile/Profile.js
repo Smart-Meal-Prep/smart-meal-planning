@@ -238,6 +238,10 @@ const Profile = (props) => {
     }
 
     const renderContent = () => {
+        if (!props.profile) {
+            return null;
+        };
+
         switch (selectedOption) {
             case 'My Information':
                 return (
@@ -337,22 +341,22 @@ const Profile = (props) => {
 
             case 'Favorite Meals':
                 return (
-                    <div className='sub-div'>
+                    <div className='sub-div' data-testid={"Favorite-div"}>
                         <h2>TBD</h2>
                     </div>
                 );
 
             default:
                 return 'My Information';
-        }
+        };
     };
 
     return (
         <div className='profile-div'>
             <NavigationBar />
-            <div className="row">
+            <div className="row" data-testid={"profile-side-bar"}>
                 {/* Sidebar */}
-                <div className="col-md-3">
+                <div className="col-md-3" data-testid={"side-bar-buttons"}>
                     <div className="d-flex flex-column flex-shrink-0 p-3 text-white profile-bar">
                         <div className="d-md-block">
                             <p className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -393,7 +397,7 @@ const Profile = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-9 p-3">
+                <div className="col-md-9 p-3" data-testid={"side-bar-data"}>
                     {renderContent()}
                 </div>
             </div>
