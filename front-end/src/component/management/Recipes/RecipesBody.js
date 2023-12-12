@@ -1,69 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../../styles/RecipesBody.css';
+
 
 const RecipesBody = (props) => {
-    return (
-        <div>
-            <h1>Recipes</h1>
-            <h1>---------------------------------------------------------------</h1>
-            <div>
-                {props.recipes && props.recipes.map((recipe) => (
-                    <div>
-                        <div>
-                            <h2>{recipe.name}</h2>
-                            <div style={{ display: 'flex', flexwrap: 'wrap' }}>
-                                <img loading="lazy" key={recipe.name} src={recipe.thumbnail} alt="Meal pic" style={{ width: '250px', height: 'auto' }} />
-                                <div>
-                                    <h3>Ingredients</h3>
-                                    <ul>
-                                        {recipe.ingredients && recipe.ingredients.map((ingredient) => (
-                                            <li>{ingredient}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <h3>----</h3>
-                                <div>
-                                    <h3>Measurements</h3>
-                                    <ul>
-                                        {recipe.measurements && recipe.measurements.map((measurement) => (
-                                            <li>{measurement}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <h3>----</h3>
-                                <div>
-                                    <h3>Matching Ingredients</h3>
-                                    <ul>
-                                        {recipe.matchingIngredients && recipe.matchingIngredients.map((ingredient) => (
-                                            <li>{ingredient}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <h3>----</h3>
-                                <div>
-                                    <h3>Missing Ingredients</h3>
-                                    <ul>
-                                        {recipe.missingIngredients && recipe.missingIngredients.map((ingredient) => (
-                                            <li>{ingredient}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <h3>----</h3>
-                                <div>
-                                    <h3>Strength</h3>
-                                    <ul>
-                                        {recipe.strength}
-                                    </ul>
-                                </div>
-                            </div>
-                            <h4>Directions</h4>
-                            <div>{recipe.instructions}</div>
-                        </div>
-                        <h1>---------------------------------------------------------------</h1>
-                    </div>
-                ))}
-            </div>
+    const [selectedRecipe, setSelectedRecipe] = useState(null);
 
+    return (
+        <div className="recipes-body">
+            <div className="row items">
+                <div className="col-md-8 recipe-list">
+                    <h1 className="recipe-list-title">Recipes</h1>
+                    <div className="list-group recipe-list-items">
+                        {props.recipes && props.recipes.map((recipe) => {
+                            return (
+                                <div>
+                                    <button
+                                        className="list-group-item list-group-item-action meal-item"
+                                        onClick={(e) => {
+                                            setSelectedRecipe(recipe.name)
+                                            console.log(e);
+                                        }}
+                                    >
+                                        <img className="meal-img" loading="lazy" key={recipe.name} src={recipe.thumbnail} alt="Meal pic" />
+                                        <h4 className="recipe-list-item-name">{recipe.name}</h4>
+                                        <button
+                                            className="btn btn-primary favorite-button"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                console.log('add to fave button pressed')
+                                            }}
+                                        >
+                                            Add to Favorites
+                                        </button>
+                                    </button>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                <div className="col-md-4 favorite-list">
+                    <h1 className="recipe-list-title">Favorites</h1>
+                </div>
+            </div>
         </div>
     );
 }

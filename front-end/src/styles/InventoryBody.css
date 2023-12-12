@@ -28,7 +28,7 @@
     z-index: 1;
 }
 
-.title {
+.inventory-title {
     background-color: rgb(243, 228, 218);
     text-decoration: underline;
     margin-top: 2vh;
@@ -40,14 +40,14 @@
 
 }
 
-.list-group {
+.ingredients {
     text-align: center;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     justify-content: center;
 }
 
-.list-group-item {
+.inventory-item {
     background-color: rgba(255, 255, 255, 0.912);
     break-inside: avoid-column;
 }

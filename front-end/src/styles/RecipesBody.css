@@ -1,0 +1,73 @@
+.recipes-body {
+    background-color: #EAE1DC;
+    height: fit-content;
+    min-height: 1000px;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-image: url('../assets/foodpat.png');
+    background-repeat: repeat-y repeat-x;
+    background-size: contain;
+    position: relative;
+    z-index: 1;
+}
+
+.recipe-list {
+    text-align: center;
+    justify-content: space-between;
+}
+
+.favorite-list {
+    text-align: center;
+    overflow-y: scroll;
+}
+
+.recipe-list-title {
+    background-color: rgb(243, 228, 218);
+    text-decoration: underline;
+    margin-top: 2vh;
+    border-width: 100px;
+    border-radius: 10px;
+    border-color: #000000;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.meal-item {
+    width: 100%;
+    height: min-content;
+    padding: 10%;
+    padding-top: 2%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.912);
+    border-radius: 10px;
+    border-width: 10px;
+    border-color: rgb(185, 153, 132);
+    break-inside: avoid-column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.items {
+    width: auto;
+    top: auto;
+}
+
+.meal-img {
+    width: 90%;
+    height: 90%;
+}
+
+.recipe-list-items {
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-content: center;
+    margin: 2%;
+    column-gap: 5%;
+    row-gap: .2%;
+}
+
+.recipe-list-item-name {
+    text-align: center;
+}

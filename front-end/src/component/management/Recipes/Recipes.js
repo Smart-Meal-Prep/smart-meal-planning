@@ -6,7 +6,6 @@ import RecipesBody from "./RecipesBody.js";
 import DashboardFooter from "../../DashboardFooter.js";
 
 const Recipes = (props) => {
-
     const { userInformation } = useContext(UserInfo);
     const userId = userInformation.id;
 
