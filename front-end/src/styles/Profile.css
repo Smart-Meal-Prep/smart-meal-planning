@@ -1,0 +1,27 @@
+.profile-div{
+    background-color: #EAE1DC;
+    height: fit-content;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-image: url('../assets/foodpat.png');
+    background-repeat: repeat-y repeat-x;
+    background-size: contain;
+}
+
+.profile-bar{
+    height: 90vh;
+}
+
+.profile-title{
+    font-size: 30px;
+}
+
+.nav-link{
+    font-size: 20px;
+}
+
+.list-section{
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+}
