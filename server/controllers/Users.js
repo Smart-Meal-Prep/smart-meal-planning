@@ -71,7 +71,12 @@ const userLogin = async (req, res) => {
     req.session.authorized = true;//sets the user as authorized
 
     res.status(200);
-    return res.json("Login successful");
+    res.json({
+        status: "Login successful",
+        username: userExists.username,
+        email: userExists.email,
+        id: userExists.id
+    });
 };
 
 const Logout = async (req, res) => {
