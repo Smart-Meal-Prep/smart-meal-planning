@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../styles/Login.css'
 
 const Login = () => {
-    const { setStatus } = useContext(UserInfo);
+    const { setStatus, setUserInformation } = useContext(UserInfo);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -46,9 +46,14 @@ const Login = () => {
 
             if (res.ok) {
                 const responseData = await res.json();
-                console.log('Response data:', responseData);
+                console.log('Response data:', responseData.status);
+                setUserInformation({
+                    username: responseData.username,
+                    email: responseData.email,
+                    id: responseData.id
+                });
                 Swal.fire({
-                    title: `${responseData}`,
+                    title: `${responseData.status}`,
                     icon: "success"
                 });
                 setTimeout(() => {
