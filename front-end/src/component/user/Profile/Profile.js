@@ -353,7 +353,7 @@ const Profile = (props) => {
             <div className="row">
                 {/* Sidebar */}
                 <div className="col-md-3">
-                    <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark profile-bar">
+                    <div className="d-flex flex-column flex-shrink-0 p-3 text-white profile-bar">
                         <p className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                             <svg className="bi me-2" width="40" height="32"><use xlinkHref="#bootstrap" /></svg>
                             <span className="profile-title">Profile Settings</span>

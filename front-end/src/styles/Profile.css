@@ -11,6 +11,7 @@
 
 .profile-bar {
     height: 90vh;
+    background-color: rgba(182, 153, 138, 0.9);
 }
 
 .profile-title {
@@ -60,4 +61,56 @@
 .label-text {
     font-size: 16px;
     font-weight: lighter;
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+    .profile-title {
+        font-size: 20px;
+    }
+
+    .nav-link {
+        font-size: 18px;
+    }
+
+    .form-info {
+        margin-left: 21vh;
+    }
+
+    .text-form {
+        font-size: 20px;
+    }
+
+    .text-detail {
+        font-size: 18px;
+        text-align: center;
+    }
+
+
+}
+
+@media (max-width: 1440px) and (min-width: 1025px) {
+    .profile-title {
+        font-size: 20px;
+    }
+
+    .nav-link {
+        font-size: 18px;
+    }
+
+    .form-info {
+        margin-left: 25vh;
+    }
+
+    .text-form {
+        font-size: 28px;
+    }
+
+    .text-detail {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .label-text {
+        font-size: 28px;
+    }
 }
