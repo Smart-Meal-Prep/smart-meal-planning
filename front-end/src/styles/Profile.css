@@ -90,11 +90,11 @@
 
 @media (max-width: 1440px) and (min-width: 1025px) {
     .profile-title {
-        font-size: 20px;
+        font-size: 26px;
     }
 
     .nav-link {
-        font-size: 18px;
+        font-size: 25px;
     }
 
     .form-info {
@@ -112,5 +112,32 @@
 
     .label-text {
         font-size: 28px;
+    }
+}
+
+@media (max-width: 2560px) and (min-width: 1441px) {
+    .profile-title {
+        font-size: 45px;
+    }
+
+    .nav-link {
+        font-size: 36px;
+    }
+
+    .form-info {
+        margin-left: 25vh;
+    }
+
+    .text-form {
+        font-size: 35px;
+    }
+
+    .text-detail {
+        font-size: 33px;
+        text-align: center;
+    }
+
+    .label-text {
+        font-size: 33px;
     }
 }
