@@ -19,7 +19,6 @@ const RecipesBody = (props) => {
                                         className="list-group-item list-group-item-action meal-item"
                                         onClick={(e) => {
                                             setSelectedRecipe(recipe.name)
-                                            console.log(e);
                                         }}
                                     >
                                         <img className="meal-img" loading="lazy" key={recipe.name} src={recipe.thumbnail} alt="Meal pic" />
@@ -28,7 +27,6 @@ const RecipesBody = (props) => {
                                             className="btn btn-primary favorite-button"
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                console.log('add to fave button pressed')
                                             }}
                                         >
                                             Add to Favorites

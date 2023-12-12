@@ -177,10 +177,89 @@ const removePreference = async (req, res) => {
     }
 }
 
+const addFavoriteMeal = async (req, res) => {
+    try {
+        const {UserId, meal} = req.body;
+        if (!meal) {
+            res.status(400);
+            return res.json({ error: "Field(s) left empty" });
+        }
+
+        if (!UserId) {
+            res.status(400);
+            return res.json({ error: "No userid provided" });
+        }
+
+        const profile = await Profile.findOne({
+            where: {UserId : UserId},
+            include: User
+        })
+
+        if(!profile){
+            res.status(400);
+            return res.json({ error: "User profile not found" });
+        }
+        
+        profile.favoriteMeals = [...profile.favoriteMeals, meal];
+        await profile.save();
+
+        res.status(200);
+        return res.json({ message: "Successfully added meal" })
+
+    }catch(error){
+        console.log('Failed to add meal, error:', error);
+        res.status(400);
+        return res.json({ error: 'Error adding meal' })
+    }
+}
+
+const removeFavoriteMeal = async (req, res) => {
+    try {
+        const {UserId, meal} = req.body;
+        if (!meal) {
+            res.status(400);
+            return res.json({ error: "Field(s) left empty" });
+        }
+
+        if (!UserId) {
+            res.status(400);
+            return res.json({ error: "No userid provided" });
+        }
+
+        const profile = await Profile.findOne({
+            where: {UserId : UserId},
+            include: User
+        })
+
+        if(!profile){
+            res.status(400);
+            return res.json({ error: "User profile not found" });
+        }
+        
+        if(!profile.favoriteMeals.includes(meal)){
+            res.status(400)
+            return res.json({ error: "Meal not found" });
+        }
+
+        profile.favoriteMeals = profile.favoriteMeals.filter(m => m !== meal);
+        await profile.save();
+
+        res.status(200);
+        return res.json({ message: "Successfully removed meal" })
+
+    }catch(error){
+        console.log('Failed to remove meal, error:', error);
+        res.status(400);
+        return res.json({ error: 'Error removing meal' })
+    }
+}
+
 module.exports = {
     getProfile,
     addAllergy,
     removeAllergy,
     addPreference,
-    removePreference
+    removePreference, 
+    addFavoriteMeal, 
+    removeFavoriteMeal
 };

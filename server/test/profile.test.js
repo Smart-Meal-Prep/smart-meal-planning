@@ -1,5 +1,5 @@
 const { json } = require('sequelize');
-const { getProfile, addAllergy, removeAllergy, addPreference, removePreference } = require('../controllers/Profile');
+const { getProfile, addAllergy, removeAllergy, addPreference, removePreference, addFavoriteMeal, removeFavoriteMeal } = require('../controllers/Profile');
 const { Profile, User } = require('../models');
 
 jest.mock('../models')
@@ -314,7 +314,7 @@ describe('On vaild add preference post body', () => {
     });
 });
 
-/**removeAllergy */
+/**removePreference */
 describe('On invalid remove preference post', () => {
     it('should return status code of 400 if input field is left empty', async () => {
         const req = {
@@ -337,7 +337,7 @@ describe('On invalid remove preference post', () => {
             }
         };
 
-        await removeAllergy(req, res);
+        await removePreference(req, res);
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({ error: "No userid provided" });
     });
@@ -352,7 +352,7 @@ describe('On invalid remove preference post', () => {
 
         jest.spyOn(Profile, 'findOne').mockResolvedValue(null);
 
-        await removeAllergy(req, res);
+        await removePreference(req, res);
 
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({ error: "User profile not found" });
@@ -404,9 +404,183 @@ describe('On vaild remove preference post body', () => {
         await removePreference(req, res);
         
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith({ message: "Successfully removed allergy" });
+        expect(res.json).toHaveBeenCalledWith({ message: "Successfully removed preference" });
 
         expect(profile.preferences).not.toContain(req.body.preference);
+        expect(profile.save).toHaveBeenCalled();
+    });
+});
+
+/*addFavoriteMeal*/
+describe('On invalid add meal post', () => {
+    it('should return status code of 400 if input field is left empty', async () => {
+        const req = {
+            body: {
+                meal: "",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        await addFavoriteMeal(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Field(s) left empty" });
+    });
+
+    it('should return status code of 400 if there is no userid', async () => {
+        const req = {
+            body: {
+                meal: "Chicken Alfredo",
+                UserId: null
+            }
+        };
+
+        await addFavoriteMeal(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "No userid provided" });
+    });
+
+    it('should return status code of 400 is user profile is not found', async () => {
+        const req = {
+            body: {
+                meal: "Chicke Alfredo",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(null);
+
+        await addFavoriteMeal(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "User profile not found" });
+    })
+})
+
+describe('On vaild add meal post body', () => {
+    it('should return a status code of 200 and add meal to the users favorite meal list', async () => {
+        const req = {
+            body: {
+                meal: "Chicken Alfredo",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        const profile = {
+            id: 1,
+            allergies: ['Peanuts'],
+            preferences: ['Vegetarian'],
+            favoriteMeals: ['Sushi'],
+            UserId: Number.MAX_SAFE_INTEGER,
+            save: jest.fn().mockResolvedValue(true) // Mock the save method
+        }
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
+
+        await addFavoriteMeal(req, res);
+        
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({ message: "Successfully added meal" });
+
+        expect(profile.favoriteMeals).toContain(req.body.meal);
+        expect(profile.save).toHaveBeenCalled();
+    });
+});
+
+/**removeFavoriteMeal */
+describe('On invalid remove meal post', () => {
+    it('should return status code of 400 if input field is left empty', async () => {
+        const req = {
+            body: {
+                meal: "",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        await removeFavoriteMeal(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Field(s) left empty" });
+    });
+
+    it('should return status code of 400 if there is no userid', async () => {
+        const req = {
+            body: {
+                meal: "Chicken Alfredo",
+                UserId: null
+            }
+        };
+
+        await removeFavoriteMeal(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "No userid provided" });
+    });
+
+    it('should return status code of 400 is user profile is not found', async () => {
+        const req = {
+            body: {
+                meal: "Chicken Alfredo",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(null);
+
+        await removeFavoriteMeal(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "User profile not found" });
+    })
+
+    it('should return a status code of 400 if user tries to remove a meal thats not in the favorite meal list', async () => {
+        const req = {
+            body: {
+                meal: 'Chicken Alfredo',
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        }
+
+        const profile = {
+            id: 1,
+            allergies: ['Peanuts'],
+            preferences: ['Vegetarian'],
+            favoriteMeals: ['Sushi'],
+            UserId: Number.MAX_SAFE_INTEGER,
+        }
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
+
+        await removeFavoriteMeal(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({ error: "Meal not found" });
+    })
+})
+
+describe('On vaild remove meal post body', () => {
+    it('should return a status code of 200 and remove meal from the users favorite meal list', async () => {
+        const req = {
+            body: {
+                meal: "Chicken Alfredo",
+                UserId: Number.MAX_SAFE_INTEGER
+            }
+        };
+
+        const profile = {
+            id: 1,
+            allergies: ['Peanuts'],
+            preferences: ['Vegetarian'],
+            favoriteMeals: ['Sushi', 'Chicken Alfredo'],
+            UserId: Number.MAX_SAFE_INTEGER,
+            save: jest.fn().mockResolvedValue(true) // Mock the save method
+        }
+
+        jest.spyOn(Profile, 'findOne').mockResolvedValue(profile);
+
+        await removeFavoriteMeal(req, res);
+        
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({ message: "Successfully removed meal" });
+
+        expect(profile.favoriteMeals).not.toContain(req.body.meal);
         expect(profile.save).toHaveBeenCalled();
     });
 });
