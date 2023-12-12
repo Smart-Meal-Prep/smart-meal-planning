@@ -236,7 +236,7 @@ const Profile = (props) => {
         }
 
     }
-    
+
     const renderContent = () => {
         switch (selectedOption) {
             case 'My Information':
@@ -338,7 +338,7 @@ const Profile = (props) => {
             case 'Favorite Meals':
                 return (
                     <div className='sub-div'>
-                        <h2>TBH</h2>
+                        <h2>TBD</h2>
                     </div>
                 );
 
@@ -354,41 +354,43 @@ const Profile = (props) => {
                 {/* Sidebar */}
                 <div className="col-md-3">
                     <div className="d-flex flex-column flex-shrink-0 p-3 text-white profile-bar">
-                        <p className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                            <svg className="bi me-2" width="40" height="32"><use xlinkHref="#bootstrap" /></svg>
-                            <span className="profile-title">Profile Settings</span>
-                        </p>
-                        <hr />
-                        <ul className="nav nav-pills flex-column mb-auto">
-                            <li className='list-section'>
-                                <button
-                                    className="btn nav-link text-white list-section"
-                                    onClick={() => setSelectedOption('My Information')}
-                                >
-                                    <svg className="bi me-2" width="16" height="16"><use xlinkHref="#speedometer2" /></svg>
-                                    My Information
-                                </button>
-                            </li>
-                            <li className='list-section'>
-                                <button
-                                    className="btn nav-link text-white list-section"
-                                    onClick={() => setSelectedOption('Update Preference')}
-                                >
-                                    <svg className="bi me-2" width="16" height="16"><use xlinkHref="#table" /></svg>
-                                    Update Preference
-                                </button>
-                            </li>
-                            <li className='list-section'>
-                                <button
-                                    className="btn nav-link text-white list-section"
-                                    onClick={() => setSelectedOption('Favorite Meals')}
-                                >
-                                    <svg className="bi me-2" width="16" height="16"><use xlinkHref="#grid" /></svg>
-                                    Favorite Meals
-                                </button>
-                            </li>
-                        </ul>
-                        <hr />
+                        <div className="d-md-block">
+                            <p className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                                <svg className="bi me-2" width="40" height="32"><use xlinkHref="#bootstrap" /></svg>
+                                <span className="profile-title">Profile Settings</span>
+                            </p>
+                            <hr />
+                            <ul className="nav nav-pills flex-column mb-auto">
+                                <li className='list-section'>
+                                    <button
+                                        className={`btn nav-link text-white list-section ${selectedOption === 'My Information' ? 'active' : ''}`}
+                                        onClick={() => setSelectedOption('My Information')}
+                                    >
+                                        <svg className="bi me-2" width="16" height="16"><use xlinkHref="#speedometer2" /></svg>
+                                        My Information
+                                    </button>
+                                </li>
+                                <li className='list-section'>
+                                    <button
+                                        className={`btn nav-link text-white list-section ${selectedOption === 'Update Preference' ? 'active' : ''}`}
+                                        onClick={() => setSelectedOption('Update Preference')}
+                                    >
+                                        <svg className="bi me-2" width="16" height="16"><use xlinkHref="#table" /></svg>
+                                        Update Preference
+                                    </button>
+                                </li>
+                                <li className='list-section'>
+                                    <button
+                                        className={`btn nav-link text-white list-section ${selectedOption === 'Favorite Meals' ? 'active' : ''}`}
+                                        onClick={() => setSelectedOption('Favorite Meals')}
+                                    >
+                                        <svg className="bi me-2" width="16" height="16"><use xlinkHref="#grid" /></svg>
+                                        Favorite Meals
+                                    </button>
+                                </li>
+                            </ul>
+                            <hr />
+                        </div>
                     </div>
                 </div>
                 <div className="col-md-9 p-3">
