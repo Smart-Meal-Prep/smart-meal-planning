@@ -74,16 +74,16 @@ describe('On successful user', () => {
         };
 
         // Mock the Users.findOne function to return a user object
-        jest.spyOn(Users, 'findOne').mockResolvedValue({ email: "powers@gmail.com", password: "hashedPassword" });
+        jest.spyOn(Users, 'findOne').mockResolvedValue({ email: "powers@gmail.com", password: "hashedPassword", id: Number.MAX_SAFE_INTEGER });
 
         // Mock the bcrypt.compare function to return true, indicating correct password
         jest.spyOn(bcrypt, 'compare').mockResolvedValue(true);
 
         await userLogin(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith("Login successful");
+        expect(res.json).toHaveBeenCalledWith({ status: "Login successful", email: "powers@gmail.com", id: Number.MAX_SAFE_INTEGER });
 
-        expect(req.session.user).toEqual({ email: "powers@gmail.com", password: "hashedPassword" });
+        expect(req.session.user).toEqual({ email: "powers@gmail.com", password: "hashedPassword", id: Number.MAX_SAFE_INTEGER });
         expect(req.session.authorized).toBe(true);
     });
 });
