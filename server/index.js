@@ -12,7 +12,8 @@ app.use(session({
     resave: false,//prevent unnecessary writes to the session store
     saveUninitialized: false,//if the session was created but no data was added to it, the session will still be saved in the store.
     cookie: {
-        path: '/' // Available for all paths
+        path: '/', // Available for all paths
+        sameSite: 'None'
     }
 }));
 
