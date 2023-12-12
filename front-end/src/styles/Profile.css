@@ -1,0 +1,140 @@
+.profile-div {
+    background-color: #EAE1DC;
+    height: fit-content;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-image: url('../assets/foodpat.png');
+    background-repeat: repeat-y repeat-x;
+    background-size: contain;
+}
+
+.profile-bar {
+    height: 90vh;
+    background-color: rgba(182, 153, 138, 0.9);
+}
+
+.profile-title {
+    font-size: 30px;
+}
+
+.nav-link {
+    font-size: 20px;
+}
+
+.list-section {
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+}
+
+.sub-div {
+    background-color: rgba(247, 225, 215, 0.8);
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.select-width {
+    width: 40%;
+}
+
+.form-info {
+    margin-left: 58vh;
+}
+
+.text-form {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.text-detail {
+    font-size: 18px;
+    font-weight: lighter;
+}
+
+.intro-text {
+    padding-top: 8vh;
+}
+
+.bt-pad {
+    margin-top: 1vh;
+}
+
+.label-text {
+    font-size: 16px;
+    font-weight: lighter;
+}
+
+@media (max-width: 425px) and (min-width: 320px) {
+    .form-info {
+        margin-left: 0vh;
+    }
+
+    .text-form {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .text-detail {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .sub-div {
+        padding-bottom: 5vh;
+    }
+
+    .profile-bar {
+        height: 60vh;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+    .profile-title {
+        font-size: 20px;
+    }
+
+    .nav-link {
+        font-size: 18px;
+    }
+
+    .form-info {
+        margin-left: 21vh;
+    }
+
+    .text-form {
+        font-size: 20px;
+    }
+
+    .text-detail {
+        font-size: 18px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 1440px) and (min-width: 1025px) {
+    .profile-title {
+        font-size: 26px;
+    }
+
+    .nav-link {
+        font-size: 25px;
+    }
+
+    .form-info {
+        margin-left: 25vh;
+    }
+
+    .text-form {
+        font-size: 28px;
+    }
+
+    .text-detail {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .label-text {
+        font-size: 28px;
+    }
+}
