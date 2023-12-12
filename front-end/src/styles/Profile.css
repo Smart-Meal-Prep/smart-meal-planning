@@ -1,4 +1,4 @@
-.profile-div{
+.profile-div {
     background-color: #EAE1DC;
     height: fit-content;
     width: 100%;
@@ -9,19 +9,55 @@
     background-size: contain;
 }
 
-.profile-bar{
+.profile-bar {
     height: 90vh;
 }
 
-.profile-title{
+.profile-title {
     font-size: 30px;
 }
 
-.nav-link{
+.nav-link {
     font-size: 20px;
 }
 
-.list-section{
+.list-section {
     margin-bottom: 2vh;
     margin-top: 2vh;
+}
+
+.sub-div {
+    background-color: whitesmoke;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.select-width {
+    width: 40%;
+}
+
+.form-info {
+    margin-left: 58vh;
+}
+
+.text-form {
+    font-size: 22px;
+}
+
+.text-detail {
+    font-size: 18px;
+}
+
+.intro-text {
+    padding-top: 8vh;
+}
+
+.bt-pad {
+    margin-top: 1vh;
+}
+
+.label-text {
+    font-size: 16px;
+    font-weight: lighter;
 }

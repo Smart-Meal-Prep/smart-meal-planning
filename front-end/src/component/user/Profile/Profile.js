@@ -16,6 +16,7 @@ const Profile = (props) => {
     const [newPreference, setNewPreference] = useState('');
     const [removingAllergy, setRemovingAllergy] = useState('');
     const [removingPreference, setRemovingPreference] = useState('');
+    const [selectedOption, setSelectedOption] = useState('My Information');
 
     useEffect(() => {
         const updateProfile = async () => {
@@ -235,92 +236,109 @@ const Profile = (props) => {
         }
 
     }
-
-    const [selectedOption, setSelectedOption] = useState('');
-
+    
     const renderContent = () => {
         switch (selectedOption) {
             case 'My Information':
                 return (
-                    <div>
-                        {/* Render content for My Information */}
-                        {/* Example: Display user information */}
-                        <h2>User Information</h2>
-                        {/* Add your content here */}
+                    <div className='sub-div mx-auto'>
+                        <h2 className="text-center intro-text">User Information</h2>
+                        <form className='form-info'>
+                            <div className="form-group row">
+                                <label htmlFor="staticUsername" className="col-sm-2 col-form-label text-form">Username:</label>
+                                <div className="col-sm-10">
+                                    <input type="text" readOnly className="form-control-plaintext text-detail" id="staticUsername" value={userInformation.username} />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label text-form">Email:</label>
+                                <div className="col-sm-10">
+                                    <input type="text" readOnly className="form-control-plaintext text-detail" id="staticEmail" value={userInformation.email} />
+                                </div>
+                            </div>
+                        </form>
+                        <h2 className="text-center">Allergies:</h2>
+                        <Select className='select-width mx-auto' options={props.profile.allergiesOptions} />
+
+                        <h2 className="text-center">Preferences:</h2>
+                        <Select className='select-width mx-auto' options={props.profile.preferencesOptions} />
                     </div>
                 );
 
             case 'Update Preference':
                 return (
-                    <div>
-                        <form>
-                            Add Allergy:
-                            <Select
-                                options={lists.ingredientsOptions}
-                                onChange={(e) => setNewAllergy(e.label)}
-                                value={{ label: newAllergy }}
-                            />
-                            <button type="button" onClick={handleAddAllergy}>
-                                Add
-                            </button>
-                        </form>
-                        <form>
-                            Remove Allergy:
-                            <Select
-                                options={props.profile.allergiesOptions}
-                                onChange={(e) => setRemovingAllergy(e.label)}
-                                value={{ label: removingAllergy }}
-                            />
-                            <button type="button" onClick={handleRemoveAllergy}>
-                                Remove
-                            </button>
-                        </form>
-                        <form>
-                            Add Preference:
-                            <Select
-                                options={lists.preferencesOptions}
-                                value={{ label: newPreference }}
-                                onChange={(e) => setNewPreference(e.label)}
-                            />
-                            <button type="button" onClick={handleAddPreference}>
-                                Add
-                            </button>
-                        </form>
+                    <div className='sub-div mx-auto text-center'>
+                        <h2 className="intro-text">Preferences</h2>
 
-                        <form>
-                            Remove Preference:
-                            <Select
-                                options={props.profile.preferencesOptions}
-                                value={{ label: removingPreference }}
-                                onChange={(e) => setRemovingPreference(e.label)}
-                            />
-                            <button type="button" onClick={handleRemovePreference}>
-                                Remove
-                            </button>
-                        </form>
-                        <h2>Allergies:</h2>
-                        <ul>
-                            {props.profile.allergies && props.profile.allergies.map((allergy, index) => (
-                                <li key={index}>{allergy}</li>
-                            ))}
-                        </ul>
+                        <div className="centered-form">
+                            <form>
+                                <label className='label-text' htmlFor="add-allergy">Add Allergy:</label>
+                                <Select
+                                    id="add-allergy"
+                                    className='select-width mx-auto'
+                                    options={lists.ingredientsOptions}
+                                    onChange={(e) => setNewAllergy(e.label)}
+                                    value={{ label: newAllergy }}
+                                />
+                                <button className="btn btn-primary bt-pad" type="button" onClick={handleAddAllergy}>
+                                    Add
+                                </button>
+                            </form>
 
-                        <h2>Preferences:</h2>
-                        <ul>
-                            {props.profile.preferences && props.profile.preferences.map((preference, index) => (
-                                <li key={index}>{preference}</li>
-                            ))}
-                        </ul>
+                            <form>
+                                <label className='label-text' htmlFor="remove-allergy">Remove Allergy:</label>
+                                <Select
+                                    id="remove-allergy"
+                                    className='select-width mx-auto'
+                                    options={props.profile.allergiesOptions}
+                                    onChange={(e) => setRemovingAllergy(e.label)}
+                                    value={{ label: removingAllergy }}
+                                />
+                                <button className="btn btn-primary bt-pad" type="button" onClick={handleRemoveAllergy}>
+                                    Remove
+                                </button>
+                            </form>
+
+                            <form>
+                                <label className='label-text' htmlFor="add-preference">Add Preference:</label>
+                                <Select
+                                    id="add-preference"
+                                    className='select-width mx-auto'
+                                    options={lists.preferencesOptions}
+                                    value={{ label: newPreference }}
+                                    onChange={(e) => setNewPreference(e.label)}
+                                />
+                                <button className="btn btn-primary bt-pad" type="button" onClick={handleAddPreference}>
+                                    Add
+                                </button>
+                            </form>
+
+                            <form>
+                                <label className='label-text' htmlFor="remove-preference">Remove Preference:</label>
+                                <Select
+                                    id="remove-preference"
+                                    className='select-width mx-auto'
+                                    options={props.profile.preferencesOptions}
+                                    value={{ label: removingPreference }}
+                                    onChange={(e) => setRemovingPreference(e.label)}
+                                />
+                                <button className="btn btn-primary bt-pad" type="button" onClick={handleRemovePreference}>
+                                    Remove
+                                </button>
+                            </form>
+                        </div>
+                        <h2 className="text-center">Allergies:</h2>
+                        <Select className='select-width mx-auto' options={props.profile.allergiesOptions} />
+
+                        <h2 className="text-center">Preferences:</h2>
+                        <Select className='select-width mx-auto' options={props.profile.preferencesOptions} />
                     </div>
                 );
 
             case 'Favorite Meals':
                 return (
-                    <div>
-                        {/* Render content for Favorite Meals */}
-                        {/* Example: Display favorite meals */}
-                        <h2>Favorite Meals</h2>
-                        {/* Add your content here */}
+                    <div className='sub-div'>
+                        <h2>TBH</h2>
                     </div>
                 );
 
