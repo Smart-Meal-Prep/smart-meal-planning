@@ -3,8 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import Dashboard from './component/Dashboard/Dashboard';
 import Register from './component/user/Register/Register';
 import Login from './component/user/Login/Login';
-import Inventory from './component/management/Inventory';
-import Recipes from './component/management/Recipes';
+import Inventory from './component/management/Inventory/Inventory';
+import Recipes from './component/management/Recipes/Recipes';
 import Profile from './component/user/Profile/Profile';
 import UserInfo from './config/UserInfo';
 import "./styles/App.css"
