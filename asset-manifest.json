@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "./static/css/main.2ea27665.css",
-    "main.js": "./static/js/main.b9df9f3c.js",
+    "main.js": "./static/js/main.e9bc0f8a.js",
     "static/media/foodpat.png": "./static/media/foodpat.ffcd2ad1402e2d0f6eb6.png",
     "static/media/overlay_2.png": "./static/media/overlay_2.0e76efbf29b13e2f43dc.png",
     "static/media/cooking_logo.png": "./static/media/cooking_logo.a2343b613b13a1d6d976.png",
     "index.html": "./index.html",
     "main.2ea27665.css.map": "./static/css/main.2ea27665.css.map",
-    "main.b9df9f3c.js.map": "./static/js/main.b9df9f3c.js.map"
+    "main.e9bc0f8a.js.map": "./static/js/main.e9bc0f8a.js.map"
   },
   "entrypoints": [
     "static/css/main.2ea27665.css",
-    "static/js/main.b9df9f3c.js"
+    "static/js/main.e9bc0f8a.js"
   ]
 }
