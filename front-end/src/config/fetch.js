@@ -11,10 +11,12 @@ const loggoutEndpoint = `${backendEndpoint}user/logout`;
 
 /*profile endpoints*/
 const profileEndpoint = `${backendEndpoint}profile/`;
-const addAllergyEndpoint = `${profileEndpoint}addAllergy`
-const removeAllergyEndpoint = `${profileEndpoint}removeAllergy`
-const addPreferenceEndpoint = `${profileEndpoint}addPreference`
-const removePreferenceEndpoint = `${profileEndpoint}removePreference`
+const addAllergyEndpoint = `${profileEndpoint}addAllergy`;
+const removeAllergyEndpoint = `${profileEndpoint}removeAllergy`;
+const addPreferenceEndpoint = `${profileEndpoint}addPreference`;
+const removePreferenceEndpoint = `${profileEndpoint}removePreference`;
+const addFavoriteMealEndpoint = `${profileEndpoint}addFavoriteMeal`;
+const removeFavoriteMealEndpoint = `${profileEndpoint}removeFavoriteMeal`;
 
 /*inventory endpoints*/
 const inventoryEndpoint = `${backendEndpoint}inventory`;
@@ -37,6 +39,8 @@ const endPoints = {
     removeAllergyEndpoint,
     addPreferenceEndpoint,
     removePreferenceEndpoint,
+    addFavoriteMealEndpoint,
+    removeFavoriteMealEndpoint,
     inventoryEndpoint,
     inventoryUpdateAmountEndpoint,
     recipeEdnpoint,

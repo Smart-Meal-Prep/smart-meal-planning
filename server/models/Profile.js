@@ -9,12 +9,16 @@ module.exports = (sequelize, DataTypes) => {
         preferences: {
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
-            defaultValue: [] // Set a default empty array
+            defaultValue: [] 
+        },
+        favoriteMeals: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: false,
+            defaultValue: [] 
         }
     });
 
     Profile.associate = (models) => {
-        // Define a one-to-one association between Users and Profile
         Profile.belongsTo(models.Users, {
             foreignKey: 'UserId',
             onDelete: 'cascade'
