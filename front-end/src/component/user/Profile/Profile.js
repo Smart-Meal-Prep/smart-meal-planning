@@ -7,9 +7,10 @@ import NavigationBar from '../../NavigationBar';
 import DashboardFooter from '../../DashboardFooter';
 import '../../../styles/Profile.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MealItem from '../../management/Recipes/MealItem';
+import RecipeInfo from '../../management/Recipes/RecipeInfo';
 
 const Profile = (props) => {
-
     const { userInformation } = useContext(UserInfo);
     const userId = userInformation.id;
     const [newAllergy, setNewAllergy] = useState('');
@@ -17,6 +18,11 @@ const Profile = (props) => {
     const [removingAllergy, setRemovingAllergy] = useState('');
     const [removingPreference, setRemovingPreference] = useState('');
     const [selectedOption, setSelectedOption] = useState('My Information');
+    const [selectedRecipe, setSelectedRecipe] = useState('');
+    const {
+        favoriteMealsList, setFavoriteMealsList,
+        favoriteMealsListOptions, setFavoriteMealsListOptions,
+    } = props.recipeStates;
 
     useEffect(() => {
         const updateProfile = async () => {
@@ -237,6 +243,76 @@ const Profile = (props) => {
 
     }
 
+    const handleAddFavorite = async (event, meal) => {
+        event.preventDefault()
+        if (!meal) {
+            alert('Invalid meal');
+        }
+        if (favoriteMealsList.find(m => m.name === meal)) {
+            alert('Meal is already a favorite');
+        }
+        try {
+            const res = await fetch(`${endPoints.addFavoriteMealEndpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    {
+                        meal: meal.name,
+                        UserId: userId
+                    }
+                )
+            })
+
+            if (!res.ok) {
+                console.log('failed to add favorite meal');
+                return;
+            }
+
+            setFavoriteMealsList([...favoriteMealsList, meal]);
+            setFavoriteMealsListOptions([...favoriteMealsListOptions, { label: meal.name, value: meal }])
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleRemoveFavorite = async (event, meal) => {
+        event.preventDefault();
+        if (!meal) {
+            alert('Invalid meal');
+        }
+        if (favoriteMealsList.find(m => m.name === meal)) {
+            alert('Meal is already a favorite');
+        }
+        try {
+            const res = await fetch(`${endPoints.removeFavoriteMealEndpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    {
+                        UserId: userId,
+                        meal: meal.name
+                    }
+                )
+            })
+
+            if (!res.ok) {
+                console.log(res, 'failed to remove favorite meal');
+                return;
+            }
+
+            setFavoriteMealsList(favoriteMealsList.filter(m => m.name !== meal.name));
+            setFavoriteMealsListOptions(favoriteMealsListOptions.filter(m => m.label !== meal.name));
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const renderContent = () => {
         if (!props.profile) {
             return null;
@@ -342,7 +418,31 @@ const Profile = (props) => {
             case 'Favorite Meals':
                 return (
                     <div className='sub-div' data-testid={"Favorite-div"}>
-                        <h2>TBD</h2>
+                        {selectedRecipe ?
+                            <RecipeInfo 
+                                selectedRecipe={selectedRecipe} setSelectedRecipe={setSelectedRecipe}
+                                favoriteMealsList={favoriteMealsList} setFavoriteMealsList={setFavoriteMealsList}
+                                handleAddFavorite={handleAddFavorite} handleRemoveFavorite={handleRemoveFavorite}
+                            />
+                            :
+                            <div>
+                                <Select
+                                    options={favoriteMealsListOptions}
+                                    onChange={(e) => setSelectedRecipe(e.value)}
+                                />
+                                <div className="recipe-list-items">
+                                    {favoriteMealsList && favoriteMealsList.map((recipe) => {
+                                        return (
+                                            <MealItem
+                                                recipe={recipe} selectedRecipe={selectedRecipe} setSelectedRecipe={setSelectedRecipe}
+                                                handleAddFavorite={handleAddFavorite} handleRemoveFavorite={handleRemoveFavorite}
+                                                favoriteMealsList={favoriteMealsList}
+                                            />
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        }
                     </div>
                 );
 

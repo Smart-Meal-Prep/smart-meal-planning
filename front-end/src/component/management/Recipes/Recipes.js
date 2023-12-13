@@ -9,11 +9,13 @@ import RecipeInfo from "./RecipeInfo.js";
 const Recipes = (props) => {
     const { userInformation } = useContext(UserInfo);
     const userId = userInformation.id;
-    const [favoriteMealsList, setFavoriteMealsList] = useState(null);
-    const [favoriteMealsListOptions, setFavoriteMealsListOptions] = useState(null);
-    const [selectedRecipe, setSelectedRecipe] = useState(null);
     const { recipes, setRecipes } = props;
-    const [recipeOptions, setRecipeOptions] = useState(null);
+    const {
+        favoriteMealsList, setFavoriteMealsList,
+        favoriteMealsListOptions, setFavoriteMealsListOptions,
+        selectedRecipe, setSelectedRecipe,
+        recipeOptions, setRecipeOptions
+    } = props.recipeStates;
 
     useEffect(() => {
         const updateRecipes = async () => {
