@@ -24,6 +24,7 @@ const MealItem = (props) => {
                 >
                     {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
                 </button>
+                <h6 className={`strength-${recipe.strength}`}>{recipe.strength}</h6>
             </button>
         </div>
     );

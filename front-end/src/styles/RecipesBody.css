@@ -90,3 +90,27 @@
     padding: 2%;
     background-color: rgba(243, 228, 218, 0.866);
 }
+
+.have-ingredient-true {
+    color:lawngreen;
+}
+
+.have-ingredient-false {
+    color: red;
+}
+
+.strength-Strongest {
+    color:deepskyblue;
+}
+.strength-Strong {
+    color: lawngreen;
+}
+.strength-Medium {
+    color:chocolate;
+}
+.strength-Weak {
+    color:red;
+}
+.strength-Weakest {
+    color:#000000;
+}

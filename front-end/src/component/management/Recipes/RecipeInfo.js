@@ -8,22 +8,33 @@ const RecipeInfo = (props) => {
 
     return (
         <div className="recipes-body">
-            <button
-                className="btn btn-primary btn-lg"
-                onClick={() => setSelectedRecipe(null)}
-            >
-                Back to Recipes
-            </button>
-            <button
-                className={`btn ${isFavorite ? 'btn-danger' : 'btn-primary'} btn-lg favorite-button`}
-                onClick={(e) => {
-                    isFavorite ? handleRemoveFavorite(e, selectedRecipe) : handleAddFavorite(e, selectedRecipe);
-                }}
-            >
-                {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-            </button>
 
-            <div className="row mt-4">
+            <div className="row">
+                <div className="col-md">
+                    <button
+                        className="btn btn-primary btn-lg"
+                        onClick={() => setSelectedRecipe(null)}
+                    >
+                        Back to Recipes
+                    </button>
+               
+                    <button
+                        className={`btn ${isFavorite ? 'btn-danger' : 'btn-primary'} btn-lg favorite-button`}
+                        onClick={(e) => {
+                            isFavorite ? handleRemoveFavorite(e, selectedRecipe) : handleAddFavorite(e, selectedRecipe);
+                        }}
+                    >
+                        {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+                    </button>
+                </div>
+
+                <div className="col-md">
+                    <h4 className={`recipe-list-title strength-${selectedRecipe.strength}`}>{`${selectedRecipe.strength} match for your inventory`}</h4>
+
+                </div>
+            </div>
+
+            <div className="row">
                 <div className="col-md-6">
                     <h1 className="recipe-list-title">{selectedRecipe.name}</h1>
                     <div className="d-flex justify-content-center align-items-center recipe-info-img-div">
@@ -34,11 +45,17 @@ const RecipeInfo = (props) => {
                 <div className="col-md-6">
                     <h2 className="recipe-list-title">Ingredients</h2>
                     <ul className="list-group">
-                        {selectedRecipe.ingredients.map((ingredient, index) => (
-                            <li key={index} className="list-group-item">
-                                {ingredient} - {selectedRecipe.measurements[index]}
-                            </li>
-                        ))}
+                        {selectedRecipe.ingredients.map((ingredient, index) => {
+                            const hasIngredient = selectedRecipe.matchingIngredients.includes(ingredient);
+                            return (
+                                <li key={index} className="d-flex list-group-item">
+                                    {ingredient} - {selectedRecipe.measurements[index]}
+                                    <div className={`have-ingredient-${hasIngredient} ms-auto`}>
+                                        {(hasIngredient ? ' You have this ingredient' : ' Missing this ingredient')}
+                                    </div>
+                                </li>
+                            )
+                        })}
                     </ul>
                 </div>
             </div>
