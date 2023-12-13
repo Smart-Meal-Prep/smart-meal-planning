@@ -44,6 +44,18 @@ const App = () => {
 
   const [recipes, setRecipes] = useState([{}]);
 
+  const [favoriteMealsList, setFavoriteMealsList] = useState(null);
+  const [favoriteMealsListOptions, setFavoriteMealsListOptions] = useState(null);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [recipeOptions, setRecipeOptions] = useState(null);
+
+  const recipeStates = {
+    favoriteMealsList, setFavoriteMealsList, 
+    favoriteMealsListOptions, setFavoriteMealsListOptions,
+    selectedRecipe, setSelectedRecipe,
+    recipeOptions, setRecipeOptions
+  }
+
   return (
     <UserInfo.Provider value={value}>
       <div className="App">
@@ -56,10 +68,10 @@ const App = () => {
               (<Inventory userInventory={inventory} setUserInventory={setUserInventory} />) : (<Navigate to="/login" />)} />
           <Route path='/profile' element={
             status.LoggedIn ?
-              (<Profile profile={profile} setProfile={setProfile} />) : (<Navigate to="/login" />)} />
+              (<Profile profile={profile} setProfile={setProfile} recipeStates={recipeStates}/>) : (<Navigate to="/login" />)} />
           <Route path="/recipes" element={
             status.LoggedIn ?
-              (<Recipes recipes={recipes} setRecipes={setRecipes} profile={profile} setProfile={setProfile}/>) : (<Navigate to="/login" />)} />
+              (<Recipes recipes={recipes} setRecipes={setRecipes} profile={profile} setProfile={setProfile} recipeStates={recipeStates} />) : (<Navigate to="/login" />)} />
         </Routes>
       </div>
     </UserInfo.Provider>
