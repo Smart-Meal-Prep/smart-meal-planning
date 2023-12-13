@@ -33,6 +33,11 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.recipe-list-title p {
+    text-decoration:dotted;
+    text-align: start;
+}
+
 .meal-item {
     width: 100%;
     height: min-content;
@@ -70,4 +75,18 @@
 
 .recipe-list-item-name {
     text-align: center;
+}
+
+.recipe-info-img {
+    padding: 2%;
+    width: 50%;  
+}
+
+.recipe-info-img-div {
+    background-color: #925d41c4;
+}
+
+.instructions {
+    padding: 2%;
+    background-color: rgba(243, 228, 218, 0.866);
 }

@@ -36,8 +36,10 @@ const App = () => {
   const [profile, setProfile] = useState({
     allergies: [],
     prefereces: [],
+    favoriteMeals: [],
     allergiesOptions: [],
     preferecesOptions: [],
+    favoriteMealsOptions: []
   });
 
   const [recipes, setRecipes] = useState([{}]);

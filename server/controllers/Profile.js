@@ -2,7 +2,7 @@ const { Profile, User } = require('../models');
 
 const getProfile = async (req, res) => {
     try {
-        const {UserId} = req.params;
+        const { UserId } = req.params;
 
         if (!UserId) {
             res.status(400);
@@ -16,7 +16,7 @@ const getProfile = async (req, res) => {
         res.status(200);
         return res.json(profile)
 
-    }catch(error){
+    } catch (error) {
         console.log("Failed to get user profile")
         res.status(400);
         return res.json({ error: 'Error retrieving user profile' })
@@ -25,7 +25,7 @@ const getProfile = async (req, res) => {
 
 const addAllergy = async (req, res) => {
     try {
-        const {UserId, ingredient} = req.body;
+        const { UserId, ingredient } = req.body;
         if (!ingredient) {
             res.status(400);
             return res.json({ error: "Field(s) left empty" });
@@ -37,22 +37,22 @@ const addAllergy = async (req, res) => {
         }
 
         const profile = await Profile.findOne({
-            where: {UserId : UserId},
+            where: { UserId: UserId },
             include: User
         })
 
-        if(!profile){
+        if (!profile) {
             res.status(400);
             return res.json({ error: "User profile not found" });
         }
-        
+
         profile.allergies = [...profile.allergies, ingredient];
         await profile.save();
 
         res.status(200);
         return res.json({ message: "Successfully added allergy" })
 
-    }catch(error){
+    } catch (error) {
         console.log('Failed to add allergy, error:', error);
         res.status(400);
         return res.json({ error: 'Error adding allergy' })
@@ -61,7 +61,7 @@ const addAllergy = async (req, res) => {
 
 const removeAllergy = async (req, res) => {
     try {
-        const {UserId, ingredient} = req.body;
+        const { UserId, ingredient } = req.body;
         if (!ingredient) {
             res.status(400);
             return res.json({ error: "Field(s) left empty" });
@@ -73,16 +73,16 @@ const removeAllergy = async (req, res) => {
         }
 
         const profile = await Profile.findOne({
-            where: {UserId : UserId},
+            where: { UserId: UserId },
             include: User
         })
 
-        if(!profile){
+        if (!profile) {
             res.status(400);
             return res.json({ error: "User profile not found" });
         }
-        
-        if(!profile.allergies.includes(ingredient)){
+
+        if (!profile.allergies.includes(ingredient)) {
             res.status(400)
             return res.json({ error: "Allergy not found" });
         }
@@ -93,7 +93,7 @@ const removeAllergy = async (req, res) => {
         res.status(200);
         return res.json({ message: "Successfully removed allergy" })
 
-    }catch(error){
+    } catch (error) {
         console.log('Failed to remove allergy, error:', error);
         res.status(400);
         return res.json({ error: 'Error removing allergy' })
@@ -102,7 +102,7 @@ const removeAllergy = async (req, res) => {
 
 const addPreference = async (req, res) => {
     try {
-        const {UserId, preference} = req.body;
+        const { UserId, preference } = req.body;
         if (!preference) {
             res.status(400);
             return res.json({ error: "Field(s) left empty" });
@@ -114,22 +114,22 @@ const addPreference = async (req, res) => {
         }
 
         const profile = await Profile.findOne({
-            where: {UserId : UserId},
+            where: { UserId: UserId },
             include: User
         })
 
-        if(!profile){
+        if (!profile) {
             res.status(400);
             return res.json({ error: "User profile not found" });
         }
-        
+
         profile.preferences = [...profile.preferences, preference];
         await profile.save();
 
         res.status(200);
         return res.json({ message: "Successfully added preference" })
 
-    }catch(error){
+    } catch (error) {
         console.log('Failed to add preference, error:', error);
         res.status(400);
         return res.json({ error: 'Error adding preference' })
@@ -138,7 +138,7 @@ const addPreference = async (req, res) => {
 
 const removePreference = async (req, res) => {
     try {
-        const {UserId, preference} = req.body;
+        const { UserId, preference } = req.body;
         if (!preference) {
             res.status(400);
             return res.json({ error: "Field(s) left empty" });
@@ -150,16 +150,16 @@ const removePreference = async (req, res) => {
         }
 
         const profile = await Profile.findOne({
-            where: {UserId : UserId},
+            where: { UserId: UserId },
             include: User
         })
 
-        if(!profile){
+        if (!profile) {
             res.status(400);
             return res.json({ error: "User profile not found" });
         }
-        
-        if(!profile.preferences.includes(preference)){
+
+        if (!profile.preferences.includes(preference)) {
             res.status(400)
             return res.json({ error: "Preference not found" });
         }
@@ -170,7 +170,7 @@ const removePreference = async (req, res) => {
         res.status(200);
         return res.json({ message: "Successfully removed preference" })
 
-    }catch(error){
+    } catch (error) {
         console.log('Failed to remove preference, error:', error);
         res.status(400);
         return res.json({ error: 'Error removing preference' })
@@ -179,7 +179,7 @@ const removePreference = async (req, res) => {
 
 const addFavoriteMeal = async (req, res) => {
     try {
-        const {UserId, meal} = req.body;
+        const { UserId, meal } = req.body;
         if (!meal) {
             res.status(400);
             return res.json({ error: "Field(s) left empty" });
@@ -191,22 +191,22 @@ const addFavoriteMeal = async (req, res) => {
         }
 
         const profile = await Profile.findOne({
-            where: {UserId : UserId},
+            where: { UserId: UserId },
             include: User
         })
 
-        if(!profile){
+        if (!profile) {
             res.status(400);
             return res.json({ error: "User profile not found" });
         }
-        
+
         profile.favoriteMeals = [...profile.favoriteMeals, meal];
         await profile.save();
 
         res.status(200);
         return res.json({ message: "Successfully added meal" })
 
-    }catch(error){
+    } catch (error) {
         console.log('Failed to add meal, error:', error);
         res.status(400);
         return res.json({ error: 'Error adding meal' })
@@ -215,7 +215,7 @@ const addFavoriteMeal = async (req, res) => {
 
 const removeFavoriteMeal = async (req, res) => {
     try {
-        const {UserId, meal} = req.body;
+        const { UserId, meal } = req.body;
         if (!meal) {
             res.status(400);
             return res.json({ error: "Field(s) left empty" });
@@ -227,16 +227,16 @@ const removeFavoriteMeal = async (req, res) => {
         }
 
         const profile = await Profile.findOne({
-            where: {UserId : UserId},
+            where: { UserId: UserId },
             include: User
         })
 
-        if(!profile){
+        if (!profile) {
             res.status(400);
             return res.json({ error: "User profile not found" });
         }
-        
-        if(!profile.favoriteMeals.includes(meal)){
+
+        if (!profile.favoriteMeals.includes(meal)) {
             res.status(400)
             return res.json({ error: "Meal not found" });
         }
@@ -247,7 +247,7 @@ const removeFavoriteMeal = async (req, res) => {
         res.status(200);
         return res.json({ message: "Successfully removed meal" })
 
-    }catch(error){
+    } catch (error) {
         console.log('Failed to remove meal, error:', error);
         res.status(400);
         return res.json({ error: 'Error removing meal' })
@@ -259,7 +259,7 @@ module.exports = {
     addAllergy,
     removeAllergy,
     addPreference,
-    removePreference, 
-    addFavoriteMeal, 
+    removePreference,
+    addFavoriteMeal,
     removeFavoriteMeal
 };
