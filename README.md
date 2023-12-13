@@ -22,6 +22,7 @@
 3. [Tests](#tests)
 4. [Env variables](#env-variables)
 5. [Contributors](#contributors)
+6. [Acknowledgement](#acknowledgement)
 
 ## <a name="what-is-smart-meals"> What is Smart Meals ?</a>
 Smart Meals revolutionizes meal planning! Our web app simplifies everything from ingredient management to meal creation. Easily add items to your inventory and generate a personalized meal list. Sorted by strength, discover the most efficient meals based on matched ingredients, cutting down on costs and waste. Try it out and elevate your meal experience! 🌟
@@ -90,9 +91,14 @@ Environment variables are :
 
 
 ## <a name="contributors">Contributors</a>
+This project is part of our CTP curriculum for cohort 9. Thank you to all those who contributed to making this project come to life.
 
 [//]: contributor-faces
 <a href="https://github.com/DFLotus"><img src="https://avatars.githubusercontent.com/u/92601176?v=4" title="DF-Lotus" width="50" height="50"></a>
 <a href="https://github.com/matteoSaputo"><img src="https://avatars.githubusercontent.com/u/80838566?v=4" title="Matteo-Saputo" width="50" height="50"></a>
 
 [![GitHub contributors](https://img.shields.io/github/contributors/Smart-Meal-Prep/smart-meal-planning.svg)](https://github.com/Smart-Meal-Prep/smart-meal-planning/graphs/contributors)
+## <a name="acknowledgement">Acknowledgement</a>
+<a href="https://github.com/CUNYTechPrep"><img src="https://avatars.githubusercontent.com/u/28817068?s=200&v=4" title="Matteo-Saputo" width="50" height="50"></a>
+
+
