@@ -14,16 +14,16 @@ const Dashboardbody = () => {
             </div>
             <div className="info-boxes">
                 <div className="info-box">
-                    <h3>Info 1</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <h3>Get Started</h3>
+                    <p>Explore culinary possibilities on our website by effortlessly managing your ingredient inventory </p>
                 </div>
                 <div className="info-box">
-                    <h3>Info 2</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <h3>Sign Up</h3>
+                    <p>Create an account now to add ingredients and discover a variety of recipes that match the items in your stock</p>
                 </div>
                 <div className="info-box">
-                    <h3>Info 3</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <h3>Peace of Mind</h3>
+                    <p>Elevate your kitchen confidence as we guide you towards stress-free and enjoyable meal preparation</p>
                 </div>
             </div>
         </div>
