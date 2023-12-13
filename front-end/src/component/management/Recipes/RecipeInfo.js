@@ -46,7 +46,7 @@ const RecipeInfo = (props) => {
                     <h2 className="recipe-list-title">Ingredients</h2>
                     <ul className="list-group">
                         {selectedRecipe.ingredients.map((ingredient, index) => {
-                            const hasIngredient = selectedRecipe.matchingIngredients.includes(ingredient);
+                            const hasIngredient = selectedRecipe.matchingIngredients ? false : selectedRecipe.matchingIngredients.includes(ingredient);
                             return (
                                 <li key={index} className="d-flex list-group-item">
                                     {ingredient} - {selectedRecipe.measurements[index]}

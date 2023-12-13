@@ -11,7 +11,7 @@ const RecipesBody = (props) => {
     const userId = userInformation.id;
     const { selectedRecipe, setSelectedRecipe, favoriteMealsList, setFavoriteMealsList, favoriteMealsListOptions, setFavoriteMealsListOptions, handleAddFavorite, handleRemoveFavorite, recipeOptions } = props;
     const [rendered, setRendered] = useState(0);
-    console.log(recipeOptions);
+
     useEffect(() => {
         const updateProfile = async () => {
             try {
