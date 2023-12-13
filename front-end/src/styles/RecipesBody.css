@@ -12,6 +12,13 @@
     z-index: 1;
 }
 
+.sub-div {
+    background-color: rgba(247, 225, 215, 0.8);
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+}   
+
 .recipe-list {
     text-align: center;
     justify-content: space-between;
