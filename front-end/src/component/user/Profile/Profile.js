@@ -237,55 +237,6 @@ const Profile = (props) => {
 
     }
 
-    // const handleAddFavoriteMeal = async (event, meal) => {
-    //     event.preventDefault();
-    //     if (!meal) {
-    //         return alert('Please provide vaild meal');
-    //     }//need to check if it matchs a vaild ingreident
-
-    //     if (props.profile.favoriteMeals.includes(meal)) {
-    //         return alert('Meal is already a favorite');
-    //     }//checks to make sure user doesn't add duplicates
-
-    //     try {
-    //         const res = await fetch(endPoints.addFavoriteMealEndpoint, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(
-    //                 {
-    //                     meal: meal,
-    //                     UserId: userId
-    //                 }
-    //             )
-    //         })
-
-    //         if (res.ok) {
-    //             /*update fave meal list*/
-    //             const updatedFavoriteMeals = [...props.profile.favoriteMeals, meal.name];
-    //             const updatedFavoriateMealsOptions = [...props.profile.favoriteMealsOptions, { label: meal.name, value: meal.name }];
-
-    //             props.setProfile({
-    //                 ...props.profile,
-    //                 preferences: updatedFavoriteMeals,
-    //                 preferencesOptions: updatedFavoriateMealsOptions
-    //             });
-    //             setNewPreference(""); // Clear the input field
-    //         }
-    //         else {
-    //             const errorData = await res.json();
-    //             alert(`Adding failed: ${errorData.message}`);
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
-    // const removeAddFavoriteMeal = async (event, meal) => {
-    //     event.preventDefault();
-    // }
-
     const renderContent = () => {
         if (!props.profile) {
             return null;

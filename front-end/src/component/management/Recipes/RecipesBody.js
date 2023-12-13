@@ -10,7 +10,6 @@ const RecipesBody = (props) => {
     const userId = userInformation.id;
     const { selectedRecipe, setSelectedRecipe, favoriteMealsList, setFavoriteMealsList, handleAddFavorite, handleRemoveFavorite } = props;
     const [rendered, setRendered] = useState(0);
-    console.log(favoriteMealsList);
 
     useEffect(() => {
         const updateProfile = async () => {

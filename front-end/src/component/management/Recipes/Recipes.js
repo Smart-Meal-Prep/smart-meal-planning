@@ -74,7 +74,7 @@ const Recipes = (props) => {
                 console.log('failed to add favorite meal');
                 return;
             }
-            console.log(res);
+
             setFavoriteMealsList([...favoriteMealsList, meal]);
 
         } catch (error) {
@@ -83,7 +83,6 @@ const Recipes = (props) => {
     }
 
     const handleRemoveFavorite = async (event, meal) => {
-        console.log(meal, userId)
         event.preventDefault();
         if (!meal) {
             alert('Invalid meal');
@@ -134,7 +133,7 @@ const Recipes = (props) => {
                     favoriteMealsList={favoriteMealsList} setFavoriteMealsList={setFavoriteMealsList}
                     handleAddFavorite={handleAddFavorite} handleRemoveFavorite={handleRemoveFavorite}
                 />
-            } 
+            }
             <DashboardFooter />
         </div>
     )
