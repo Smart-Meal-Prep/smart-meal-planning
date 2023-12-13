@@ -10,8 +10,10 @@ const Recipes = (props) => {
     const { userInformation } = useContext(UserInfo);
     const userId = userInformation.id;
     const [favoriteMealsList, setFavoriteMealsList] = useState(null);
+    const [favoriteMealsListOptions, setFavoriteMealsListOptions] = useState(null);
     const [selectedRecipe, setSelectedRecipe] = useState(null);
     const { recipes, setRecipes } = props;
+    const [recipeOptions, setRecipeOptions] = useState(null);
 
     useEffect(() => {
         const updateRecipes = async () => {
@@ -39,6 +41,13 @@ const Recipes = (props) => {
                 }
 
                 props.setRecipes(recipes);
+
+                let opts = []
+                recipes.forEach(recipe => {
+                    opts = [...opts, { label: recipe.name, value: recipe }];
+                });
+                setRecipeOptions(opts);
+
 
             } catch (error) {
                 console.log('failed to get recipes');
@@ -76,6 +85,7 @@ const Recipes = (props) => {
             }
 
             setFavoriteMealsList([...favoriteMealsList, meal]);
+            setFavoriteMealsListOptions([...favoriteMealsListOptions, { label: meal.name, value: meal }])
 
         } catch (error) {
             console.log(error);
@@ -110,6 +120,7 @@ const Recipes = (props) => {
             }
 
             setFavoriteMealsList(favoriteMealsList.filter(m => m.name !== meal.name));
+            setFavoriteMealsListOptions(favoriteMealsListOptions.filter(m => m.label !== meal.name));
 
         } catch (error) {
             console.log(error);
@@ -129,9 +140,11 @@ const Recipes = (props) => {
                 :
                 <RecipesBody
                     recipes={recipes} setRecipes={setRecipes}
+                    recipeOptions={recipeOptions}
                     selectedRecipe={selectedRecipe} setSelectedRecipe={setSelectedRecipe}
                     favoriteMealsList={favoriteMealsList} setFavoriteMealsList={setFavoriteMealsList}
                     handleAddFavorite={handleAddFavorite} handleRemoveFavorite={handleRemoveFavorite}
+                    favoriteMealsListOptions={favoriteMealsListOptions} setFavoriteMealsListOptions={setFavoriteMealsListOptions}
                 />
             }
             <DashboardFooter />
