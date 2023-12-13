@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../styles/RecipesBody.css';
 
 const MealItem = (props) => {
-    const {recipe, selectedRecipe, setSelectedRecipe, handleAddFavorite, handleRemoveFavorite, favoriteMealsList} = props;
-    const isFavorite = favoriteMealsList && favoriteMealsList.find(m => m.name == recipe.name);
+    const {recipe, setSelectedRecipe, handleAddFavorite, handleRemoveFavorite, favoriteMealsList} = props;
+    const isFavorite = favoriteMealsList && favoriteMealsList.find(m => m.name === recipe.name);
     return (
         <div>
             <button

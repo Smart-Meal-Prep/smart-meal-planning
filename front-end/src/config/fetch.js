@@ -1,5 +1,5 @@
 /*Hard code local varibles*/
-const inProd = false;
+const inProd = true;
 
 /*Folder containing endpoint urls*/
 const backendEndpoint = inProd ? "https://smart-meals-back-end.onrender.com/" : "http://localhost:3001/";

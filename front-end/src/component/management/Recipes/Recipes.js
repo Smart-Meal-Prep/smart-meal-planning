@@ -5,7 +5,6 @@ import NavigationBar from "../../NavigationBar.js";
 import RecipesBody from "./RecipesBody.js";
 import DashboardFooter from "../../DashboardFooter.js";
 import RecipeInfo from "./RecipeInfo.js";
-// import RecipeInfo from "./RecipeInfo.js";
 
 const Recipes = (props) => {
     const { userInformation } = useContext(UserInfo);
@@ -47,14 +46,14 @@ const Recipes = (props) => {
             }
         }
         updateRecipes();
-    }, [userId]);
+    }, []);
 
     const handleAddFavorite = async (event, meal) => {
         event.preventDefault()
         if (!meal) {
             alert('Invalid meal');
         }
-        if (favoriteMealsList.find(m => m.name == meal)) {
+        if (favoriteMealsList.find(m => m.name === meal)) {
             alert('Meal is already a favorite');
         }
         try {
@@ -89,7 +88,7 @@ const Recipes = (props) => {
         if (!meal) {
             alert('Invalid meal');
         }
-        if (favoriteMealsList.find(m => m.name == meal)) {
+        if (favoriteMealsList.find(m => m.name === meal)) {
             alert('Meal is already a favorite');
         }
         try {
