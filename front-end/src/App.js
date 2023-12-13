@@ -36,8 +36,10 @@ const App = () => {
   const [profile, setProfile] = useState({
     allergies: [],
     prefereces: [],
+    favoriteMeals: [],
     allergiesOptions: [],
     preferecesOptions: [],
+    favoriteMealsOptions: []
   });
 
   const [recipes, setRecipes] = useState([{}]);
@@ -57,7 +59,7 @@ const App = () => {
               (<Profile profile={profile} setProfile={setProfile} />) : (<Navigate to="/login" />)} />
           <Route path="/recipes" element={
             status.LoggedIn ?
-              (<Recipes recipes={recipes} setRecipes={setRecipes} />) : (<Navigate to="/login" />)} />
+              (<Recipes recipes={recipes} setRecipes={setRecipes} profile={profile} setProfile={setProfile}/>) : (<Navigate to="/login" />)} />
         </Routes>
       </div>
     </UserInfo.Provider>

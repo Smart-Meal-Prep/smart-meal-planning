@@ -1,69 +1,91 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../../styles/RecipesBody.css';
+import MealItem from "./MealItem";
+import endPoints from "../../../config/fetch";
+import UserInfo from "../../../config/UserInfo";
+import Select from "react-select";
 
 const RecipesBody = (props) => {
-    return (
-        <div>
-            <h1>Recipes</h1>
-            <h1>---------------------------------------------------------------</h1>
-            <div>
-                {props.recipes && props.recipes.map((recipe) => (
-                    <div>
-                        <div>
-                            <h2>{recipe.name}</h2>
-                            <div style={{ display: 'flex', flexwrap: 'wrap' }}>
-                                <img loading="lazy" key={recipe.name} src={recipe.thumbnail} alt="Meal pic" style={{ width: '250px', height: 'auto' }} />
-                                <div>
-                                    <h3>Ingredients</h3>
-                                    <ul>
-                                        {recipe.ingredients && recipe.ingredients.map((ingredient) => (
-                                            <li>{ingredient}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <h3>----</h3>
-                                <div>
-                                    <h3>Measurements</h3>
-                                    <ul>
-                                        {recipe.measurements && recipe.measurements.map((measurement) => (
-                                            <li>{measurement}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <h3>----</h3>
-                                <div>
-                                    <h3>Matching Ingredients</h3>
-                                    <ul>
-                                        {recipe.matchingIngredients && recipe.matchingIngredients.map((ingredient) => (
-                                            <li>{ingredient}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <h3>----</h3>
-                                <div>
-                                    <h3>Missing Ingredients</h3>
-                                    <ul>
-                                        {recipe.missingIngredients && recipe.missingIngredients.map((ingredient) => (
-                                            <li>{ingredient}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <h3>----</h3>
-                                <div>
-                                    <h3>Strength</h3>
-                                    <ul>
-                                        {recipe.strength}
-                                    </ul>
-                                </div>
-                            </div>
-                            <h4>Directions</h4>
-                            <div>{recipe.instructions}</div>
-                        </div>
-                        <h1>---------------------------------------------------------------</h1>
-                    </div>
-                ))}
-            </div>
+    const { userInformation } = useContext(UserInfo);
+    const userId = userInformation.id;
+    const { selectedRecipe, setSelectedRecipe, favoriteMealsList, setFavoriteMealsList, favoriteMealsListOptions, setFavoriteMealsListOptions, handleAddFavorite, handleRemoveFavorite, recipeOptions } = props;
+    const [rendered, setRendered] = useState(0);
 
+    useEffect(() => {
+        const updateProfile = async () => {
+            try {
+                const response = await fetch(`${endPoints.profileEndpoint}/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    const userProfile = await response.json();
+                    if (userProfile) {
+                        const fetchedFavorites = userProfile.favoriteMeals;
+                        let favoriteMealsObjects = [];
+                        let opts = []
+                        fetchedFavorites.forEach(fave => {
+                            const match = props.recipes.find(r => r.name === fave)
+                            match && (favoriteMealsObjects = [...favoriteMealsObjects, match]);
+                            match && (opts = [...opts, { label: match.name, value: match }])
+                        })
+                        setFavoriteMealsListOptions(opts);
+                        setFavoriteMealsList(favoriteMealsObjects);
+                    }
+                }
+                rendered < 10 && setRendered(rendered + 1);
+            }
+            catch (error) {
+                console.log(error);
+                return;
+            }
+        };
+        updateProfile();
+    }, [rendered]);
+
+    return (
+        <div className="recipes-body">
+            <div className="row items">
+                <div className="col-md-8 recipe-list">
+                    <h1 className="recipe-list-title">Recipes</h1>
+                    <Select
+                        options={recipeOptions}
+                        onChange={(e) => setSelectedRecipe(e.value)}
+                    />
+                    <div className="list-group recipe-list-items">
+                        {props.recipes && props.recipes.map((recipe) => (
+                            <MealItem
+                                recipe={recipe} selectedRecipe={selectedRecipe} setSelectedRecipe={setSelectedRecipe}
+                                handleAddFavorite={handleAddFavorite} handleRemoveFavorite={handleRemoveFavorite}
+                                favoriteMealsList={favoriteMealsList}
+                            />
+                        ))}
+                    </div>
+                </div>
+
+                <div className="col-md-4 recipe-list">
+                    <h1 className="recipe-list-title">Favorites</h1>
+                    <Select 
+                        options={favoriteMealsListOptions}
+                        onChange={(e) => setSelectedRecipe(e.value)}
+                    />
+                    <div className="recipe-list-items">
+                        {favoriteMealsList && favoriteMealsList.map((recipe) => {
+                            return (
+                                <MealItem
+                                    recipe={recipe} selectedRecipe={selectedRecipe} setSelectedRecipe={setSelectedRecipe}
+                                    handleAddFavorite={handleAddFavorite} handleRemoveFavorite={handleRemoveFavorite}
+                                    favoriteMealsList={favoriteMealsList}
+                                />
+                            )
+                        })}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

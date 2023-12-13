@@ -52,13 +52,13 @@ const InventoryBody = (props) => {
                 <div className="row items">
                     {/* Sidebar */}
                     <div className="col-md-3">
-                        <h2 className="title">Categories</h2>
+                        <h2 className="inventory-title">Categories</h2>
                         <div className="list-group">
                             {categories.map((category) => (
                                 <button
                                     key={category}
                                     type="button"
-                                    className={`list-group-item list-group-item-action ${selectedCategory === category ? 'active' : ''}`}
+                                    className={`list-group-item list-group-item-action ${selectedCategory === category ? 'active' : ''} inventory-item`}
                                     onClick={() => handleCategoryClick(category)}
                                 >
                                     {category}
@@ -69,7 +69,7 @@ const InventoryBody = (props) => {
 
                     {/* Inventory Checklist */}
                     <div className="col-md-6">
-                        <h2 className="title">{selectedCategory ? selectedCategory : 'Inventory Checklist'}</h2>
+                        <h2 className="inventory-title">{selectedCategory ? selectedCategory : 'Inventory Checklist'}</h2>
                         <Select
                             options={lists.ingredientsOptionsByCategory[selectedCategory]}
                             value={ingredient}
@@ -84,7 +84,7 @@ const InventoryBody = (props) => {
                                 {ingredientsByCategory[selectedCategory].map((ingredient) => {
                                     const isInInventory = props.userInventory.find(i => i.ingredient === ingredient);
                                     return (
-                                        <li key={ingredient} className="list-group-item">
+                                        <li key={ingredient} className="list-group-item inventory-item">
                                             <h5>
                                                 {ingredient}
                                             </h5>
@@ -108,7 +108,7 @@ const InventoryBody = (props) => {
                     </div>
 
                     <div className="col-md-3">
-                        <h2 className="title">Inventory</h2>
+                        <h2 className="inventory-title">Inventory</h2>
                         <Select
                             options={lists.ingredientsOptions}
                             value={ingredient}
@@ -120,7 +120,7 @@ const InventoryBody = (props) => {
                         <ul className="list-group inventory">
                             {props.userInventory.map(ingredient => {
                                 return (
-                                    <li key={ingredient.ingredient} className="list-group-item">
+                                    <li key={ingredient.ingredient} className="list-group-item inventory-item">
                                         {ingredient.ingredient}
                                         <button
                                             type="button"

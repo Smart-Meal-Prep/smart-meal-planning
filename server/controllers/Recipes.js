@@ -1,4 +1,4 @@
-const { Recipes } = require('../models');
+const { Recipes, Profile } = require('../models');
 const { Sequelize } = require('sequelize');
 
 
@@ -148,14 +148,39 @@ const getRecipeSuggestions = async (req, res) => {
 
         recipes.forEach(meal => {
             const strength = calculateStrength(meal);
-            meal.dataValues = { 
+            meal.dataValues = {
                 ...meal.dataValues,
                 strength: strength
             }
         })
 
+        const profile = await Profile.findOne({
+            where: { UserId: userId }
+        })
+
+        if (!profile) {
+            res.status(200);
+            return res.json(recipes);
+        }
+
+        
+        const allergies = profile.allergies;
+        const preferences = profile.preferences;
+
+        const filteredRecipes = recipes.filter((recipe) => {
+            const ingredients = recipe.ingredients;
+
+            let hasAllergy = allergies.some(allergy => ingredients.includes(allergy));
+            allergies.length === 0 && (hasAllergy = false)
+            let InPreferences = (
+                preferences.includes(recipe.category) || preferences.includes(recipe.area)
+            );
+            preferences.length === 0 && (InPreferences = true);
+            return !hasAllergy && InPreferences;
+        });
+
         res.status(200);
-        return res.json(recipes);
+        return res.json(filteredRecipes);
 
     } catch (error) {
         console.error(error);

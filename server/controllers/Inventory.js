@@ -79,7 +79,7 @@ const removeIngredient = async (req, res) => {
 
         if (item.UserId != UserId) {
             res.status(401);
-            return res.json({ error: `"Error unauthorized user" ${item.UserId} ${UserId}` });
+            return res.json({ error: "Error unauthorized user" });
         }
 
         await item.destroy();
